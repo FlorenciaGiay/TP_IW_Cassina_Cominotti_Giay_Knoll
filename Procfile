@@ -1,0 +1,1 @@
+web: gunicorn rafaela_emprende.wsgi
