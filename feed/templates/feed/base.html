@@ -26,18 +26,43 @@
           <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarToggle">
-            <div class="navbar-nav mr-auto">
-              <a class="nav-item nav-link" href="{% url 'feed-home' %}">Home</a>
-              <a class="nav-item nav-link" href="{% url 'entrepreneurs' %}">Emprendedores</a>
-              <a class="nav-item nav-link" href="#">Calendario</a>
-              <a class="nav-item nav-link" href="#">Acerca de Nosotros</a>
-              <a class="nav-item nav-link" href="#">Contactanos</a>
-            </div>
+            <ul class="nav navbar-nav mr-auto">
+              <li {% if request.resolver_match.url_name == 'feed-home' %} class="active"{% endif %}>
+                <a class="nav-item nav-link" href="{% url 'feed-home' %}">Home</a>
+              </li>
+              
+
+              <li {% if request.resolver_match.url_name == 'entrepreneurs' %} class="active"{% endif %}>
+                <a class="nav-item nav-link" href="{% url 'entrepreneurs' %}">Emprendedores</a>
+              </li>
+              <li {% if request.resolver_match.url_name == 'calendar' %} class="active"{% endif %}>
+                <a class="nav-item nav-link" href="#">Calendario</a>
+              </li>
+              <li {% if request.resolver_match.url_name == 'about' %} class="active"{% endif %}>
+                <a class="nav-item nav-link" href="#">Acerca de Nosotros</a>
+              </li>
+              <li {% if request.resolver_match.url_name == 'contactus' %} class="active"{% endif %}>
+                <a class="nav-item nav-link" href="#">Contactanos</a>
+              </li>
+          </ul>
             <!-- Navbar Right Side -->
-            <div class="navbar-nav">
-              <a class="nav-item nav-link" href="#">Iniciar Sesión</a>
-              <a class="nav-item nav-link" href="{% url 'register' %}">Registrarse</a>
-            </div>
+            <ul class="nav navbar-nav mr-auto">
+              {% if user.is_authenticated %}
+                <li {% if request.resolver_match.url_name == 'profile' %} class="active"{% endif %}>
+                  <a class="nav-item nav-link" href="{% url 'profile' %}">Perfil</a>
+                </li>
+                <li {% if request.resolver_match.url_name == 'logout' %} class="active"{% endif %}>
+                  <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+                </li>
+              {% else %}
+                <li {% if request.resolver_match.url_name == 'login' %} class="active"{% endif %}>
+                  <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
+                </li>
+                <li {% if request.resolver_match.url_name == 'register' %} class="active"{% endif %}>
+                  <a class="nav-item nav-link" href="{% url 'register' %}">Registrarse</a>
+                </li>
+              {% endif %}
+            </ul>
           </div>
         </div>
       </nav>
@@ -62,7 +87,6 @@
                 <li class="list-group-item list-group-item-light">Últimos posteos</li>
                 <li class="list-group-item list-group-item-light">Anuncios</li>
                 <li class="list-group-item list-group-item-light">Calendario</li>
-                <!-- <li class="list-group-item list-group-item-light">etc</li> -->
               </ul>
             </p>
           </div>

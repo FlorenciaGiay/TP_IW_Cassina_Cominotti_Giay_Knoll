@@ -1,0 +1,9 @@
+{% extends "feed/base.html" %}
+{% block content %}
+    <h2>Se ha cerrado la sesión</h2>
+    <div class="border-top pt-3">
+        <small class="text-muted">
+            <a href="{% url 'login' %}">Volver a iniciar sesión</a>
+        </small>
+    </div>
+{% endblock content %}

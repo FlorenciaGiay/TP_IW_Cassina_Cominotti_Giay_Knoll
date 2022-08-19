@@ -1,5 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+
 
 posts = [
     {
@@ -35,6 +37,6 @@ def home(request):
     }
     return render(request, 'feed/home.html', context)
 
-
+@login_required
 def entrepreneurs(request):
     return render(request, 'feed/entrepreneurs.html')
