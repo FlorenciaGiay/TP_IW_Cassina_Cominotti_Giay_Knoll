@@ -13,6 +13,8 @@
 ```console
 $ git clone https://github.com/FlorenciaGiay/TP_IW_Cassina_Cominotti_Giay_Knoll.git
 
+$ cd TP_IW_Cassina_Cominotti_Giay_Knoll
+
 $ conda create -n rafaela_emprende python=3.8
 
 $ source activate rafaela_emprende
@@ -35,7 +37,20 @@ $ python manage.py createsuperuser
 ```console 
 $ python manage.py runserver
 ```
-Then open the browser to the local server IP (generally http://localhost:8000).
+Then the result should be something like this: 
+```console 
+$ python manage.py runserver
+Watching for file changes with StatReloader
+Performing system checks...
+
+System check identified no issues (0 silenced).
+August 18, 2022 - 22:59:54
+Django version 4.1, using settings 'rafaela_emprende.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CTRL-BREAK.
+```
+
+Open the browser to the local server IP  http://localhost:8000 or http://127.0.0.1:8000/
 
 
 <br />
@@ -59,6 +74,9 @@ $ conda install -c anaconda django
 3. Create a project in Django: 
 ```console
 $ django-admin startproject <PROJECT_NAME>
+
+# Or if you want to create it in the same directory:
+# $ django-admin startproject <PROJECT_NAME> .
 ```
 4. Create a Django App: 
 ```console
