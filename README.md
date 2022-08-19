@@ -19,20 +19,62 @@ $ conda create -n rafaela_emprende python=3.8
 
 $ source activate rafaela_emprende
 ```
+
 2. Install your requirements:
 ```console
 $ pip install -r requirements.txt
 ```
+
 3. Make your migrations:
 ```console
 $ python manage.py makemigrations
 
 $ python manage.py migrate
 ```
+
+Should print:
+```console
+$ python manage.py makemigrations
+No changes detected
+
+$ python manage.py migrate
+Operations to perform:
+  Apply all migrations: admin, auth, contenttypes, sessions
+Running migrations:
+  Applying contenttypes.0001_initial... OK
+  Applying auth.0001_initial... OK
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying contenttypes.0002_remove_content_type_name... OK
+  Applying auth.0002_alter_permission_name_max_length... OK
+  Applying auth.0003_alter_user_email_max_length... OK
+  Applying auth.0004_alter_user_username_opts... OK
+  Applying auth.0005_alter_user_last_login_null... OK
+  Applying auth.0006_require_contenttypes_0002... OK
+  Applying auth.0007_alter_validators_add_error_messages... OK
+  Applying auth.0008_alter_user_username_max_length... OK
+  Applying auth.0009_alter_user_last_name_max_length... OK
+  Applying auth.0010_alter_group_name_max_length... OK
+  Applying auth.0011_update_proxy_permissions... OK
+  Applying auth.0012_alter_user_first_name_max_length... OK
+  Applying sessions.0001_initial... OK
+```
+
 4. Create a new superuser
 ```console
 $ python manage.py createsuperuser
 ```
+
+Then you should see something like this:
+```console
+Username (leave blank to use 'mauro'): admin
+Email address: admin@admin.com
+Password: ucse$admin$2022
+Password (again): ucse$admin$2022
+Superuser created successfully.
+```
+
 5. Final checks
 ```console 
 $ python manage.py runserver
@@ -63,6 +105,7 @@ $ conda create -n <PROJECT_NAME> python=3.8
 
 $ source activate <PROJECT_NAME>
 ```
+
 2. Install Django: 
 ```console
 $ pip install Django
@@ -71,6 +114,7 @@ $ pip install Django
 
 $ conda install -c anaconda django
 ```
+
 3. Create a project in Django: 
 ```console
 $ django-admin startproject <PROJECT_NAME>
@@ -78,6 +122,7 @@ $ django-admin startproject <PROJECT_NAME>
 # Or if you want to create it in the same directory:
 # $ django-admin startproject <PROJECT_NAME> .
 ```
+
 4. Create a Django App: 
 ```console
 $ cd <PROJECT_NAME> 
@@ -91,22 +136,27 @@ $ python manage.py startapp <APP_NAME>
 ```python 
 <PROJECT_NAME>/<PROJECT_NAME>/settings.py
 ```
+
 6. Add URL to the APP in the project: 
 ```python 
 <PROJECT_NAME>/<PROJECT_NAME>/urls.py
 ```
+
 7. Create the APP urls.py file: 
 ```console
 $ cd django_app then $ touch urls.py
 ```
+
 8. Add a path to the Index in the URL patterns in 
 ```python 
 <app_name>/urls.py.
 ```
+
 9. Create the Index Route in 
 ```python 
 <app_name>/views.py
 ```
+
 10. Create the index.html template: 
 ```console
 $ mkdir -p templates/<APP_NAME> 
@@ -115,6 +165,7 @@ $ mkdir -p templates/<APP_NAME>
 $ touch templates/<APP_NAME>/index.html
 ```
 then add the HTML to the file.
+
 11. Make the migrations: 
 ```console
 $ cd .. 
@@ -123,6 +174,7 @@ $ cd ..
 
 $ python manage.py migrate
 ```
+
 12. Run the Django server: 
 ```console
 $ python manage.py runserver 
