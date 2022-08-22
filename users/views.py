@@ -1,60 +1,73 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth import get_user_model
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import UserRegisterForm
+from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.utils.encoding import force_bytes #, force_text
-from .tokens import account_activation_token
+from django.utils.encoding import force_bytes
 from django.template.loader import render_to_string
-from django.template.loader import get_template
-from django.core.mail import EmailMultiAlternatives
-from django.core.mail import EmailMessage  
-import os
+from django.core.mail import EmailMessage
+from django.conf import settings
+
+UserModel = get_user_model()
 
 
 def register(request):
+    if request.method == 'GET':
+        return render(request, 'users/register.html')
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            username = form.cleaned_data.get('username')
-            email = form.cleaned_data.get('email')
-            user.is_active = False  
-            user.save()  
-            ######################### mail system ####################################
-            # htmly = get_template('templates/Email.html')
-            # d = {'username': username}
-            # subject, from_email, to = 'Bienvenido a Rafaela Emprende!', os.environ.get(
-            #     'EMAIL_HOST_USER'), email
-            # html_content = htmly.render(d)
-            # msg = EmailMultiAlternatives(
-            #     subject, html_content, from_email, [to])
-            # msg.attach_alternative(html_content, "text/html")
-            # msg.send()
-            ##################################################################
+            user = form.save(commit=False)
+            user.is_active = False
+            user.save()
 
-            # to get the domain of the current site
-            current_site = get_current_site(request)
-            mail_subject = 'Activation link has been sent to your email id'
-            message = render_to_string('acc_active_email.html', {
-                'user': username,
-                'domain': current_site.domain,
-                'uid':urlsafe_base64_encode(force_bytes(user.pk)),
-                'token':account_activation_token.make_token(user),
-            })
-            to_email = form.cleaned_data.get('email')
-            email = EmailMessage(
-                        mail_subject, message, to=[to_email]
-            )
-            email.send()
+            try:
+                current_site = get_current_site(request)
+                mail_subject = 'Activate your account.'
+                message = render_to_string('users/acc_active_email.html', {
+                    'user': user,
+                    'domain': current_site.domain,
+                    'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                    'token': default_token_generator.make_token(user),
+                })
+                to_email = form.cleaned_data.get('email')
+                email = EmailMessage(
+                    mail_subject,
+                    message,
+                    to=[to_email],
+                    from_email=settings.EMAIL_HOST_USER,
+                )
+                email.send()
 
-            messages.success(
-                request, f'¡Su cuenta ha sido creada! Ahora puede conectarse')
+                messages.success(
+                    request, f'¡Su cuenta ha sido creada! Por favor, revise su bandeja de entrada y confirme su dirección de correo electrónico para completar el registro')
+            except Exception as e:
+                messages.error(
+                    request, f'Falla al enviar el email de verificación.')
+
             return redirect('login')
     else:
         form = UserRegisterForm()
     return render(request, 'users/register.html', {'form': form})
+
+
+def activate(request, uidb64, token):
+    try:
+        uid = urlsafe_base64_decode(uidb64).decode()
+        user = UserModel._default_manager.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+    if user is not None and default_token_generator.check_token(user, token):
+        user.is_active = True
+        user.save()
+        messages.success(
+            request, f'Gracias por su confirmación por correo electrónico. Ya puede acceder a su cuenta.')
+        return redirect('login')
+    else:
+        return messages.error(request, f'Activation link is invalid!')
 
 
 @login_required
