@@ -1,3 +1,9 @@
+<p align="center">
+  <a href="https://rafaela-emprende.herokuapp.com/" target="blank">
+  <img src="https://lh3.googleusercontent.com/drive-viewer/AJc5JmS1fzUs7BZ6TVLJIRz40iAfw8gU2nRZrYRc7vHNheipAjeF1qqMoEmnkwWYxQ-XHbAbBEiYcsY=w1920-h961" width="120" alt="Rafaela Emprende Logo" style="border-radius:50%; width:30%"/>
+  </a>
+</p>
+
 ## Repositorio para el desarrollo del Trabajo Práctico de la materia Ingeniería Web.
 ### Integrantes del equipo:
 ##### * Paula Cassina
