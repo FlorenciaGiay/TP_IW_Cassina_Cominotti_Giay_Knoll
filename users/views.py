@@ -8,8 +8,9 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes
 from django.template.loader import render_to_string
-from django.core.mail import EmailMessage
+from django.core.mail import send_mail
 from django.conf import settings
+from users.models import User
 
 UserModel = get_user_model()
 
@@ -26,7 +27,7 @@ def register(request):
 
             try:
                 current_site = get_current_site(request)
-                mail_subject = 'Activate your account.'
+                mail_subject = 'Rafaela Emprende 💡 | Active su cuenta'
                 message = render_to_string('users/acc_active_email.html', {
                     'user': user,
                     'domain': current_site.domain,
@@ -34,13 +35,13 @@ def register(request):
                     'token': default_token_generator.make_token(user),
                 })
                 to_email = form.cleaned_data.get('email')
-                email = EmailMessage(
-                    mail_subject,
-                    message,
-                    to=[to_email],
-                    from_email=settings.EMAIL_HOST_USER,
-                )
-                email.send()
+
+                send_mail(mail_subject,
+                          '',
+                          settings.EMAIL_HOST_USER,
+                          [to_email],
+                          fail_silently=True,
+                          html_message=message)
 
                 messages.success(
                     request, f'¡Su cuenta ha sido creada! Por favor, revise su bandeja de entrada y confirme su dirección de correo electrónico para completar el registro')
@@ -60,14 +61,14 @@ def activate(request, uidb64, token):
         user = UserModel._default_manager.get(pk=uid)
     except(TypeError, ValueError, OverflowError, User.DoesNotExist):
         user = None
-    if user is not None and default_token_generator.check_token(user, token):
+    if user is not None and default_token_generator.check_token(user, token) and not user.is_active:
         user.is_active = True
         user.save()
         messages.success(
             request, f'Gracias por su confirmación por correo electrónico. Ya puede acceder a su cuenta.')
-        return redirect('login')
     else:
-        return messages.error(request, f'Activation link is invalid!')
+        messages.error(request, f'El link de activación es invalido!')
+    return redirect('login')
 
 
 @login_required

@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 import os
+from django.contrib.messages import constants as bootstrapMessages
 import django_heroku
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -138,6 +139,8 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+MESSAGE_TAGS = {bootstrapMessages.ERROR: 'danger', }
+
 
 LOGIN_REDIRECT_URL = 'feed-home'
 LOGIN_URL = 'login'

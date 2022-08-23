@@ -75,7 +75,8 @@
         <div class="col-md-8">
           {% if messages %}
             {% for message in messages %}
-              <div class="alert alert-{{ message.tags }}">
+              <div class="alert alert-{{ message.tags }} alert-dismissable fade show">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                 {{ message }}
               </div>
             {% endfor %}
