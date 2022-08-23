@@ -1,3 +1,4 @@
+import datetime
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
@@ -6,27 +7,27 @@ from django.contrib.auth.decorators import login_required
 posts = [
     {
         'author': 'Mauro Cominotti',
-        'title': 'Blog Post 1',
+        'title': 'Post 1',
         'content': 'Third post content',
-        'date_posted': 'August 28, 2022'
+        'date_posted': datetime.datetime(2022, 8, 23, 7, 00, 00),
     },
     {
         'author': 'Florencia Giay',
-        'title': 'Blog Post 2',
+        'title': 'Post 2',
         'content': 'Second post content',
-        'date_posted': 'August 28, 2022'
+        'date_posted': datetime.datetime(2022, 8, 23, 6, 00, 00),
     },
     {
         'author': 'Paula Cassina',
-        'title': 'Blog Post 3',
+        'title': 'Post 3',
         'content': 'First post content',
-        'date_posted': 'August 28, 2022'
+        'date_posted': datetime.datetime(2022, 8, 22, 23, 00, 00),
     },
     {
         'author': 'Gonzalo Knoll',
-        'title': 'Blog Post 4',
+        'title': 'Post 4',
         'content': 'Second post content',
-        'date_posted': 'August 28, 2022'
+        'date_posted': datetime.datetime(2022, 8, 22, 22, 00, 00),
     }
 ]
 
