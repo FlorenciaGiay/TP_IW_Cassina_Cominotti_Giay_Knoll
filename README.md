@@ -17,7 +17,7 @@
 ## Steps to clone this repository with Conda
 El modelo de datos de ésta App es el siguiente:
 <p align="center">
-  <img src="./rafaela_emprende.png" alt="Rafaela Emprende Logo" style="width:100%"/>
+  <img src="./rafaela_emprende_data_model.png" alt="Rafaela Emprende Logo" style="width:100%"/>
 </p>
 
 <br />
