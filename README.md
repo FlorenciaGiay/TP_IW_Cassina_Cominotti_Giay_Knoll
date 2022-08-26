@@ -15,6 +15,15 @@
 <br />
 
 ## Steps to clone this repository with Conda
+El modelo de datos de ésta App es el siguiente:
+<p align="center">
+  <img src="./rafaela_emprende.png" alt="Rafaela Emprende Logo" style="width:100%"/>
+</p>
+
+<br />
+<br />
+
+## Steps to clone this repository with Conda
 1. Clone this Django application with the optional step of creating a virtual environment.
 ```console
 $ git clone https://github.com/FlorenciaGiay/TP_IW_Cassina_Cominotti_Giay_Knoll.git
