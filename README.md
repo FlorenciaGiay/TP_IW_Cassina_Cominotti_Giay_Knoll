@@ -1,6 +1,9 @@
 <p align="center">
   <a href="https://rafaela-emprende.herokuapp.com/" target="blank">
-  <img src="https://lh3.googleusercontent.com/drive-viewer/AJc5JmS1fzUs7BZ6TVLJIRz40iAfw8gU2nRZrYRc7vHNheipAjeF1qqMoEmnkwWYxQ-XHbAbBEiYcsY=w1920-h961" width="120" alt="Rafaela Emprende Logo" style="border-radius:50%; width:30%"/>
+  <img src="https://rafaela-emprende-files-prod.s3.us-east-1.amazonaws.com/images/logo/Rafaela_Emprende_Logo.gif?response-content-disposition=inline&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEF4aCXNhLWVhc3QtMSJGMEQCIAWev5ZsyyjWQhLN%2BSzYkP8a%2F6BoJN98LgW0vjoHkNeUAiB3UId31mCMsUvZxQcMZtAFWmQpdVIVgSOAAmOGBcRVnSrtAgjX%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8BEAAaDDI0NjkyMDA1MjYzMSIMbjoxJlyfNv1Xf3pIKsECLqrqwNu6p4O6wSKPcvXwbUMEJWu7qB4xKYNKe8Zt3rrUx2KAtR4sYUs1TuRHgqhs1EjWomC6vzQEVgPncwmUnh1a5m7wFpEs0ljICivW9NKwAmlyiFDIYewmH%2BwTx1HcRrldWMS7dTHR5LLLK1Fh7plUzvDS7ROmG8nxmWOsvOxqyKgYDHD5AEun1f%2B4aWlaLrxfa3jlmLwoLz3GSHf7u8gBGqYvuqjTEPrPU54gc5x7IzhujWKT5kzr8uG6KH9YvuDhFIFTbHrz7PUB8l76RwLYECbsUBWaDu8TBVlwrCDieS%2Bg6aYq%2FfWVRMtHOVfBUA439KTSQuEV59kBW3bAQ7YCzmXmkNfjFTVOoTRaLM6OOyuAbE4klkHSiplWryPQXwDfOtTASQ5q1gk55eVvgYA1fyZIa6ay94tA9Y4IrGUnMPyPo5gGOrQC8FqbGhDupPcitW2B%2FBsrXaBiV00j1yIYrepR1rACGpwyE5%2FjjS%2BttIBul0%2Fbc2EhHTu%2BbMy850Q4iOEZLTvFozDZtUutbuTMKU%2B6RAYxOt9oJ1jzEw40qD6POe5WA%2BylhA7eIMdAqeqKrGcg0n2FweZ30oT%2FRnlxZnZTZf475zm5c0w56uV7yuCpLFqv%2BQaOlPgcBpb6KHXX2xbw%2F8nUqRDH3QWr7UmexllSlHWSJ7n%2B62ffpNtqt5a166cFVYQltkeJ%2FLF2HiUItX14O49aRoWTErfF2i49lM%2BCc%2BxzhTxye3vAYvz6r8SwG9mBKlXTVmxpzOfscPdm%2B03babSku4ayLZeh93iYkMz8R9x6du450bYgy2xefwSnp5IPMHpDSAbCnvbpBiX2o6G%2BIrmVlKGO7Do%3D&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20220826T134107Z&X-Amz-SignedHeaders=host&X-Amz-Expires=300&X-Amz-Credential=ASIATS7MU76LR3UXIKEE%2F20220826%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=3695e7a57ed734b22edd9ba334acfeb465ef1ae59f4265ec4bb1ab22975fcbec" 
+    width="120" 
+    alt="Rafaela Emprende Logo" 
+    style="border-radius:50%; width:30%"/>
   </a>
 </p>
 
