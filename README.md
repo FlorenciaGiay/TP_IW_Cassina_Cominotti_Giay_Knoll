@@ -14,6 +14,8 @@
 <br />
 <br />
 
+Éste es un Trabajo basado en la materia de Ingeniería Web de la UCSE. Link a la wiki de la materia: https://github.com/ucseiw-team/catedra/wiki
+
 ## Steps to clone this repository with Conda
 El modelo de datos de ésta App es el siguiente:
 <p align="center">
