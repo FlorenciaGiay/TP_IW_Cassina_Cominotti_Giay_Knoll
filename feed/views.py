@@ -4,40 +4,35 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 
 
-posts = [
+emprendedores = [
     {
-        'author': 'Mauro Cominotti',
-        'title': 'Post 1',
-        'content': 'Third post content',
+        'tipo': 'Artesanias',
+        'nombre': 'Alondra',
+        'content': 'Hago pulseras :)',
         'date_posted': datetime.datetime(2022, 8, 23, 7, 00, 00),
     },
     {
-        'author': 'Florencia Giay',
-        'title': 'Post 2',
-        'content': 'Second post content',
+        'tipo': 'Gastronomia',
+        'nombre': 'Mas chica la milanesa',
+        'content': 'Hago comida :P',
         'date_posted': datetime.datetime(2022, 8, 23, 6, 00, 00),
     },
     {
-        'author': 'Paula Cassina',
-        'title': 'Post 3',
-        'content': 'First post content',
+        'tipo': 'Indumentaria',
+        'nombre': 'Vestite bien',
+        'content': 'Hago ropa XD',
         'date_posted': datetime.datetime(2022, 8, 22, 23, 00, 00),
     },
-    {
-        'author': 'Gonzalo Knoll',
-        'title': 'Post 4',
-        'content': 'Second post content',
-        'date_posted': datetime.datetime(2022, 8, 22, 22, 00, 00),
-    }
 ]
 
 
 def home(request):
-    context = {
-        'posts': posts
-    }
-    return render(request, 'feed/home.html', context)
+    return render(request, 'feed/home.html')
 
-@login_required
-def entrepreneurs(request):
-    return render(request, 'feed/entrepreneurs.html')
+# Ver si va aca o en entrepreneurs. (video youtube)
+# @login_required
+# def entrepreneurs(request):
+#     context = {
+#         'emprendedores': emprendedores
+#     }
+#     return render(request, 'feed/entrepreneurs.html', context)

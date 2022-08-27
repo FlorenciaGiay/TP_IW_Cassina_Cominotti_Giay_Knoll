@@ -1,0 +1,15 @@
+{% extends "feed/base.html" %}
+{% block content %}
+    {% for emprendedor in emprendedores %}
+    <article class="media content-section">
+    <div class="media-body">
+        <div class="article-metadata">
+        <a class="mr-2" href="#">{{ emprendedor.tipo }}</a>
+        <small class="text-muted">hace {{ emprendedor.date_posted|timesince }}</small>
+        </div>
+        <h2><a class="article-title" href="#">{{ emprendedor.nombre }}</a></h2>
+        <p class="article-content">{{ emprendedor.content }}</p>
+    </div>
+    </article>
+    {% endfor %}
+{% endblock content %}
