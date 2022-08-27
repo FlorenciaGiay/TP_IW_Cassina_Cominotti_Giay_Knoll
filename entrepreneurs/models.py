@@ -59,9 +59,3 @@ class EntrepreneurProfile(models.Model):
     description = models.TextField()
     # profile_status = models.ForeignKey('EntrepreneurStatus', null=True, blank=True, on_delete=models.SET_NULL)
     # category = models.ForeignKey('EntrepreneurCategory', null=True, blank=True, on_delete=models.SET_NULL)
-
-
-@receiver(post_save, sender=Entrepreneur)
-def create_user_profile(sender, instance, created, **kwargs):
-    if created and instance.role == "ENTREPRENEUR":
-        EntrepreneurProfile.objects.create(user=instance)

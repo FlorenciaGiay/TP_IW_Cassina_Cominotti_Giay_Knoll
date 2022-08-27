@@ -1,7 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 
 
 class User(AbstractUser):
@@ -13,19 +11,19 @@ class User(AbstractUser):
     )
 
     def __str__(self):
-        return self.email
+        return f"Role: {self.role} - Email: {self.email}"
     class Role(models.TextChoices):
+        ADMIN = "ADMIN", "Admin"
         CLIENT = "CLIENT", "Client"
         ENTREPRENEUR = "ENTREPRENEUR", "Entrepreneur"
 
     base_role = Role.CLIENT
-    role = models.CharField(max_length=50, choices=Role.choices)
+    role = models.CharField(max_length=50, choices=Role.choices, default=Role.CLIENT)
 
     def save(self, *args, **kwargs):
         if not self.pk:
             self.role = self.base_role
             return super().save(*args, **kwargs)
-
 
 class ClientManager(BaseUserManager):
     def get_queryset(self, *args, **kwargs):
@@ -42,12 +40,6 @@ class Client(User):
 
     def welcome(self):
         return "Only for clients"
-
-
-@receiver(post_save, sender=Client)
-def create_user_profile(sender, instance, created, **kwargs):
-    if created and instance.role == "CLIENT":
-        ClientProfile.objects.create(user=instance)
 
 
 class ClientProfile(models.Model):
