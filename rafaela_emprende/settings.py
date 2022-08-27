@@ -45,6 +45,7 @@ AUTH_USER_MODEL = 'users.User'
 INSTALLED_APPS = [
     'feed.apps.FeedConfig',
     'users.apps.UsersConfig',
+    'entrepreneurs.apps.EntrepreneursConfig',
     'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',
