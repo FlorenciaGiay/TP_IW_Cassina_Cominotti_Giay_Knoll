@@ -26,7 +26,5 @@ emprendedores = [
 
 @login_required
 def home(request):
-    context = {
-        'emprendedores': emprendedores
-    }
+    context = { 'emprendedores': emprendedores }
     return render(request, 'entrepreneurs/home.html', context)
