@@ -31,14 +31,14 @@
           <div class="collapse navbar-collapse" id="navbarToggle">
             <ul class="nav navbar-nav mr-auto">
               <li {% if request.resolver_match.url_name == 'feed-home' %} class="active"{% endif %}>
-                <a class="nav-item nav-link" href="{% url 'feed-home' %}">Home</a>
+                <a class="nav-item nav-link" href="{% url 'feed-home' %}">Inicio</a>
               </li>
               
 
               <li {% if request.resolver_match.url_name == 'entrepreneurs' %} class="active"{% endif %}>
                 <a class="nav-item nav-link" href="{% url 'entrepreneurs' %}">Emprendedores</a>
               </li>
-              <li {% if request.resolver_match.url_name == 'calendar' %} class="active"{% endif %}>
+              <!--<li {% if request.resolver_match.url_name == 'calendar' %} class="active"{% endif %}>
                 <a class="nav-item nav-link" href="#">Calendario</a>
               </li>
               <li {% if request.resolver_match.url_name == 'about' %} class="active"{% endif %}>
@@ -46,20 +46,20 @@
               </li>
               <li {% if request.resolver_match.url_name == 'contactus' %} class="active"{% endif %}>
                 <a class="nav-item nav-link" href="#">Contactanos</a>
-              </li>
+              </li>-->
           </ul>
             <!-- Navbar Right Side -->
             <ul class="nav navbar-nav mr-auto">
               {% if user.is_authenticated %}
                 <li {% if request.resolver_match.url_name == 'profile' %} class="active"{% endif %}>
-                  <a class="nav-item nav-link" href="{% url 'profile' %}">Perfil</a>
+                  <a class="nav-item nav-link" href="{% url 'profile' %}">Cuenta</a>
                 </li>
                 <li {% if request.resolver_match.url_name == 'logout' %} class="active"{% endif %}>
-                  <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+                  <a class="nav-item nav-link" href="{% url 'logout' %}">Cerrar Sesión</a>
                 </li>
               {% else %}
                 <li {% if request.resolver_match.url_name == 'login' %} class="active"{% endif %}>
-                  <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
+                  <a class="nav-item nav-link" href="{% url 'login' %}">Iniciar Sesión</a>
                 </li>
                 <li {% if request.resolver_match.url_name == 'register' %} class="active"{% endif %}>
                   <a class="nav-item nav-link" href="{% url 'register' %}">Registrarse</a>
@@ -72,7 +72,7 @@
     </header>
     <main role="main" class="container">
       <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-8 mx-auto">
           {% if messages %}
             {% for message in messages %}
               <div class="alert alert-{{ message.tags }} alert-dismissable fade show">
@@ -83,7 +83,7 @@
           {% endif %}
           {% block content %}{% endblock %}
         </div>
-        <div class="col-md-4">
+        <!--<div class="col-md-4">
           <div class="content-section">
             <h3>Our Sidebar</h3>
             <p class='text-muted'>You can put any information here you'd like.
@@ -94,7 +94,7 @@
               </ul>
             </p>
           </div>
-        </div>
+        </div>-->
       </div>
     </main>
 
