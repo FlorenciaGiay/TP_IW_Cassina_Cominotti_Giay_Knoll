@@ -8,7 +8,7 @@ class Entrepreneur(User):
     phone_number = models.CharField(max_length=100)
     description = models.TextField()
     profile_status = models.ForeignKey('EntrepreneurStatus', null=True, blank=True, on_delete=models.SET_NULL)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    # user = models.ForeignKey(User, on_delete=models.CASCADE)
     category = models.ForeignKey('EntrepreneurCategory', null=True, blank=True, on_delete=models.SET_NULL)
 
     def __str__(self):
