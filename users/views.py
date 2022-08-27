@@ -16,8 +16,6 @@ UserModel = get_user_model()
 
 
 def register(request):
-    if request.method == 'GET':
-        return render(request, 'users/register.html')
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
         if form.is_valid():
