@@ -17,6 +17,9 @@ class User(AbstractUser):
         CLIENT = "CLIENT", "Client"
         ENTREPRENEUR = "ENTREPRENEUR", "Entrepreneur"
 
+        def __str__(self):
+            return self.value
+
     base_role = Role.CLIENT
     role = models.CharField(max_length=50, choices=Role.choices, default=Role.CLIENT)
 

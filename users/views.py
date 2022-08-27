@@ -11,6 +11,8 @@ from django.template.loader import render_to_string
 from django.core.mail import send_mail
 from django.conf import settings
 from users.models import User
+from django import forms
+
 
 UserModel = get_user_model()
 
@@ -19,27 +21,32 @@ def register(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
         if form.is_valid():
+            # print('ROLE ############')
+            # print(form.cleaned_data.get('role'))
+            # user_role = form.cleaned_data.get('role')
             user = form.save(commit=False)
             user.is_active = False
+            # user_selected_role = selected_choices = [i for i in User.Role if str(i) == user_role]
+            # user.role = user_selected_role[0]
             user.save()
 
             try:
-                current_site = get_current_site(request)
-                mail_subject = 'Rafaela Emprende 💡 | Active su cuenta'
-                message = render_to_string('users/acc_active_email.html', {
-                    'user': user,
-                    'domain': current_site.domain,
-                    'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                    'token': default_token_generator.make_token(user),
-                })
-                to_email = form.cleaned_data.get('email')
+                # current_site = get_current_site(request)
+                # mail_subject = 'Rafaela Emprende 💡 | Active su cuenta'
+                # message = render_to_string('users/acc_active_email.html', {
+                #     'user': user,
+                #     'domain': current_site.domain,
+                #     'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                #     'token': default_token_generator.make_token(user),
+                # })
+                # to_email = form.cleaned_data.get('email')
 
-                send_mail(mail_subject,
-                          '',
-                          settings.EMAIL_HOST_USER,
-                          [to_email],
-                          fail_silently=True,
-                          html_message=message)
+                # send_mail(mail_subject,
+                #           '',
+                #           settings.EMAIL_HOST_USER,
+                #           [to_email],
+                #           fail_silently=True,
+                #           html_message=message)
 
                 messages.success(
                     request, f'¡Su cuenta ha sido creada! Por favor, revise su bandeja de entrada y confirme su dirección de correo electrónico para completar el registro')
@@ -50,6 +57,12 @@ def register(request):
             return redirect('login')
     else:
         form = UserRegisterForm()
+        # selected_choices = [(str(i), str(i)) for i in User.Role if str(i) != "ADMIN"]
+        # form.fields['role'] = forms.ChoiceField(
+        #     label='Role',
+        #     choices=selected_choices,
+        #     initial='CLIENT',
+        # )
     return render(request, 'users/register.html', {'form': form})
 
 
