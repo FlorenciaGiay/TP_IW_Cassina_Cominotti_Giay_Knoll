@@ -23,11 +23,6 @@ class User(AbstractUser):
     base_role = Role.CLIENT
     role = models.CharField(max_length=50, choices=Role.choices, default=Role.CLIENT)
 
-    def save(self, *args, **kwargs):
-        if not self.pk:
-            self.role = self.base_role
-            return super().save(*args, **kwargs)
-
 class ClientManager(BaseUserManager):
     def get_queryset(self, *args, **kwargs):
         results = super().get_queryset(*args, **kwargs)
@@ -41,8 +36,10 @@ class Client(User):
     class Meta:
         proxy = True
 
-    def welcome(self):
-        return "Only for clients"
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            self.role = self.base_role
+            return super().save(*args, **kwargs)
 
 
 class ClientProfile(models.Model):

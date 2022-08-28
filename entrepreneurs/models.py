@@ -43,11 +43,13 @@ class Entrepreneur(User):
     class Meta:
         proxy = True
 
-    def welcome(self):
-        return "Only for entrepreneurs"
-
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            self.role = self.base_role
+            return super().save(*args, **kwargs)
 
 
 class EntrepreneurProfile(models.Model):
