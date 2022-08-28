@@ -1,11 +1,11 @@
 from django import forms
-from users.models import Client
+from entrepreneurs.models import Entrepreneur
 from django.contrib.auth.forms import UserCreationForm
 
 
-class UserRegisterForm(UserCreationForm):
+class EntrepreneurRegisterForm(UserCreationForm):
     email = forms.EmailField()
 
     class Meta:
-        model = Client
+        model = Entrepreneur
         fields = ['username', 'email', 'password1', 'password2']

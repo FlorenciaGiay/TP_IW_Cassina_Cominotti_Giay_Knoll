@@ -12,6 +12,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 from users.models import User
 
+
 UserModel = get_user_model()
 
 

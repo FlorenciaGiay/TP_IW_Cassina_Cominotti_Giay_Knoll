@@ -37,20 +37,9 @@
               <li {% if request.resolver_match.url_name == 'feed-home' %} class="active"{% endif %}>
                 <a class="nav-item nav-link" href="{% url 'feed-home' %}">Inicio</a>
               </li>
-              
-
               <li {% if request.resolver_match.url_name == 'entrepreneurs' %} class="active"{% endif %}>
                 <a class="nav-item nav-link" href="{% url 'entrepreneurs' %}">Emprendedores</a>
               </li>
-              <!--<li {% if request.resolver_match.url_name == 'calendar' %} class="active"{% endif %}>
-                <a class="nav-item nav-link" href="#">Calendario</a>
-              </li>
-              <li {% if request.resolver_match.url_name == 'about' %} class="active"{% endif %}>
-                <a class="nav-item nav-link" href="#">Acerca de Nosotros</a>
-              </li>
-              <li {% if request.resolver_match.url_name == 'contactus' %} class="active"{% endif %}>
-                <a class="nav-item nav-link" href="#">Contactanos</a>
-              </li>-->
           </ul>
             <!-- Navbar Right Side -->
             <ul class="nav navbar-nav mr-auto">
@@ -65,8 +54,11 @@
                 <li {% if request.resolver_match.url_name == 'login' %} class="active"{% endif %}>
                   <a class="nav-item nav-link" href="{% url 'login' %}">Iniciar Sesión</a>
                 </li>
-                <li {% if request.resolver_match.url_name == 'register' %} class="active"{% endif %}>
-                  <a class="nav-item nav-link" href="{% url 'register' %}">Registrarse</a>
+                <li {% if request.resolver_match.url_name == 'register_client' %} class="active"{% endif %}>
+                  <a class="btn btn-dark mx-2 nav-item nav-link" href="{% url 'register_client' %}" role="button">Registrarse como Usuario</a>
+                </li>
+                <li {% if request.resolver_match.url_name == 'register_entrepreneur' %} class="active"{% endif %}>
+                  <a class="btn btn-info mx-2 nav-item nav-link" href="{% url 'register_entrepreneur' %}" role="button">Registrarse como Emprendedor</a>
                 </li>
               {% endif %}
             </ul>
@@ -87,18 +79,6 @@
           {% endif %}
           {% block content %}{% endblock %}
         </div>
-        <!--<div class="col-md-4">
-          <div class="content-section">
-            <h3>Our Sidebar</h3>
-            <p class='text-muted'>You can put any information here you'd like.
-              <ul class="list-group">
-                <li class="list-group-item list-group-item-light">Últimos posteos</li>
-                <li class="list-group-item list-group-item-light">Anuncios</li>
-                <li class="list-group-item list-group-item-light">Calendario</li>
-              </ul>
-            </p>
-          </div>
-        </div>-->
       </div>
     </main>
 
