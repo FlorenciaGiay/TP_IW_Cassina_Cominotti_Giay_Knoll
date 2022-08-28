@@ -20,6 +20,7 @@
 
 ## Rafaela Emprende Model
 El modelo de datos de ésta App es el siguiente:
+
 <p align="center">
   <img src="./rafaela_emprende_data_model.png" alt="Rafaela Emprende Logo" style="width:100%"/>
 </p>
