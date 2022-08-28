@@ -2,7 +2,7 @@
   <a href="https://rafaela-emprende.herokuapp.com/" target="blank">
   <img src="https://rafaela-emprende-logos-prod.s3.amazonaws.com/Rafaela_Emprende_Logo.gif" 
     alt="Rafaela Emprende Logo" 
-    style="border-radius:50%; width:30%"/>
+    style="border-radius:50%; width:40%"/>
   </a>
 </p>
 
@@ -18,7 +18,7 @@
 
 Éste es un Trabajo basado en la materia de Ingeniería Web de la UCSE. Link a la wiki de la materia: https://github.com/ucseiw-team/catedra/wiki
 
-## Steps to clone this repository with Conda
+## Rafaela Emprende Model
 El modelo de datos de ésta App es el siguiente:
 <p align="center">
   <img src="./rafaela_emprende_data_model.png" alt="Rafaela Emprende Logo" style="width:100%"/>
