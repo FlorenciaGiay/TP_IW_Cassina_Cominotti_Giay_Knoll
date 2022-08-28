@@ -1,7 +1,6 @@
 <p align="center">
   <a href="https://rafaela-emprende.herokuapp.com/" target="blank">
   <img src="https://rafaela-emprende-logos-prod.s3.amazonaws.com/Rafaela_Emprende_Logo.gif" 
-    width="120" 
     alt="Rafaela Emprende Logo" 
     style="border-radius:50%; width:30%"/>
   </a>
