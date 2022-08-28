@@ -22,11 +22,13 @@
 El modelo de datos de ésta App es el siguiente:
 
 <!-- ############## Rafaela Emprende Model ############## -->
+
   <p align="center">
     <img src="./rafaela_emprende_data_model.png" alt="Rafaela Emprende Logo" class="zoomE"/>
   </p>
   
   <script>
+
     window.onload = () => {
       // (A) GET ALL IMAGES
       let all = document.getElementsByClassName("zoomE");
@@ -48,7 +50,9 @@ El modelo de datos de ésta App es el siguiente:
         };
       }}
     };
+
   </script>
+
 <!-- ############## Rafaela Emprende Model ############## -->
 
 
