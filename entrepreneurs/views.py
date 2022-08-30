@@ -10,6 +10,9 @@ from django.conf import settings
 from .forms import EntrepreneurRegisterForm
 from django.contrib import messages
 from django.contrib.auth.tokens import default_token_generator
+from django.views.generic import ListView, DetailView
+from .models import EntrepreneurProfile
+from django.utils.decorators import method_decorator
 
 
 emprendedores = [
@@ -38,6 +41,16 @@ def home(request):
     context = { 'emprendedores': emprendedores }
     return render(request, 'entrepreneurs/home.html', context)
 
+@method_decorator(login_required, name='dispatch')
+class ProfileListView(ListView):
+    model = EntrepreneurProfile
+    template_name = 'entrepreneurs/home.html'
+    context_object_name = 'emprendedores'
+    ordering = ['entrepreneurship_name']
+
+@method_decorator(login_required, name='dispatch')
+class ProfileDetailView(DetailView):
+    model = EntrepreneurProfile
 
 def register(request):
     if request.method == 'POST':

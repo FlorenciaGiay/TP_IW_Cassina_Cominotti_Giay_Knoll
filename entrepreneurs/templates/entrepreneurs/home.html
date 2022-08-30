@@ -4,11 +4,12 @@
     <article class="media content-section">
     <div class="media-body">
         <div class="article-metadata">
-        <a class="mr-2" href="#">{{ emprendedor.tipo }}</a>
-        <small class="text-muted">hace {{ emprendedor.date_posted|timesince }}</small>
+        <a class="mr-2" href="#">{{ emprendedor.phone_number }}</a>
+        <!--<small class="text-muted">hace {{ emprendedor.date_posted|timesince }}</small>-->
+        <small class="text-muted">{{ emprendedor.entrepreneurship_email }}</small>
         </div>
-        <h2><a class="article-title" href="#">{{ emprendedor.nombre }}</a></h2>
-        <p class="article-content">{{ emprendedor.content }}</p>
+        <h2><a class="article-title" href="#">{{ emprendedor.entrepreneurship_name }}</a></h2>
+        <p class="article-content">{{ emprendedor.description }}</p>
     </div>
     </article>
     {% endfor %}

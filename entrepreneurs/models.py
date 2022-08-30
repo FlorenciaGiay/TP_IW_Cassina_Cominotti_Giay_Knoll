@@ -3,6 +3,7 @@ from users.models import User
 from django.contrib.auth.models import BaseUserManager
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.urls import reverse
 
 
 # class Entrepreneur(User):
@@ -59,5 +60,20 @@ class EntrepreneurProfile(models.Model):
     entrepreneurship_email = models.CharField(max_length=100)
     phone_number = models.CharField(max_length=100)
     description = models.TextField()
-    # profile_status = models.ForeignKey('EntrepreneurStatus', null=True, blank=True, on_delete=models.SET_NULL)
-    # category = models.ForeignKey('EntrepreneurCategory', null=True, blank=True, on_delete=models.SET_NULL)
+    #profile_status = models.ForeignKey('EntrepreneurStatus', null=True, blank=True, on_delete=models.SET_NULL)
+    #category = models.ForeignKey('EntrepreneurCategory', null=True, blank=True, on_delete=models.SET_NULL)
+
+    def get_absolute_url(self):
+        return reverse('profile-detail', kwargs={'pk': self.pk})
+
+class EntrepreneurStatus(models.Model):
+    description = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.description
+
+class EntrepreneurCategory(models.Model):
+    description = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.description

@@ -1,0 +1,14 @@
+{% extends "feed/base.html" %}
+{% block content %}
+    <article class="media content-section">
+    <div class="media-body">
+        <div class="article-metadata">
+        <a class="mr-2" href="#">{{ object.phone_number }}</a>
+        <!--<small class="text-muted">hace {{ emprendedor.date_posted|timesince }}</small>-->
+        <small class="text-muted">{{ object.entrepreneurship_email }}</small>
+        </div>
+        <h2 class="article-title">{{ object.entrepreneurship_name }}</h2>
+        <p class="article-content">{{ object.description }}</p>
+    </div>
+    </article>
+{% endblock content %}
