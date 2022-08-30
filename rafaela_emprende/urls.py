@@ -49,7 +49,7 @@ urlpatterns = [
              template_name='users/password_reset_complete.html'
          ),
          name='password_reset_complete'),
-    path('entrepreneurs/', include('entrepreneurs.urls')),
+    path('', include('entrepreneurs.urls')),
     path('', include('feed.urls')),
 ]
 

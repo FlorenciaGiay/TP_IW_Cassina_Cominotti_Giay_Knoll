@@ -63,17 +63,17 @@ class EntrepreneurProfile(models.Model):
     #profile_status = models.ForeignKey('EntrepreneurStatus', null=True, blank=True, on_delete=models.SET_NULL)
     #category = models.ForeignKey('EntrepreneurCategory', null=True, blank=True, on_delete=models.SET_NULL)
 
-    def get_absolute_url(self):
-        return reverse('profile-detail', kwargs={'pk': self.pk})
+#     def get_absolute_url(self):
+#         return reverse('profile-detail', kwargs={'pk': self.pk})
 
-class EntrepreneurStatus(models.Model):
-    description = models.CharField(max_length=100)
+# class EntrepreneurStatus(models.Model):
+#     description = models.CharField(max_length=100)
 
-    def __str__(self):
-        return self.description
+#     def __str__(self):
+#         return self.description
 
-class EntrepreneurCategory(models.Model):
-    description = models.CharField(max_length=100)
+# class EntrepreneurCategory(models.Model):
+#     description = models.CharField(max_length=100)
 
-    def __str__(self):
-        return self.description
+#     def __str__(self):
+#         return self.description
