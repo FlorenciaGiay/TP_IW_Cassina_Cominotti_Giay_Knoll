@@ -15,39 +15,6 @@ from .models import EntrepreneurProfile
 from django.utils.decorators import method_decorator
 
 
-entrepreneur_list = [
-    {
-        'tipo': 'Artesanias',
-        'entrepreneurship_name': 'Alondra',
-        'username': 'AlondraArtesanias',
-        'user_profile': 'https://pro2-bar-s3-cdn-cf.myportfolio.com/8ee9e0df6a57e6cb08ce8298364354c5/b4dd1698f1d995ddf6dc1caf45e69d0b5550752716af226bf5b6e140d0a48ae6175a3d2b28d2d24e_car_1x1.jpg?h=2f9a2d1908efc225350ee82423d2d7b5&url=aHR0cHM6Ly9taXItczMtY2RuLWNmLmJlaGFuY2UubmV0L3Byb2plY3RzL29yaWdpbmFsLzE5Yjg3YTI5Mjc0MzkzLjU1ZWFkMmU3MWFhNDMuanBn',
-        'entrepreneurship_email': 'alondra@gmail.com',
-        'phone_number': '+5493492565728',
-        'description': 'Hago pulseras :)',
-        'date_posted': datetime.datetime(2022, 8, 23, 7, 00, 00),
-    },
-    {
-        'tipo': 'Gastronomia',
-        'entrepreneurship_name': 'Mas chica la milanesa',
-        'username': 'MasChicaLaMilanesa',
-        'user_profile': 'https://pro2-bar-s3-cdn-cf.myportfolio.com/8ee9e0df6a57e6cb08ce8298364354c5/b4dd1698f1d995ddf6dc1caf45e69d0b5550752716af226bf5b6e140d0a48ae6175a3d2b28d2d24e_car_1x1.jpg?h=2f9a2d1908efc225350ee82423d2d7b5&url=aHR0cHM6Ly9taXItczMtY2RuLWNmLmJlaGFuY2UubmV0L3Byb2plY3RzL29yaWdpbmFsLzE5Yjg3YTI5Mjc0MzkzLjU1ZWFkMmU3MWFhNDMuanBn',
-        'entrepreneurship_email': 'milanga@gmail.com',
-        'phone_number': '+5493492565728',
-        'description': 'Hago comida :P',
-        'date_posted': datetime.datetime(2022, 8, 23, 6, 00, 00),
-    },
-    {
-        'tipo': 'Indumentaria',
-        'entrepreneurship_name': 'Vestite bien',
-        'username': 'Dressing_Up_Rafaela',
-        'user_profile': 'https://pro2-bar-s3-cdn-cf.myportfolio.com/8ee9e0df6a57e6cb08ce8298364354c5/b4dd1698f1d995ddf6dc1caf45e69d0b5550752716af226bf5b6e140d0a48ae6175a3d2b28d2d24e_car_1x1.jpg?h=2f9a2d1908efc225350ee82423d2d7b5&url=aHR0cHM6Ly9taXItczMtY2RuLWNmLmJlaGFuY2UubmV0L3Byb2plY3RzL29yaWdpbmFsLzE5Yjg3YTI5Mjc0MzkzLjU1ZWFkMmU3MWFhNDMuanBn',
-        'entrepreneurship_email': 'dressingup@gmail.com',
-        'phone_number': '+5493492565728',
-        'description': 'Hago ropa XD',
-        'date_posted': datetime.datetime(2022, 8, 22, 23, 00, 00),
-    },
-]
-
 @method_decorator(login_required, name='dispatch')
 class ProfileListView(ListView):
     paginate_by = 1
