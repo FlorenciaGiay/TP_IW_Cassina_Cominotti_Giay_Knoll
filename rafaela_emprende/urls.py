@@ -23,8 +23,7 @@ from entrepreneurs import views as entrepreneur_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('register-client/', user_views.register, name='register_client'),
-    path('register-entrepreneur/', entrepreneur_views.register, name='register_entrepreneur'),
+    path('register/', user_views.register, name='register'),
     path('activate/<uidb64>/<token>/', user_views.activate, name='activate'),  
     path('profile/', user_views.profile, name='profile'),
     path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
