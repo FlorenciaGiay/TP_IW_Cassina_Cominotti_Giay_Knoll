@@ -22,3 +22,6 @@ class Entrepreneur(models.Model):
     description = models.TextField()
     status = models.ForeignKey('EntrepreneurStatus', null=False, blank=False, on_delete=models.PROTECT)
     category = models.ForeignKey('EntrepreneurCategory', null=False, blank=False, on_delete=models.PROTECT)
+
+    def __str__(self):
+        return f"User.id: {self.user.id} - email: {self.user.email}"

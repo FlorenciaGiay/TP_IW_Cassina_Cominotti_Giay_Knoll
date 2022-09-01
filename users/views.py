@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+
+from entrepreneurs.models import Entrepreneur, EntrepreneurStatus, EntrepreneurCategory
 from .forms import UserRegisterForm
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.shortcuts import get_current_site
@@ -75,4 +77,9 @@ def profile(request):
     default_image = 'https://pro2-bar-s3-cdn-cf.myportfolio.com/8ee9e0df6a57e6cb08ce8298364354c5/b4dd1698f1d995ddf6dc1caf45e69d0b5550752716af226bf5b6e140d0a48ae6175a3d2b28d2d24e_car_1x1.jpg?h=2f9a2d1908efc225350ee82423d2d7b5&url=aHR0cHM6Ly9taXItczMtY2RuLWNmLmJlaGFuY2UubmV0L3Byb2plY3RzL29yaWdpbmFsLzE5Yjg3YTI5Mjc0MzkzLjU1ZWFkMmU3MWFhNDMuanBn'
     image = request.user.profile.image.url if (hasattr(request.user, 'profile') and hasattr(
         request.user.profile, 'image') and hasattr(request.user.profile.image, 'url')) else default_image
-    return render(request, 'users/profile.html', {'user_profile': image})
+    entrepreneur_selected = Entrepreneur.objects.select_related().filter(user=request.user).values()
+    if entrepreneur_selected:
+        entrepreneur_selected = entrepreneur_selected[0]
+        entrepreneur_selected["status"] = EntrepreneurStatus.objects.get(id=entrepreneur_selected["status_id"])
+        entrepreneur_selected["category"] = EntrepreneurCategory.objects.get(id=entrepreneur_selected["category_id"])
+    return render(request, 'users/profile.html', {'entrepreneur': entrepreneur_selected}, )

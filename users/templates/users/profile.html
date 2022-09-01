@@ -3,12 +3,36 @@
 {% block content %}
     <div class="content-section">
       <div class="media">
-        <img class="rounded-circle account-img img-fluid" src="{{ user_profile }}">
+        {% if entrepreneur and entrepreneur.image_profile %}
+            <img class="rounded-circle account-img img-fluid" 
+            src="{{ entrepreneur.image_profile }}" 
+            alt="Generic placeholder image">
+        {% else %}
+            <img class="rounded-circle account-img img-fluid" 
+            src="https://pro2-bar-s3-cdn-cf.myportfolio.com/8ee9e0df6a57e6cb08ce8298364354c5/b4dd1698f1d995ddf6dc1caf45e69d0b5550752716af226bf5b6e140d0a48ae6175a3d2b28d2d24e_car_1x1.jpg?h=2f9a2d1908efc225350ee82423d2d7b5&url=aHR0cHM6Ly9taXItczMtY2RuLWNmLmJlaGFuY2UubmV0L3Byb2plY3RzL29yaWdpbmFsLzE5Yjg3YTI5Mjc0MzkzLjU1ZWFkMmU3MWFhNDMuanBn" 
+            alt="Generic placeholder image">
+        {% endif %}
         <div class="media-body">
           <h2 class="account-heading">{{ user.username }}</h2>
           <p class="text-secondary">{{ user.email }}</p>
+          {% if entrepreneur %}
+          <hr />
+          <h2>Perfil Emprendedor</h2>
+            <p class="text-secondary">
+              <a class="mr-2" href="{% url 'entrepreneur-detail' entrepreneur.id %}">@{{ entrepreneur.entrepreneurship_name }}</a> 
+              • 
+              <span class="badge badge-info">{{ entrepreneur.category.description }}</span>
+              <span class="badge badge-primary">Estado: {{ entrepreneur.status.description }}</span>
+            </p>
+            <p class="text-secondary">Email del emprendimiento: {{ entrepreneur.entrepreneurship_email }}</p>
+            <p class="text-secondary">Teléfono del emprendimiento: {{ entrepreneur.phone_number }}</p>
+            <p class="text-secondary">Descripción: {{ entrepreneur.description }}</p>
+          {% else %}
+            <div class="d-flex align-items-start">
+              <a class="btn btn-dark mt-4 nav-item nav-link" href="{% url 'entrepreneur-add' %}" role="button">Quiero ser Emprendedor!</a>
+            </div>
+          {% endif %}
         </div>
       </div>
-      <!-- FORM HERE -->
     </div>
 {% endblock content %}
