@@ -70,3 +70,13 @@ def entrepreneur_update_view(request, pk):
     }
 
     return render(request, 'entrepreneurs/entrepreneur_update.html', context)
+
+@login_required
+def entrepreneur_delete_view(request, pk=None):
+    if request.method == 'POST':
+        entrepreneur_to_delete = Entrepreneur.objects.get(id=pk)
+        entrepreneur_to_delete.delete()
+        return redirect('profile')
+
+    if request.method == 'GET':
+        return render(request, 'entrepreneurs/entrepreneur_confirm_delete.html', { 'entrepreneur_pk': pk })

@@ -1,0 +1,13 @@
+{% extends "feed/base.html" %}
+{% block content %}
+<div class="content-section">
+    <h1 class="mb-5">Está seguro que desea elminar su Perfil de Emprendedor?</h1>
+    <form action="{% url 'entrepreneur-delete' entrepreneur_pk %}" method="POST">
+        {% csrf_token %}
+        <div class="form-group d-flex justify-content-around">
+            <a class="btn btn-outline-info" href="{% url 'profile' %}" role="button">Cancelar</a>
+            <button class="btn btn-outline-danger" type="submit">Eliminar</button>
+        </div>
+    </form>
+</div>
+{% endblock content %}
