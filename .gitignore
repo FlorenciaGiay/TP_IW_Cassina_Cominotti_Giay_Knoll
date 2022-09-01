@@ -7,7 +7,8 @@
 *.pyc
 __pycache__
 db.sqlite3
-media
+media/*
+!media/default.jpg
 .vscode
 
 # Backup files # 
