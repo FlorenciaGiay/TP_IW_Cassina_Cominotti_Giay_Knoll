@@ -13,7 +13,7 @@
             <div class="d-flex justify-content-center align-items-center flex-column">
                 <h2 class="article-title mt-4">{{ object.entrepreneurship_name }}</h2>
                 <a class="mr-2" href="{% url 'entrepreneur-detail' entrepreneur.id %}">@{{ entrepreneur.entrepreneurship_name }}</a> 
-                <span class="badge badge-info">{{ entrepreneur.category.description }}</span>
+                <span class="badge" style="color:white; background-color: {{ entrepreneur.category.color }}">{{ entrepreneur.category.description }}</span>
             </div>
             <p class="text-secondary mt-5">
                 <p class="text-secondary"><b>Email del emprendimiento:</b> {{ entrepreneur.entrepreneurship_email }}</p>

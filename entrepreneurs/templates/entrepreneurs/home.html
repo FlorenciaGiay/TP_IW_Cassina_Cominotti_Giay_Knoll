@@ -25,7 +25,9 @@
                     {% endif %}
                     <div class="d-flex flex-column">
                         <h5 class="article-title">{{ entrepreneur.entrepreneurship_name }} • 
-                            <small><span class="badge badge-info">{{entrepreneur.category.description}}</span></small>
+                            <small>
+                                <span class="badge" style="color:white; background-color: {{ entrepreneur.category.color }}">{{ entrepreneur.category.description }}</span>
+                            </small>
                         </h5>
                         <!-- <a class="mr-2" href="{% url 'entrepreneur-detail' entrepreneur.pk %}">@{{ entrepreneur.user.username }}</a> -->
                         <!-- <small class="article-content">{{ entrepreneur.description }}</small> -->

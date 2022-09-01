@@ -22,8 +22,8 @@
               <p class="text-secondary">
                 <a class="mr-2" href="{% url 'entrepreneur-detail' entrepreneur.id %}">@{{ entrepreneur.entrepreneurship_name }}</a> 
                 • 
-                <span class="badge badge-info">{{ entrepreneur.category.description }}</span>
-                <span class="badge badge-primary">Estado: {{ entrepreneur.status.description }}</span>
+                <span class="badge" style="color:white; background-color: {{ entrepreneur.category.color }}">{{ entrepreneur.category.description }}</span>
+                <span class="badge" style="color:white; background-color: {{ entrepreneur.status.color }}">Estado: {{ entrepreneur.status.description }}</span>
               </p>
               <p class="text-secondary">Email del emprendimiento: {{ entrepreneur.entrepreneurship_email }}</p>
               <p class="text-secondary">Teléfono del emprendimiento: {{ entrepreneur.phone_number }}</p>
