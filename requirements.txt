@@ -11,3 +11,4 @@ pydotplus==2.0.2
 six==1.16.0
 django-filter==22.1
 Pillow==9.2.0
+black==22.8.0
