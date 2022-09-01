@@ -3,19 +3,23 @@
     <article class="media content-section row">
         <div class="media-body col-12">
             <div class="article-metadata">
-            <a class="mr-2" href="#">{{ object.phone_number }}</a>
-            <!--<small class="text-muted">hace {{ emprendedor.date_posted|timesince }}</small>-->
-            <small class="text-muted">{{ object.entrepreneurship_email }}</small>
+                <small class="text-muted">Creado hace {{ user.date_joined|timesince }}</small>
             </div>
-            <h2 class="article-title">{{ object.entrepreneurship_name }}</h2>
-            <p class="article-content">{{ object.description }}</p>
-        </div>
-        <div class="col-12">
-            <div class="d-flex justify-content-between mt-2 w-50">
-                <i style="cursor: pointer;" class="fa fa-reply"></i>
-                <i style="cursor: pointer;" class="fa fa-retweet"></i>
-                <i style="cursor: pointer;" class="fa fa-heart"></i>
+            <div class="d-flex justify-content-center align-items-center mt-4">
+                <img class="rounded-circle img-fluid w-25" 
+                src="{{ entrepreneur.image_profile.url }}"
+                alt="Generic placeholder image">
             </div>
+            <div class="d-flex justify-content-center align-items-center flex-column">
+                <h2 class="article-title mt-4">{{ object.entrepreneurship_name }}</h2>
+                <a class="mr-2" href="{% url 'entrepreneur-detail' entrepreneur.id %}">@{{ entrepreneur.entrepreneurship_name }}</a> 
+                <span class="badge badge-info">{{ entrepreneur.category.description }}</span>
+            </div>
+            <p class="text-secondary mt-5">
+                <p class="text-secondary"><b>Email del emprendimiento:</b> {{ entrepreneur.entrepreneurship_email }}</p>
+                <p class="text-secondary"><b>Teléfono del emprendimiento:</b> {{ entrepreneur.phone_number }}</p>
+                <p class="text-secondary"><b>Descripción:</b> {{ entrepreneur.description }}</p>
+            </p>
         </div>
     </article>
     <a class="btn btn-info mt-2 nav-item nav-link d-inline-block" href="{% url 'entrepreneurs' %}" role="button">Volver</a>
