@@ -7,7 +7,6 @@ from django.utils.decorators import method_decorator
 from django.http import HttpResponseRedirect
 
 
-@method_decorator(login_required, name='dispatch')
 class EntrepreneurListView(FilterView):
     paginate_by = 1
     ordering = ["-id"]
@@ -15,7 +14,6 @@ class EntrepreneurListView(FilterView):
     model = Entrepreneur
     filterset_class = EntrepreneurFilter
 
-@method_decorator(login_required, name='dispatch')
 class EntrepreneurDetailView(DetailView):
     model = Entrepreneur
     template_name = 'entrepreneurs/entrepreneur_detail.html'
