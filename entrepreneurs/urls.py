@@ -4,6 +4,7 @@ from . import views as entrepreneur_views
 
 urlpatterns = [
     path("entrepreneurs/", EntrepreneurListView.as_view(), name="entrepreneurs"),
+    path("events/", entrepreneur_views.events, name="events"),
     path("entrepreneur/add/", EntrepreneurAddView.as_view(), name="entrepreneur-add"),
     path(
         "entrepreneur/delete/<int:pk>",
