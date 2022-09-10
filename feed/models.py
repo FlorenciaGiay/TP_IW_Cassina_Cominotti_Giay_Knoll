@@ -4,9 +4,14 @@ from users.models import User
 
 
 class Event(models.Model):
-    title = models.CharField(max_length=100)
-    content = models.TextField()
+    title = models.CharField(max_length=100, null=False)
+    content = models.TextField(null=False)
+    direction = models.TextField(null=False)
+    cost_of_entry = models.IntegerField(null=False)
     created_at = models.DateTimeField(auto_now_add=True)
+    image_profile = models.ImageField(
+        default="images/default.jpg", upload_to="images/event_pics"
+    )
 
     class Meta:
         ordering = ["created_at"]
