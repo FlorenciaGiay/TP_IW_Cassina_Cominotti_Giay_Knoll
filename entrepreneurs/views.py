@@ -95,8 +95,3 @@ def entrepreneur_delete_view(request, pk=None):
             "entrepreneurs/entrepreneur_confirm_delete.html",
             {"entrepreneur_pk": pk},
         )
-
-
-@login_required
-def events(request):
-    return render(request, "entrepreneurs/events.html")
