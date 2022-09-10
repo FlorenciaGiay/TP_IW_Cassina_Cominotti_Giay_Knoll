@@ -1,0 +1,17 @@
+{% extends "feed/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="content-section">
+        <form method="POST">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Informacion del Evento</legend>
+                {{ form|crispy }}
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">Guardar</button>
+            </div>
+        </form>
+        <a class="btn btn-info mt-2 nav-item nav-link d-inline-block" href="{% url 'events' %}" role="button">Volver</a>
+    </div>
+{% endblock content %}
