@@ -96,6 +96,7 @@ def entrepreneur_delete_view(request, pk=None):
             {"entrepreneur_pk": pk},
         )
 
+
 @login_required
 def events(request):
     return render(request, "entrepreneurs/events.html")
