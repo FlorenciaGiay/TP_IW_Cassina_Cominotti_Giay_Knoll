@@ -7,6 +7,13 @@
         {{ filter.form.as_p }}
         <input type="submit" value="Buscar" style="cursor: pointer;"/>
     </form>
+    <div class="col-12 d-flex align-items-center justify-content-end">
+        {% if user.is_superuser %}
+            <a class="btn btn-dark mx-2 nav-item nav-link" href="{% url 'event-add' %}" role="button">
+                Crear Evento
+            </a>
+        {% endif %}
+    </div>
     <ul class="list-unstyled">
         {% for event in event_list %}
         <li class="media my-4 d-flex flex-column border p-4 rounded">
@@ -24,7 +31,7 @@
                         style="width: 20%;">
                     {% endif %}
                     <div class="d-flex flex-column">
-                        <h5 class="article-title">{{ event.eventship_name }} • 
+                        <h5 class="article-title">{{ event.title }} • <small class="text-muted">{{ event.created_at | timesince }}</small>
                             <small>
                                 <span class="badge" style="color:white; background-color: {{ event.category.color }}">{{ event.category.description }}</span>
                             </small>

@@ -11,10 +11,17 @@
                 alt="Generic placeholder image">
             </div>
             <p class="text-secondary mt-5">
+                <p class="text-secondary"><b>Título:</b> {{ event.title }}</p>
                 <p class="text-secondary"><b>Descripción:</b> {{ event.content }}</p>
+                <p class="text-secondary"><b>Dirección:</b> {{ event.direction }}</p>
+                <p class="text-secondary"><b>Costo de Entrada:</b> {{ event.cost_of_entry }}</p>
             </p>
         </div>
     </article>
     <a class="btn btn-info mt-2 nav-item nav-link d-inline-block" href="{% url 'events' %}" role="button">Volver</a>
-
+    {% if user.is_superuser %}
+        <a class="btn btn-dark mt-2 nav-item nav-link d-inline-block" href="{% url 'event-update' event.pk %}" role="button">
+            Actualizar Evento
+        </a>
+    {% endif %}
 {% endblock content %}
