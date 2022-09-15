@@ -20,4 +20,9 @@ urlpatterns = [
         EntrepreneurDetailView.as_view(),
         name="entrepreneur-detail",
     ),
+    path(
+        "entrepreneur/accept-petition/<int:pk>/",
+        entrepreneur_views.accept_entrepreneur_petition,
+        name="accept-entrepreneur-petition",
+    ),
 ]

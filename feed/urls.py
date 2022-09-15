@@ -22,4 +22,9 @@ urlpatterns = [
         EventDetailView.as_view(),
         name="event-detail",
     ),
+    path(
+        "petitions",
+        event_views.petitions,
+        name="petitions",
+    ),
 ]

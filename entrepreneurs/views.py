@@ -23,6 +23,13 @@ class EntrepreneurDetailView(DetailView):
     model = Entrepreneur
     template_name = "entrepreneurs/entrepreneur_detail.html"
 
+def accept_entrepreneur_petition(request, pk):
+    entrepreneur = Entrepreneur.objects.get(pk=pk)
+    entrepreneur.status = EntrepreneurStatus.objects.get(description="Activo")
+    entrepreneur.save()
+    context = {"entrepreneur": entrepreneur}
+    return render(request, "entrepreneurs/entrepreneur_detail.html", context)
+
 
 @method_decorator(login_required, name="dispatch")
 class EntrepreneurAddView(CreateView):

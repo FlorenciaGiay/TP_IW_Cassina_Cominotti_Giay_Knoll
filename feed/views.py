@@ -2,22 +2,30 @@ import datetime
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django_filters.views import FilterView
-from django.views.generic import DetailView, CreateView
+from django.views.generic import DetailView, CreateView, FormView, View
 from feed.filter import EventFilter
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.contrib import messages
 from django.shortcuts import render, redirect
-from feed.forms import EventUpdateForm
-from .forms import CommentForm
+from feed.forms import EventUpdateForm, CommentForm
+from django.views.generic.detail import SingleObjectMixin
+from django.urls import reverse
 
-from feed.models import Event, Comment
+from feed.models import Event, Comment, EventEntrepreneur, EventPetitionStatus
+from entrepreneurs.models import Entrepreneur, EntrepreneurStatus
 
 
 def home(request):
     return render(request, "feed/home.html")
 
+def petitions(request):
+    entrepreneur_profiles = Entrepreneur.objects.filter(status=EntrepreneurStatus.objects.get(description="Pendiente"))
+    event_petitions = EventEntrepreneur.objects.filter(status=EventPetitionStatus.objects.get(description="Pendiente"))
+    context = {'entrepreneurs': entrepreneur_profiles,
+    'event_petitions': event_petitions}
+    return render(request, "feed/petitions.html", context)
 
 class EventListView(FilterView):
     paginate_by = 5
@@ -27,33 +35,52 @@ class EventListView(FilterView):
     filterset_class = EventFilter
 
 
-class EventDetailView(DetailView):
+class EventDisplay(DetailView):
     model = Event
     template_name = "feed/event_detail.html"
+    context_object_name = "event"
 
-def post_detail(request, slug):
-    template_name = 'post_detail.html'
-    post = get_object_or_404(Event, slug=slug)
-    comments = post.comments.filter(active=True)
-    new_comment = None
-    # Comment posted
-    if request.method == 'POST':
-        comment_form = CommentForm(data=request.POST)
-        if comment_form.is_valid():
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = CommentForm()
+        return context
 
-            # Create Comment object but don't save to database yet
-            new_comment = comment_form.save(commit=False)
-            # Assign the current post to the comment
-            new_comment.post = post
-            # Save the comment to the database
-            new_comment.save()
-    else:
-        comment_form = CommentForm()
+@method_decorator(login_required, name="dispatch")
+class PostComment(SingleObjectMixin, FormView):
+    model = Event
+    form_class = CommentForm
+    template_name = "feed/event_detail.html"
 
-    return render(request, template_name, {'post': post,
-                                           'comments': comments,
-                                           'new_comment': new_comment,
-                                           'comment_form': comment_form})
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        return super().post(self.request, *args, **kwargs)
+
+    # def get_form_kwargs(self):
+    #     kwargs = super(PostComment, self).get_form_kwargs()
+    #     kwargs['request'] = self.request
+    #     return kwargs
+
+    def form_valid(self, form):
+        comment = form.save(commit=False)
+        comment.event = self.object
+        comment.user = self.request.user
+        comment.save()
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        post = self.get_object()
+        return reverse('event-detail', kwargs={'pk': post.pk}) + '#comments'
+
+class EventDetailView(View):
+    def get(self, request, *args, **kwargs):
+        view = EventDisplay.as_view()
+        return view(self.request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        view = PostComment.as_view()
+        return view(self.request, *args, **kwargs)
+
+
 
 @method_decorator(login_required, name="dispatch")
 class EventAddView(CreateView):
@@ -87,7 +114,7 @@ def event_update_view(request, pk):
         e_form = EventUpdateForm(request.POST, request.FILES, instance=event_selected)
         if e_form.is_valid():
             e_form.save()
-            messages.success(request, f"Su cuenta ha sido actualizada!")
+            messages.success(request, f"El evento ha sido actualizado!")
             return redirect("events")
 
     else:

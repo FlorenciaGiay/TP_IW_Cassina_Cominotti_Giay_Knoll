@@ -1,4 +1,5 @@
 {% extends "feed/base.html" %}
+{% load crispy_forms_tags %}
 {% block content %}
     <article class="media content-section row">
         <div class="media-body col-12">
@@ -18,6 +19,22 @@
             </p>
         </div>
     </article>
+    <div class="event-comments">
+        <h4>Comentarios</h4>
+        {% for comment in event.comments.all %}
+        <b>{{ comment.user.username }}</b> dijo hace <b>{{ comment.created_at|timesince }}</b>
+        <p>{{ comment.content }}</p>
+        {% empty %}
+        <p>Feel free to leave the first comment!</p>
+        {% endfor %}
+        <hr>
+        <h3>Add a comment</h3>
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Submit</button>
+        </form>
+    </div>
     <a class="btn btn-info mt-2 nav-item nav-link d-inline-block" href="{% url 'events' %}" role="button">Volver</a>
     {% if user.is_superuser %}
         <a class="btn btn-dark mt-2 nav-item nav-link d-inline-block" href="{% url 'event-update' event.pk %}" role="button">

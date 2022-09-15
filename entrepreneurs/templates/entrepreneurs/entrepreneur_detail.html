@@ -23,5 +23,8 @@
         </div>
     </article>
     <a class="btn btn-info mt-2 nav-item nav-link d-inline-block" href="{% url 'entrepreneurs' %}" role="button">Volver</a>
-
+    {% if entrepreneur.status.description == "Pendiente" %}
+        <a class="btn btn-dark mt-2 nav-item nav-link d-inline-block" href="{% url 'accept-entrepreneur-petition' entrepreneur.pk %}" role="button" style="background-color: limegreen; margin-left: 10px; float: right;">Aceptar Solicitud</a>
+        <a class="btn btn-dark mt-2 nav-item nav-link d-inline-block" href="{% url 'entrepreneur-detail' entrepreneur.pk %}" role="button" style="background-color: red; margin-left: 10px; float: right;">Rechazar Solicitud</a>
+    {% endif %}
 {% endblock content %}

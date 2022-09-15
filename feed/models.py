@@ -27,13 +27,22 @@ class Comment(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        ordering = ["created_at"]
+        ordering = ["-created_at"]
 
     def __str__(self):
         return "Comment {} by {}".format(self.content, self.user.email)
 
+class EventPetitionStatus(models.Model):
+    description = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.description
 
 class EventEntrepreneur(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     entrepreneur = models.ForeignKey(Entrepreneur, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
+    status = models.ForeignKey(
+        "EventPetitionStatus", null=False, blank=False, on_delete=models.PROTECT
+    )
+
