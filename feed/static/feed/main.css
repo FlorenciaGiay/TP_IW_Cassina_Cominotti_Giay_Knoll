@@ -4,6 +4,29 @@ body {
   margin-top: 5rem;
 }
 
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+  border-radius: 100px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 100px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 100px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 h1, h2, h3, h4, h5, h6 {
   color: #444444;
 }

@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
-from entrepreneurs.models import Entrepreneur, EntrepreneurStatus, EntrepreneurCategory
+from entrepreneurs.models import Entrepreneur
 from .forms import UserRegisterForm
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.shortcuts import get_current_site
@@ -43,7 +43,7 @@ def register(request):
                 send_mail(
                     mail_subject,
                     "",
-                    settings.EMAIL_HOST_USER,
+                    f'"Rafaela Emprende Team" <{settings.EMAIL_HOST_USER}>',
                     [to_email],
                     fail_silently=True,
                     html_message=message,

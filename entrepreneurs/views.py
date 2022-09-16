@@ -9,6 +9,10 @@ from django.utils.decorators import method_decorator
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.conf import settings
+from django.contrib.sites.shortcuts import get_current_site
+from django.template.loader import render_to_string
+from django.core.mail import send_mail
 
 
 class EntrepreneurListView(FilterView):
@@ -27,16 +31,65 @@ def accept_entrepreneur_petition(request, pk):
     entrepreneur = Entrepreneur.objects.get(pk=pk)
     entrepreneur.status = EntrepreneurStatus.objects.get(description="Activo")
     entrepreneur.save()
-    context = {"entrepreneur": entrepreneur}
-    return render(request, "entrepreneurs/entrepreneur_detail.html", context)
+    try:
+        current_site = get_current_site(request)
+        mail_subject = "Rafaela Emprende 💡 | Tu emprendimiento ha sido aprobado!"
+        message = render_to_string(
+            "entrepreneurs/accept_entrepreneurship.html",
+            {
+                "user": request.user,
+                "entrepreneur": entrepreneur,
+                "domain": current_site.domain
+            },
+        )
+        to_email = entrepreneur.user.email
+
+        send_mail(
+            mail_subject,
+            "",
+            f'"Rafaela Emprende Team" <{settings.EMAIL_HOST_USER}>',
+            [to_email],
+            fail_silently=True,
+            html_message=message,
+        )
+
+        messages.info(request, f"El emprendedor {entrepreneur.entrepreneurship_email} ha sido aceptado")
+    except Exception as e:
+        messages.error(request, f"Falla al enviar el email de verificación.")
+
+    return redirect("petitions")
 
 def reject_entrepreneur_petition(request, pk):
     entrepreneur = Entrepreneur.objects.get(pk=pk)
     entrepreneur.status = EntrepreneurStatus.objects.get(description="Rechazado")
     entrepreneur.save()
-    context = {"entrepreneur": entrepreneur}
-    return render(request, "entrepreneurs/entrepreneur_detail.html", context)
+    try:
+        current_site = get_current_site(request)
+        mail_subject = "Rafaela Emprende 💡 | Tu emprendimiento ha sido rechazado"
+        message = render_to_string(
+            "entrepreneurs/reject_entrepreneurship.html",
+            {
+                "user": request.user,
+                "entrepreneur": entrepreneur,
+                "domain": current_site.domain
+            },
+        )
+        to_email = request.user.email
 
+        send_mail(
+            mail_subject,
+            "",
+            f'"Rafaela Emprende Team" <{settings.EMAIL_HOST_USER}>',
+            [to_email],
+            fail_silently=True,
+            html_message=message,
+        )
+
+        messages.info(request, f"El emprendedor {entrepreneur.entrepreneurship_email} ha sido rechazado")
+    except Exception as e:
+        messages.error(request, f"Falla al enviar el email de verificación.")
+
+    return redirect("petitions")
 
 @method_decorator(login_required, name="dispatch")
 class EntrepreneurAddView(CreateView):

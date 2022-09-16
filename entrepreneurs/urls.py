@@ -26,7 +26,7 @@ urlpatterns = [
         name="accept-entrepreneur-petition",
     ),
     path(
-        "entrepreneur/accept-petition/<int:pk>/",
+        "entrepreneur/reject-petition/<int:pk>/",
         entrepreneur_views.reject_entrepreneur_petition,
         name="reject-entrepreneur-petition",
     ),
