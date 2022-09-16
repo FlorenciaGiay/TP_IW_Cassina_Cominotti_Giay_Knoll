@@ -30,6 +30,13 @@ def accept_entrepreneur_petition(request, pk):
     context = {"entrepreneur": entrepreneur}
     return render(request, "entrepreneurs/entrepreneur_detail.html", context)
 
+def reject_entrepreneur_petition(request, pk):
+    entrepreneur = Entrepreneur.objects.get(pk=pk)
+    entrepreneur.status = EntrepreneurStatus.objects.get(description="Rechazado")
+    entrepreneur.save()
+    context = {"entrepreneur": entrepreneur}
+    return render(request, "entrepreneurs/entrepreneur_detail.html", context)
+
 
 @method_decorator(login_required, name="dispatch")
 class EntrepreneurAddView(CreateView):

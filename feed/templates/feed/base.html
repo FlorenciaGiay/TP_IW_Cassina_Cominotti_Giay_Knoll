@@ -47,7 +47,7 @@
                 <a class="nav-item nav-link" href="{% url 'events' %}">Eventos</a>
               </li>
               {% if user.is_superuser %}
-              <li {% if request.resolver_match.url_name == 'events' %} class="active"{% endif %}>
+              <li {% if request.resolver_match.url_name == 'petitions' %} class="active"{% endif %}>
                 <a class="nav-item nav-link" href="{% url 'petitions' %}">Solicitudes</a>
               </li>
               {% endif %}
@@ -74,7 +74,7 @@
         </div>
       </nav>
     </header>
-    <main role="main" class="container">
+    <main role="main" class="container" style="min-height:90vh;">
       <div class="row">
         <div class="col-md-8 mx-auto">
           {% if messages %}
@@ -89,6 +89,31 @@
         </div>
       </div>
     </main>
+    <footer class="bg-dark text-center text-white mt-5">
+      <div class="container p-4">
+        <section>
+          <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+          <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button">
+            <i class="fab fa-twitter"></i>
+          </a>
+          <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button">
+            <i class="fab fa-google"></i>
+          </a>
+          <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button">
+            <i class="fab fa-linkedin-in"></i>
+          </a>
+        </section>
+      </div>
+      <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+        © 2022 Copyright 
+        <a class="text-white" href="https://mdbootstrap.com/">Rafaela Emprende</a>
+      </div>
+    </footer>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

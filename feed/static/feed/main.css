@@ -17,6 +17,10 @@ option {
   cursor: pointer;
 }
 
+textarea {
+  width: 100%;
+}
+
 .bg-steel {
   background-color: #5f788a;
 }

@@ -33,7 +33,8 @@ class Comment(models.Model):
         return "Comment {} by {}".format(self.content, self.user.email)
 
 class EventPetitionStatus(models.Model):
-    description = models.CharField(max_length=100)
+    description = models.CharField(max_length=100, unique=True,)
+    color = models.CharField(max_length=9, default="#17a2b8")
 
     def __str__(self):
         return self.description
@@ -42,7 +43,8 @@ class EventEntrepreneur(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     entrepreneur = models.ForeignKey(Entrepreneur, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     status = models.ForeignKey(
-        "EventPetitionStatus", null=False, blank=False, on_delete=models.PROTECT
+        EventPetitionStatus, null=False, blank=False, on_delete=models.PROTECT, to_field='description', default='Pendiente'
     )
 

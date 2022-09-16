@@ -23,7 +23,7 @@ urlpatterns = [
         name="event-detail",
     ),
     path(
-        "petitions",
+        "petitions/",
         event_views.petitions,
         name="petitions",
     ),
