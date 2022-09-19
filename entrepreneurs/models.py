@@ -18,14 +18,23 @@ class EntrepreneurCategory(models.Model):
     def __str__(self):
         return self.description
 
+
 class Entrepreneur(models.Model):
     user = models.OneToOneField(User, blank=True, null=True, on_delete=models.CASCADE)
-    entrepreneurship_name = models.CharField(max_length=100)
-    entrepreneurship_email = models.CharField(max_length=100)
-    phone_number = models.CharField(max_length=100)
-    description = models.TextField()
+    entrepreneurship_name = models.CharField(
+        max_length=100, verbose_name="Nombre del emprendimiento"
+    )
+    entrepreneurship_email = models.CharField(
+        max_length=100, verbose_name="Email del emprendimiento"
+    )
+    phone_number = models.CharField(
+        max_length=100, verbose_name="Número de teléfono del emprendimiento"
+    )
+    description = models.TextField(verbose_name="Descripción del emprendimiento")
     image_profile = models.ImageField(
-        default="images/default.jpg", upload_to="images/entrepreneur_profile_pics"
+        default="images/default.jpg",
+        upload_to="images/entrepreneur_profile_pics",
+        verbose_name="Foto de perfil del emprendimiento",
     )
     status = models.ForeignKey(
         "EntrepreneurStatus", null=False, blank=False, on_delete=models.PROTECT
@@ -37,3 +46,12 @@ class Entrepreneur(models.Model):
 
     def __str__(self):
         return f"User.id: {self.user.id} - email: {self.user.email}"
+
+
+class EntrepreneurPhoto(models.Model):
+    entrepreneur = models.ForeignKey(
+        Entrepreneur, on_delete=models.CASCADE, related_name="photos"
+    )
+    image = models.ImageField(
+        default="images/default.jpg", upload_to="images/entrepreneur_photos"
+    )

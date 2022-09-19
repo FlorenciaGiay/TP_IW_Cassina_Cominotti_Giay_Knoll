@@ -3,9 +3,13 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic import DetailView, CreateView
 from django_filters.views import FilterView
 from entrepreneurs.filter import EntrepreneurFilter
-from entrepreneurs.forms import EntrepreneurUpdateForm, UserUpdateForm
+from entrepreneurs.forms import (
+    EntrepreneurUpdateForm,
+    UserUpdateForm,
+    EntrepreneurImageForm,
+)
 from feed.models import Event, EventEntrepreneur, EventPetitionStatus
-from .models import Entrepreneur, EntrepreneurStatus
+from .models import Entrepreneur, EntrepreneurStatus, EntrepreneurPhoto
 from django.utils.decorators import method_decorator
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
@@ -317,23 +321,39 @@ def entrepreneur_update_view(request, pk):
         e_form = EntrepreneurUpdateForm(
             request.POST, request.FILES, instance=entrepreneur_selected
         )
+        files = request.FILES.getlist("image")
         if u_form.is_valid() and e_form.is_valid():
             u_form.save()
             e_form.save()
+            for i in files:
+                EntrepreneurPhoto.objects.create(
+                    entrepreneur=entrepreneur_selected, image=i
+                )
             messages.success(request, f"Su cuenta ha sido actualizada!")
 
-            if (entrepreneur_selected.status.description == "Rechazado"):
-                entrepreneur_selected.status = EntrepreneurStatus.objects.get(description="Pendiente")
+            if entrepreneur_selected.status.description == "Rechazado":
+                entrepreneur_selected.status = EntrepreneurStatus.objects.get(
+                    description="Pendiente"
+                )
 
             return redirect("profile")
 
     else:
         u_form = UserUpdateForm(instance=request.user)
         e_form = EntrepreneurUpdateForm(instance=entrepreneur_selected)
+        photos_selected = EntrepreneurPhoto.objects.filter(
+            entrepreneur=entrepreneur_selected
+        ).first()
+        i_form = (
+            EntrepreneurImageForm(instance=photos_selected)
+            if photos_selected
+            else EntrepreneurImageForm()
+        )
 
     context = {
         "u_form": u_form,
         "e_form": e_form,
+        "i_form": i_form,
         "entrepreneur": entrepreneur_selected,
     }
 

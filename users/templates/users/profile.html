@@ -29,11 +29,36 @@
               <p class="text-secondary">Teléfono del emprendimiento: {{ entrepreneur.phone_number }}</p>
               <p class="text-secondary">Descripción: {{ entrepreneur.description }}</p>
             </div>
+            
+            <div id="entrepreneurPhotosCarousel" class="carousel slide" data-ride="carousel">
+              <ol class="carousel-indicators">
+                {% for photo in entrepreneur.photos.all %}
+                    <li data-target="#entrepreneurPhotosCarousel" data-slide-to="{{forloop.counter0 }}" class="{% if forloop.first%}active{%endif%}"></li>
+                {%endfor%}
+              </ol>
+              <div class="carousel-inner">
+                {% for photo in entrepreneur.photos.all %}        
+                  <div class="carousel-item{% if forloop.first %} active{% endif %}" style="height: 50vh;">                    
+                    <img class="d-block w-100 rounded" src="{{photo.image.url}}" alt="Foto del emprendedor">
+                  </div>
+                {%endfor%}
+              </div>
+              <a class="carousel-control-prev" href="#entrepreneurPhotosCarousel" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Anterior</span>
+              </a>
+              <a class="carousel-control-next" href="#entrepreneurPhotosCarousel" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Siguiente</span>
+              </a>
+            </div>
+
             <div class="d-flex justify-content-around">
               <a class="btn btn-outline-info mt-4 nav-item nav-link" href="{% url 'entrepreneur-update' entrepreneur.pk %}" role="button">Actualizar perfil</a>
               <a class="btn btn-outline-danger mt-4 nav-item nav-link" href="{% url 'entrepreneur-delete' entrepreneur.pk %}" role="button">Eliminar</a>
             </div>
           </div>
+          
         {% else %}
           <div class="d-flex align-items-start">
             <a class="btn btn-outline-info mt-4 nav-item nav-link" href="{% url 'entrepreneur-add' %}" role="button">Quiero ser Emprendedor!</a>

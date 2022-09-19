@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.contrib import messages
 from django.shortcuts import render, redirect
-from feed.forms import EventUpdateForm, CommentForm
+from feed.forms import EventAddForm, EventUpdateForm, CommentForm
 from django.views.generic.detail import SingleObjectMixin
 from django.urls import reverse
 
@@ -103,14 +103,26 @@ class EventDetailView(View):
 class EventAddView(CreateView):
     model = Event
     template_name = "feed/event_add.html"
-    fields = [
-        "title",
-        "content",
-        "direction",
-        "datetime_of_event",
-        "cost_of_entry",
-        "image_profile",
-    ]
+    form_class = EventAddForm
+
+    # fields = [
+    #     "title",
+    #     "content",
+    #     "direction",
+    #     "datetime_of_event",
+    #     "cost_of_entry",
+    #     "image_profile",
+    # ]
+
+    # def get_form(self):
+        # add date picker in forms
+        # from django.forms.widgets import SelectDateWidget
+        # form = super(EventAddView, self).get_form()
+        # form.fields['datetime_of_event'].label = 'Fecha de Realización'
+        # form.fields['datetime_of_event'].widget = SelectDateWidget()
+        # form.fields['datetime_of_event'].widget.attrs.update({'class': 'datepicker'})
+
+        # return form
 
     def form_valid(self, form):
         self.object = form.save()
