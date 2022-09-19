@@ -20,12 +20,17 @@ from entrepreneurs.models import Entrepreneur, EntrepreneurStatus
 def home(request):
     return render(request, "feed/home.html")
 
+
 def petitions(request):
-    entrepreneur_profiles = Entrepreneur.objects.filter(status=EntrepreneurStatus.objects.get(description="Pendiente"))
-    event_petitions = EventEntrepreneur.objects.filter(status=EventPetitionStatus.objects.get(description="Pendiente"))
-    context = {'entrepreneurs': entrepreneur_profiles,
-    'event_petitions': event_petitions}
+    entrepreneur_profiles = Entrepreneur.objects.filter(status__description="Pendiente")
+    event_petitions = EventEntrepreneur.objects.filter(status__description="Pendiente")
+    context = {
+        "entrepreneurs": entrepreneur_profiles,
+        "event_petitions": event_petitions,
+    }
+
     return render(request, "feed/petitions.html", context)
+
 
 class EventListView(FilterView):
     paginate_by = 5
@@ -42,8 +47,19 @@ class EventDisplay(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['form'] = CommentForm()
+        context["form"] = CommentForm()
+        try:
+            selected_event = kwargs.get("object")
+            entrepreneur_already_participates = EventEntrepreneur.objects.get(
+                event=selected_event, entrepreneur=self.request.user.entrepreneur
+            )
+        except Exception as e:
+            entrepreneur_already_participates = None
+        context["entrepreneur_already_participates"] = (
+            entrepreneur_already_participates is not None
+        )
         return context
+
 
 @method_decorator(login_required, name="dispatch")
 class PostComment(SingleObjectMixin, FormView):
@@ -69,7 +85,8 @@ class PostComment(SingleObjectMixin, FormView):
 
     def get_success_url(self):
         post = self.get_object()
-        return reverse('event-detail', kwargs={'pk': post.pk}) + '#comments'
+        return reverse("event-detail", kwargs={"pk": post.pk}) + "#comments"
+
 
 class EventDetailView(View):
     def get(self, request, *args, **kwargs):
@@ -79,7 +96,6 @@ class EventDetailView(View):
     def post(self, request, *args, **kwargs):
         view = PostComment.as_view()
         return view(self.request, *args, **kwargs)
-
 
 
 @method_decorator(login_required, name="dispatch")

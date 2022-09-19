@@ -9,7 +9,7 @@
     </form>
     <ul class="list-unstyled">
         {% for entrepreneur in entrepreneur_list %}
-            {% if entrepreneur.status.description != "Activo" %}
+            {% if entrepreneur.status.description == "Activo" %}
                 <li class="media my-4 d-flex flex-column border p-4 rounded">
                     <div class="row w-100">
                         <div class="col-4 d-flex flex-row">

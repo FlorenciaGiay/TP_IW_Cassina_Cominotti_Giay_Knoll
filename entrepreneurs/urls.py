@@ -30,4 +30,19 @@ urlpatterns = [
         entrepreneur_views.reject_entrepreneur_petition,
         name="reject-entrepreneur-petition",
     ),
+    path(
+        "entrepreneur/make-event-petition/<int:event_pk>",
+        entrepreneur_views.entrepreneur_make_event_petition,
+        name="entrepreneur-make-event-petition",
+    ),
+    path(
+        "entrepreneurship/accept-event-petition/<int:pk>/",
+        entrepreneur_views.accept_entrepreneurship_event_petition,
+        name="accept-entrepreneurship-event-petition",
+    ),
+    path(
+        "entrepreneurship/reject-event-petition/<int:pk>/",
+        entrepreneur_views.reject_entrepreneurship_event_petition,
+        name="reject-entrepreneurship-event-petition",
+    ),
 ]

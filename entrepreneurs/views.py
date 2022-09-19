@@ -4,6 +4,7 @@ from django.views.generic import DetailView, CreateView
 from django_filters.views import FilterView
 from entrepreneurs.filter import EntrepreneurFilter
 from entrepreneurs.forms import EntrepreneurUpdateForm, UserUpdateForm
+from feed.models import Event, EventEntrepreneur, EventPetitionStatus
 from .models import Entrepreneur, EntrepreneurStatus
 from django.utils.decorators import method_decorator
 from django.http import HttpResponseRedirect
@@ -13,6 +14,7 @@ from django.conf import settings
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
 from django.core.mail import send_mail
+from django.urls import reverse
 
 
 class EntrepreneurListView(FilterView):
@@ -27,6 +29,7 @@ class EntrepreneurDetailView(DetailView):
     model = Entrepreneur
     template_name = "entrepreneurs/entrepreneur_detail.html"
 
+
 def accept_entrepreneur_petition(request, pk):
     entrepreneur = Entrepreneur.objects.get(pk=pk)
     entrepreneur.status = EntrepreneurStatus.objects.get(description="Activo")
@@ -37,9 +40,9 @@ def accept_entrepreneur_petition(request, pk):
         message = render_to_string(
             "entrepreneurs/accept_entrepreneurship.html",
             {
-                "user": request.user,
+                "user": entrepreneur.user,
                 "entrepreneur": entrepreneur,
-                "domain": current_site.domain
+                "domain": current_site.domain,
             },
         )
         to_email = entrepreneur.user.email
@@ -53,11 +56,15 @@ def accept_entrepreneur_petition(request, pk):
             html_message=message,
         )
 
-        messages.info(request, f"El emprendedor {entrepreneur.entrepreneurship_email} ha sido aceptado")
+        messages.info(
+            request,
+            f"El emprendedor {entrepreneur.entrepreneurship_email} ha sido aceptado",
+        )
     except Exception as e:
-        messages.error(request, f"Falla al enviar el email de verificación.")
+        messages.error(request, f"Falla al enviar el email")
 
     return redirect("petitions")
+
 
 def reject_entrepreneur_petition(request, pk):
     entrepreneur = Entrepreneur.objects.get(pk=pk)
@@ -69,9 +76,9 @@ def reject_entrepreneur_petition(request, pk):
         message = render_to_string(
             "entrepreneurs/reject_entrepreneurship.html",
             {
-                "user": request.user,
+                "user": entrepreneur.user,
                 "entrepreneur": entrepreneur,
-                "domain": current_site.domain
+                "domain": current_site.domain,
             },
         )
         to_email = request.user.email
@@ -85,11 +92,155 @@ def reject_entrepreneur_petition(request, pk):
             html_message=message,
         )
 
-        messages.info(request, f"El emprendedor {entrepreneur.entrepreneurship_email} ha sido rechazado")
+        messages.info(
+            request,
+            f"El emprendedor {entrepreneur.entrepreneurship_email} ha sido rechazado",
+        )
     except Exception as e:
-        messages.error(request, f"Falla al enviar el email de verificación.")
+        messages.error(request, f"Falla al enviar el email")
 
     return redirect("petitions")
+
+
+def entrepreneur_make_event_petition(request, event_pk):
+    selected_entrepreneur = Entrepreneur.objects.get(user=request.user)
+    try:
+        EventEntrepreneur.objects.all().delete()
+        selected_event = Event.objects.get(pk=event_pk)
+        entrepreneur_already_participates = EventEntrepreneur.objects.get(
+            event=selected_event, entrepreneur=selected_entrepreneur
+        )
+    except Exception as e:
+        entrepreneur_already_participates = None
+    if (
+        selected_entrepreneur is None
+        or selected_event is None
+        or entrepreneur_already_participates
+    ):
+        messages.error(request, f"Falla al subscribirse al evento")
+        return reverse("event-detail", kwargs={"pk": selected_event.pk})
+
+    # Create new EventEntrepreneur
+    pending_petition_status = EventPetitionStatus.objects.get(description="Pendiente")
+    new_petition = EventEntrepreneur(
+        event=selected_event,
+        entrepreneur=selected_entrepreneur,
+        status=pending_petition_status,
+    )
+    new_petition.save()
+
+    try:
+        current_site = get_current_site(request)
+        mail_subject = (
+            f"Rafaela Emprende 💡 | Te has suscrito al evento '{selected_event.title}'!"
+        )
+        message = render_to_string(
+            "entrepreneurs/petition_to_event.html",
+            {
+                "user": request.user,
+                "event": selected_event,
+                "domain": current_site.domain,
+            },
+        )
+        to_email = request.user.email
+
+        send_mail(
+            mail_subject,
+            "",
+            f'"Rafaela Emprende Team" <{settings.EMAIL_HOST_USER}>',
+            [to_email],
+            fail_silently=True,
+            html_message=message,
+        )
+
+        messages.info(
+            request,
+            f"Tu petición para participar del evento {selected_event.title} ha sido enviada",
+        )
+    except Exception as e:
+        messages.error(request, f"Falla al enviar petición para participar en evento.")
+
+    # return reverse("event-detail", kwargs={"pk": selected_event.pk})
+    return HttpResponseRedirect(
+        reverse("event-detail", kwargs={"pk": selected_event.pk})
+    )
+
+
+def accept_entrepreneurship_event_petition(request, pk):
+    petition = EventEntrepreneur.objects.get(pk=pk)
+    entrepreneur = petition.entrepreneur
+    petition.status = EventPetitionStatus.objects.get(description="Aprobado")
+    petition.save()
+    try:
+        current_site = get_current_site(request)
+        mail_subject = "Rafaela Emprende 💡 | Tu petición al evento ha sido aprobada!"
+        message = render_to_string(
+            "entrepreneurs/accept_entrepreneur_petition.html",
+            {
+                "user": entrepreneur.user,
+                "entrepreneur": entrepreneur,
+                "event": petition.event,
+                "domain": current_site.domain,
+            },
+        )
+        to_email = entrepreneur.user.email
+
+        send_mail(
+            mail_subject,
+            "",
+            f'"Rafaela Emprende Team" <{settings.EMAIL_HOST_USER}>',
+            [to_email],
+            fail_silently=True,
+            html_message=message,
+        )
+
+        messages.info(
+            request,
+            f"La petición del emprendedor {entrepreneur.entrepreneurship_email} para el evento {petition.event.title} ha sido aprobada",
+        )
+    except Exception as e:
+        messages.error(request, f"Falla al enviar el email")
+
+    return redirect("petitions")
+
+
+def reject_entrepreneurship_event_petition(request, pk):
+    petition = EventEntrepreneur.objects.get(pk=pk)
+    entrepreneur = petition.entrepreneur
+    petition.status = EventPetitionStatus.objects.get(description="Rechazado")
+    petition.save()
+    try:
+        current_site = get_current_site(request)
+        mail_subject = "Rafaela Emprende 💡 |  Tu petición al evento ha sido rechazada"
+        message = render_to_string(
+            "entrepreneurs/reject_entrepreneur_petition.html",
+            {
+                "user": entrepreneur.user,
+                "entrepreneur": entrepreneur,
+                "event": petition.event,
+                "domain": current_site.domain,
+            },
+        )
+        to_email = entrepreneur.user.email
+
+        send_mail(
+            mail_subject,
+            "",
+            f'"Rafaela Emprende Team" <{settings.EMAIL_HOST_USER}>',
+            [to_email],
+            fail_silently=True,
+            html_message=message,
+        )
+
+        messages.info(
+            request,
+            f"La petición del emprendedor {entrepreneur.entrepreneurship_email} para el evento {petition.event.title} ha sido rechazada",
+        )
+    except Exception as e:
+        messages.error(request, f"Falla al enviar el email")
+
+    return redirect("petitions")
+
 
 @method_decorator(login_required, name="dispatch")
 class EntrepreneurAddView(CreateView):

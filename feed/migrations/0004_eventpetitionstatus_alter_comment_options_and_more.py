@@ -3,6 +3,7 @@
 from django.db import migrations, models
 import django.db.models.deletion
 
+
 def populate_eventpetitionstatus(apps, schema_editor):
     names = [
         ("Pendiente", "#1E88E5"),
@@ -13,6 +14,7 @@ def populate_eventpetitionstatus(apps, schema_editor):
     for name, color in names:
         obj = EventPetitionStatus(description=name, color=color)
         obj.save()
+
 
 class Migration(migrations.Migration):
 
