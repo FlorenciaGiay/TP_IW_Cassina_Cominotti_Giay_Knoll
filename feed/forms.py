@@ -6,14 +6,17 @@ from django.forms import DateTimeInput
 
 
 class EventAddForm(forms.ModelForm):
-    # datetime_of_event = forms.DateTimeField(
-    #     label="Fecha de realización",
-    #     input_formats=['%d/%m/%Y %H:%M'],
-    #     widget=forms.DateTimeInput(attrs={
-    #         'class': 'form-control datetimepicker-input',
-    #         'data-target': '#datetimepicker_addevent'
-    #     })
-    # )
+    datetime_of_event = forms.DateTimeField(
+        label="Fecha de realización",
+        input_formats=["%d/%m/%Y %H:%M"],
+        widget=forms.DateTimeInput(
+            attrs={
+                "class": "form-control datetimepicker-input",
+                "data-target": "#datetimepicker_addevent",
+            }
+        ),
+    )
+
     class Meta:
         model = Event
         fields = [
@@ -22,16 +25,8 @@ class EventAddForm(forms.ModelForm):
             "direction",
             "cost_of_entry",
             "image_profile",
-            "datetime_of_event"
+            "datetime_of_event",
         ]
-        widgets = {
-            "datetime_of_event": forms.DateTimeInput(
-                attrs={
-                    "class": "form-control datetimepicker-input",
-                    "data-target": "#datetimepicker_addevent",
-                }
-            ),
-        }
 
 
 class EventUpdateForm(forms.ModelForm):

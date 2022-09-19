@@ -1,6 +1,4 @@
-import datetime
-from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
 from django_filters.views import FilterView
 from django.views.generic import DetailView, CreateView, FormView, View
 from feed.filter import EventFilter
@@ -13,8 +11,8 @@ from feed.forms import EventAddForm, EventUpdateForm, CommentForm
 from django.views.generic.detail import SingleObjectMixin
 from django.urls import reverse
 
-from feed.models import Event, Comment, EventEntrepreneur, EventPetitionStatus
-from entrepreneurs.models import Entrepreneur, EntrepreneurStatus
+from feed.models import Event, EventEntrepreneur
+from entrepreneurs.models import Entrepreneur
 
 
 def home(request):
@@ -72,11 +70,6 @@ class PostComment(SingleObjectMixin, FormView):
         self.object = self.get_object()
         return super().post(self.request, *args, **kwargs)
 
-    # def get_form_kwargs(self):
-    #     kwargs = super(PostComment, self).get_form_kwargs()
-    #     kwargs['request'] = self.request
-    #     return kwargs
-
     def form_valid(self, form):
         comment = form.save(commit=False)
         comment.event = self.object
@@ -104,25 +97,6 @@ class EventAddView(CreateView):
     model = Event
     template_name = "feed/event_add.html"
     form_class = EventAddForm
-
-    # fields = [
-    #     "title",
-    #     "content",
-    #     "direction",
-    #     "datetime_of_event",
-    #     "cost_of_entry",
-    #     "image_profile",
-    # ]
-
-    # def get_form(self):
-        # add date picker in forms
-        # from django.forms.widgets import SelectDateWidget
-        # form = super(EventAddView, self).get_form()
-        # form.fields['datetime_of_event'].label = 'Fecha de Realización'
-        # form.fields['datetime_of_event'].widget = SelectDateWidget()
-        # form.fields['datetime_of_event'].widget.attrs.update({'class': 'datepicker'})
-
-        # return form
 
     def form_valid(self, form):
         self.object = form.save()

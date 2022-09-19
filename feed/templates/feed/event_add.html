@@ -12,6 +12,9 @@
                 {{ form.cost_of_entry|as_crispy_field  }}
                 {{ form.image_profile|as_crispy_field  }}
 
+                <label for="datetimepicker_addevent" class="requiredField">
+                    Fecha de Realización<span class="asteriskField">*</span>
+                </label>
                 <div class="input-group date" id="datetimepicker_addevent" data-target-input="nearest">
                     {{ form.datetime_of_event }}
                     <div class="input-group-append" data-target="#datetimepicker_addevent" data-toggle="datetimepicker">
@@ -20,9 +23,20 @@
                 </div>
                 <script>
                     $(function () {
-                    $("#datetimepicker_addevent").datetimepicker({
-                        format: 'DD/MM/YYYY HH:mm',
-                    });
+                        $("#datetimepicker_addevent").datetimepicker({
+                            format: 'DD/MM/YYYY HH:mm',
+                            icons: {
+                                time: 'fa fa-clock',
+                                date: 'fa fa-calendar',
+                                up: 'fa fa-angle-up',
+                                down: 'fa fa-angle-down',
+                                previous: 'fa fa-angle-left',
+                                next: 'fa fa-angle-right',
+                                today: 'fa fa-calendar-check-o',
+                                clear: 'fa fa-trash',
+                                close: 'fa fa-times'
+                            },
+                        });
                     });
                 </script>
             </fieldset>
