@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.db import models
 from entrepreneurs.models import Entrepreneur
 from users.models import User
@@ -9,6 +10,7 @@ class Event(models.Model):
     direction = models.TextField(null=False)
     cost_of_entry = models.IntegerField(null=False)
     created_at = models.DateTimeField(auto_now_add=True)
+    datetime_of_event = models.DateTimeField(null=False, default=datetime.now)
     image_profile = models.ImageField(
         default="images/default.jpg", upload_to="images/event_pics"
     )

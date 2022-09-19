@@ -69,7 +69,43 @@ def accept_entrepreneur_petition(request, pk):
 def reject_entrepreneur_petition(request, pk):
     entrepreneur = Entrepreneur.objects.get(pk=pk)
     entrepreneur.status = EntrepreneurStatus.objects.get(description="Rechazado")
-    entrepreneur.save()
+    entrepreneur.number_of_attempts = entrepreneur.number_of_attempts + 1
+    if (
+        entrepreneur.number_of_attempts
+        <= settings.NUMBER_OF_ATTEMPTS_TO_CREATE_ENTREPRENEUR_PROFILE
+    ):
+        entrepreneur.save()
+    else:
+        # Delete entrepreneurship completely
+        Entrepreneur.delete(pk=entrepreneur.pk)
+
+        # Send email noticing the complete delete of the entrepreneur profile
+        current_site = get_current_site(request)
+        mail_subject = "Rafaela Emprende 💡 | Tu emprendimiento ha sido rechazado"
+        message = render_to_string(
+            "entrepreneurs/reject_completely_entrepreneur_petition.html",
+            {
+                "user": entrepreneur.user,
+                "entrepreneur": entrepreneur,
+                "domain": current_site.domain,
+            },
+        )
+        to_email = request.user.email
+
+        send_mail(
+            mail_subject,
+            "",
+            f'"Rafaela Emprende Team" <{settings.EMAIL_HOST_USER}>',
+            [to_email],
+            fail_silently=True,
+            html_message=message,
+        )
+
+        messages.info(
+            request,
+            f"El emprendedor {entrepreneur.entrepreneurship_email} ha sido rechazado completamente por pasar el límite de intentos de verificación",
+        )
+
     try:
         current_site = get_current_site(request)
         mail_subject = "Rafaela Emprende 💡 | Tu emprendimiento ha sido rechazado"
@@ -285,6 +321,10 @@ def entrepreneur_update_view(request, pk):
             u_form.save()
             e_form.save()
             messages.success(request, f"Su cuenta ha sido actualizada!")
+
+            if (entrepreneur_selected.status.description == "Rechazado"):
+                entrepreneur_selected.status = EntrepreneurStatus.objects.get(description="Pendiente")
+
             return redirect("profile")
 
     else:

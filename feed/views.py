@@ -55,6 +55,7 @@ class EventDisplay(DetailView):
             )
         except Exception as e:
             entrepreneur_already_participates = None
+
         context["entrepreneur_already_participates"] = (
             entrepreneur_already_participates is not None
         )
@@ -106,6 +107,7 @@ class EventAddView(CreateView):
         "title",
         "content",
         "direction",
+        "datetime_of_event",
         "cost_of_entry",
         "image_profile",
     ]

@@ -18,7 +18,6 @@ class EntrepreneurCategory(models.Model):
     def __str__(self):
         return self.description
 
-
 class Entrepreneur(models.Model):
     user = models.OneToOneField(User, blank=True, null=True, on_delete=models.CASCADE)
     entrepreneurship_name = models.CharField(max_length=100)
@@ -34,16 +33,7 @@ class Entrepreneur(models.Model):
     category = models.ForeignKey(
         "EntrepreneurCategory", null=False, blank=False, on_delete=models.PROTECT
     )
+    number_of_attempts = models.IntegerField(null=False, default=0)
 
     def __str__(self):
         return f"User.id: {self.user.id} - email: {self.user.email}"
-
-    # def save(self, *args, **kwargs):
-    #     super().save(*args, **kwargs)
-
-    #     img = Image.open(self.image_profile.path)
-
-    #     if img.height > 300 or img.width > 300:
-    #         output_size = (300, 300)
-    #         img.thumbnail(output_size)
-    #         img.save(self.image_profile.path)

@@ -66,6 +66,10 @@
                     </div>
                     <div class="col-10">
                         <h5 class="article-title">
+                            <a href="{% url 'event-detail' event_petition.event.pk %}">
+                                {{ event_petition.event.title }}
+                            </a>
+                            • 
                             <a href="{% url 'entrepreneur-detail' event_petition.entrepreneur.pk %}">
                                 {{ event_petition.entrepreneur.entrepreneurship_name }}
                             </a>

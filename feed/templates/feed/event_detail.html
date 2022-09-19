@@ -4,7 +4,7 @@
     <article class="media content-section row">
         <div class="media-body col-12">
             <div class="article-metadata">
-                <small class="text-muted">Creado hace {{ user.date_joined|timesince }}</small>
+                <small class="text-muted">Creado hace {{ event.created_at|timesince }}</small>
             </div>
             <div class="d-flex justify-content-center align-items-center mt-4">
                 <img class="rounded-circle"
@@ -17,9 +17,10 @@
                 <p class="text-secondary"><b>Título:</b> {{ event.title }}</p>
                 <p class="text-secondary"><b>Descripción:</b> {{ event.content }}</p>
                 <p class="text-secondary"><b>Dirección:</b> {{ event.direction }}</p>
-                <p class="text-secondary"><b>Costo de Entrada:</b> {{ event.cost_of_entry }}</p>
+                <p class="text-secondary"><b>Fecha de realización:</b> {{ event.datetime_of_event }}</p>
+                <p class="text-secondary"><b>Costo de Entrada:</b> ${{ event.cost_of_entry }}</p>
             </p>
-            {% if user.entrepreneur and user.entrepreneur.status == "Activo" and not entrepreneur_already_participates%}
+            {% if user.entrepreneur and user.entrepreneur.status.description == "Activo" and not entrepreneur_already_participates%}
                 <div class="d-flex justify-content-center">
                     <a class="btn btn-dark mt-2 nav-item nav-link d-inline-block" href="{% url 'entrepreneur-make-event-petition' event.pk %}" role="button">
                         ¡Quiero Participar!
