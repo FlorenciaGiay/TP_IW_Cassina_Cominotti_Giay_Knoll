@@ -5,7 +5,7 @@
       <div class="media">
         <div class="media-body">
           <h2 class="account-heading">{{ user.username }}</h2>
-          <p class="text-secondary">{{ user.email }}</p>
+          <p class="text-primary">{{ user.email }}</p>
         </div>
       </div>
       <div>
@@ -19,15 +19,15 @@
             </div>
             <div class="media-body">
               <h2>Perfil Emprendedor</h2>
-              <p class="text-secondary">
+              <p>
                 <a class="mr-2" href="{% url 'entrepreneur-detail' entrepreneur.id %}">@{{ entrepreneur.entrepreneurship_name }}</a> 
                 • 
                 <span class="badge" style="color:white; background-color: {{ entrepreneur.category.color }}">{{ entrepreneur.category.description }}</span>
                 <span class="badge" style="color:white; background-color: {{ entrepreneur.status.color }}">Estado: {{ entrepreneur.status.description }}</span>
               </p>
-              <p class="text-secondary">Email del emprendimiento: {{ entrepreneur.entrepreneurship_email }}</p>
-              <p class="text-secondary">Teléfono del emprendimiento: {{ entrepreneur.phone_number }}</p>
-              <p class="text-secondary">Descripción: {{ entrepreneur.description }}</p>
+              <p>Email del emprendimiento: {{ entrepreneur.entrepreneurship_email }}</p>
+              <p>Teléfono del emprendimiento: {{ entrepreneur.phone_number }}</p>
+              <p>Descripción: {{ entrepreneur.description }}</p>
             </div>
             
             <div id="entrepreneurPhotosCarousel" class="carousel slide" data-ride="carousel">

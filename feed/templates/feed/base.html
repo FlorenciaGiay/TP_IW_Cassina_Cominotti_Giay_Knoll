@@ -14,9 +14,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
     <!-- Font Awesome -->
     <script src="{% static 'fontawesomefree/js/all.min.js' %}"></script>
 
@@ -27,7 +24,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/css/tempusdominus-bootstrap-4.min.css" integrity="sha256-XPTBwC3SBoWHSmKasAk01c08M6sIA5gF5+sRxqak2Qs=" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/js/tempusdominus-bootstrap-4.min.js" integrity="sha256-z0oKYg6xiLq3yJGsp/LsY9XykbweQlHl42jHv2XTBz4=" crossorigin="anonymous"></script>
 
+    <!-- My CSS -->
     <link rel="stylesheet" type="text/css" href="{% static 'feed/main.css' %}">
+
+    <!-- Bootstrap CSS Theme -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" >
 
     {% if title %}
         <title>Rafaela Emprende - {{ title }}</title>
@@ -37,7 +38,7 @@
 </head>
 <body>
     <header class="site-header">
-      <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+      <nav class="navbar navbar-expand-md navbar-dark bg-primary fixed-top">
         <div class="container">
           <a class="navbar-brand mr-4 d-flex align-items-center" href="{% url 'feed-home' %}">
             <img src="https://rafaela-emprende-logos-prod.s3.amazonaws.com/Rafaela_Emprende_Logo_Small_Slow.gif" 
@@ -89,9 +90,11 @@
         </div>
       </nav>
     </header>
-    <main role="main" class="container" style="min-height:90vh;">
-      <div class="row">
-        <div class="col-md-8 mx-auto">
+    <main role="main" 
+        class="{% if request.resolver_match.url_name == 'feed-home' %} container-fluid {% else %} container {% endif %}" 
+        style="min-height:90vh; {% if request.resolver_match.url_name != 'feed-home' %} margin-top:10vh; {% endif %}">
+      <div class="row" style="{% if request.resolver_match.url_name == 'feed-home' %} height:100vh; {% endif %}">
+        <div class="{% if request.resolver_match.url_name == 'feed-home' %} col-12 m-0 p-0 {% else %} col-md-8 mx-auto {% endif %}">
           {% if messages %}
             {% for message in messages %}
               <div class="alert alert-{{ message.tags }} alert-dismissable fade show">
@@ -104,7 +107,7 @@
         </div>
       </div>
     </main>
-    <footer class="bg-dark text-center text-white mt-5">
+    <footer class="bg-dark text-center text-white">
       <div class="container p-4">
         <section>
           <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button">
@@ -126,7 +129,7 @@
       </div>
       <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
         © 2022 Copyright 
-        <a class="text-white" href="https://mdbootstrap.com/">Rafaela Emprende</a>
+        <a class="text-white" href="#">Rafaela Emprende</a>
       </div>
     </footer>
   </body>

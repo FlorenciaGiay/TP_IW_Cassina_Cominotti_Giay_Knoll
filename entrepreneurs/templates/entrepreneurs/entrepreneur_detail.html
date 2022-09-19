@@ -17,10 +17,10 @@
                 <a class="mr-2" href="{% url 'entrepreneur-detail' entrepreneur.id %}">@{{ entrepreneur.entrepreneurship_name }}</a> 
                 <span class="badge" style="color:white; background-color: {{ entrepreneur.category.color }}">{{ entrepreneur.category.description }}</span>
             </div>
-            <p class="text-secondary mt-5">
-                <p class="text-secondary"><b>Email del emprendimiento:</b> {{ entrepreneur.entrepreneurship_email }}</p>
-                <p class="text-secondary"><b>Teléfono del emprendimiento:</b> {{ entrepreneur.phone_number }}</p>
-                <p class="text-secondary"><b>Descripción:</b> {{ entrepreneur.description }}</p>
+            <p class="mt-5">
+                <p><b>Email del emprendimiento:</b> {{ entrepreneur.entrepreneurship_email }}</p>
+                <p><b>Teléfono del emprendimiento:</b> {{ entrepreneur.phone_number }}</p>
+                <p><b>Descripción:</b> {{ entrepreneur.description }}</p>
             </p>
         </div>
         <div class="col-12 px-5">

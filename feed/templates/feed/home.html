@@ -1,17 +1,37 @@
 {% extends "feed/base.html" %}
 {% block content %}
   {% load humanize %}
-  <h1 style="text-align:center;">¡Bienvenidos a Rafaela Emprende!</h1>
-    <h4 style="text-align:center;">Este es un sitio en el que podrán conocer eventos y emprendedores de Rafaela y ciudades aledañas.</h4>
-    <ul>
-      <li>
-        Desde la sección Emprendedores podrán navegar buscando perfiles de emprendedores y/o emprendimientos, filtrando por nombres.
-      </li>
-      <li>
-        Desde la sección Eventos podrán acceder a toda la información de los eventos sobre las ferias que se irán subiendo a medida que la Municipalidad los va organizando.
-      </li>
-      <li>
-        Desde la opción Perfil de Emprendedor, podrán crearse su perfil de emprendedor, adjuntando toda la información necesaria. 
-      </li>
-    </ul>
+  <div style="height:100vh">
+    <div
+      id="intro-example"
+      class="p-5 text-center bg-image d-flex justify-content-center"
+    >
+      <div style="position: relative; bottom: -50%; z-index: 100;">
+        <div class="d-flex justify-content-center align-items-center h-100">
+          <div class="text-dark">
+            <h1 class="mb-3">Bienvenido a 
+              <b>
+                <span style="color:#56cc9d; text-shadow: 1px 0 #fff, -1px 0 #fff, 0 1px #fff, 0 -1px #fff,
+                1px 1px #fff, -1px -1px #fff, 1px -1px #fff, -1px 1px #fff;">
+                  Rafaela Emprende
+                </span>
+                {% if not user.is_anonymous %} 
+                  {{ user.username }}!
+                {% endif %}
+              </b>
+            </h1>
+            <h5 class="mb-4">Este es un sitio en el que podrán conocer eventos y emprendedores de <br> Rafaela y ciudades aledañas.</h5>
+
+            {% if not user.is_anonymous %}
+              <a class="btn btn-primary btn-lg m-2" href="{% url 'events' %}" role="button">Ver Eventos</a>
+            {% else %}
+              <a class="btn btn-primary btn-lg m-2" href="{% url 'register' %}" role="button">Registrarse</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="intro-example-after">
+    </div>
+  </div>
 {% endblock content %}

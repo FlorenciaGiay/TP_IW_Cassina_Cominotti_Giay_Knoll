@@ -4,10 +4,26 @@ body {
   margin-top: 5rem;
 }
 
+#intro-example {
+  position: relative;
+  background: url('https://bootstrapmade.com/demo/templates/BizLand/assets/img/hero-bg.jpg') no-repeat;
+  height:50vh;
+}
+
+#intro-example-after {
+  background: url('https://bootstrapmade.com/demo/templates/BizLand/assets/img/hero-bg.jpg') no-repeat;
+  height:50vh;
+  transform:scaleY(-1)
+}
+
 .carousel-indicators li {
   cursor: pointer;
 }
 
+.fa-angle-down,
+.fa-angle-up {
+  color: #56cc9d;
+}
 /* width */
 ::-webkit-scrollbar {
   width: 10px;
