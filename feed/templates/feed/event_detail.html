@@ -27,25 +27,28 @@
                     </a>
                 </div>
             {% endif %}
-            <h5 class="mt-4">Participantes</h5>
-            <ul class="list-group row">
-                {% for participant_petition in participant_petitions %}
-                    <li class="list-group-item col-12">
-                        <img class="rounded-circle mr-4"
-                                src="{{ participant_petition.entrepreneur.image_profile.url }}"
-                                width="30px"
-                                height="30px"
-                                alt="Participant profile image">
-                        <a href="{% url 'entrepreneur-detail' participant_petition.entrepreneur.pk %}">
-                            {{ participant_petition.entrepreneur.entrepreneurship_name }}
-                        </a>
-                        • 
-                        <small>
-                            <span class="badge" style="color:white; background-color: {{ participant_petition.entrepreneur.category.color }}">{{ participant_petition.entrepreneur.category.description }}</span>
-                        </small>
-                    </li>
-                {% endfor %}
-            </ul>
+            
+            {% if participant_petitions %}
+                <h5 class="mt-4">Participantes</h5>
+                <ul class="list-group row">
+                    {% for participant_petition in participant_petitions %}
+                        <li class="list-group-item col-12">
+                            <img class="rounded-circle mr-4"
+                                    src="{{ participant_petition.entrepreneur.image_profile.url }}"
+                                    width="30px"
+                                    height="30px"
+                                    alt="Participant profile image">
+                            <a href="{% url 'entrepreneur-detail' participant_petition.entrepreneur.pk %}">
+                                {{ participant_petition.entrepreneur.entrepreneurship_name }}
+                            </a>
+                            • 
+                            <small>
+                                <span class="badge" style="color:white; background-color: {{ participant_petition.entrepreneur.category.color }}">{{ participant_petition.entrepreneur.category.description }}</span>
+                            </small>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
         </div>
     </article>
     <div>
