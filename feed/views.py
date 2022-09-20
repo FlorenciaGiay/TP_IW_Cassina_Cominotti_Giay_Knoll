@@ -46,17 +46,25 @@ class EventDisplay(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["form"] = CommentForm()
+        selected_event = kwargs.get("object")
         try:
-            selected_event = kwargs.get("object")
             entrepreneur_already_participates = EventEntrepreneur.objects.get(
                 event=selected_event, entrepreneur=self.request.user.entrepreneur
             )
         except Exception as e:
             entrepreneur_already_participates = None
 
+        try:
+            participant_petitions = EventEntrepreneur.objects.filter(
+                event=selected_event, status__description="Aprobado"
+            )
+        except Exception as e:
+            participant_petitions = None
+
         context["entrepreneur_already_participates"] = (
             entrepreneur_already_participates is not None
         )
+        context["participant_petitions"] = participant_petitions
         return context
 
 
