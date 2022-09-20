@@ -145,7 +145,6 @@ def reject_entrepreneur_petition(request, pk):
 def entrepreneur_make_event_petition(request, event_pk):
     selected_entrepreneur = Entrepreneur.objects.get(user=request.user)
     try:
-        EventEntrepreneur.objects.all().delete()
         selected_event = Event.objects.get(pk=event_pk)
         entrepreneur_already_participates = EventEntrepreneur.objects.get(
             event=selected_event, entrepreneur=selected_entrepreneur
@@ -200,7 +199,6 @@ def entrepreneur_make_event_petition(request, event_pk):
     except Exception as e:
         messages.error(request, f"Falla al enviar petición para participar en evento.")
 
-    # return reverse("event-detail", kwargs={"pk": selected_event.pk})
     return HttpResponseRedirect(
         reverse("event-detail", kwargs={"pk": selected_event.pk})
     )
