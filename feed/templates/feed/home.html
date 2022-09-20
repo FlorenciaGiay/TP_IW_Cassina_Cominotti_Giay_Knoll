@@ -23,9 +23,12 @@
             <h5 class="mb-4">Este es un sitio en el que podrán conocer eventos y emprendedores de <br> Rafaela y ciudades aledañas.</h5>
 
             {% if not user.is_anonymous %}
-              <a class="btn btn-primary btn-lg m-2" href="{% url 'events' %}" role="button">Ver Eventos</a>
+              <a class="btn btn-primary btn-lg m-2" href="{% url 'entrepreneurs' %}" role="button">Emprendedores</a><br>
+              <a class="btn btn-primary btn-lg m-2" href="{% url 'events' %}" role="button">Eventos</a><br>
             {% else %}
-              <a class="btn btn-primary btn-lg m-2" href="{% url 'register' %}" role="button">Registrarse</a>
+              <a class="btn btn-primary btn-lg m-2" href="{% url 'register' %}" role="button">Registrarse</a><br>
+              <a class="btn btn-primary btn-lg m-2" href="{% url 'entrepreneurs' %}" role="button">Emprendedores</a><br>
+              <a class="btn btn-primary btn-lg m-2" href="{% url 'events' %}" role="button">Eventos</a><br>
             {% endif %}
           </div>
         </div>

@@ -24,7 +24,6 @@ class EventAddForm(forms.ModelForm):
             "content",
             "direction",
             "cost_of_entry",
-            "image_profile",
             "datetime_of_event",
         ]
 

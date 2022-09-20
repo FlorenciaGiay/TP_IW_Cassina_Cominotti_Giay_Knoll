@@ -24,7 +24,7 @@
             </p>
         </div>
         <div class="col-12 px-5">
-            <div id="entrepreneurPhotosCarousel" class="carousel slide" data-ride="carousel">
+            <div id="entrepreneurPhotosCarousel" class="carousel slide" data-interval="5000" data-touch="true" data-ride="carousel">
                 <ol class="carousel-indicators">
                 {% for photo in entrepreneur.photos.all %}
                     <li data-target="#entrepreneurPhotosCarousel" data-slide-to="{{forloop.counter0 }}" class="{% if forloop.first%}active{%endif%}"></li>
