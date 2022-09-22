@@ -1,0 +1,6 @@
+{{ object.title }}
+{{ object.content }}
+{{ object.direction }}
+{{ object.cost_of_entry }}
+{{ object.created_at }}
+{{ object.datetime_of_event }}

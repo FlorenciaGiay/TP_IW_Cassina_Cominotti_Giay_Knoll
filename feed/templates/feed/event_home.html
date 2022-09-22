@@ -10,7 +10,7 @@
         {% csrf_token %}
         <fieldset class="form-group">
             <legend class="border-bottom mb-4">Informacion del Evento</legend>
-                {{ filter_form.title|as_crispy_field  }}
+                {{ filter_form.text_search|as_crispy_field  }}
                 {{ filter_form.cost_of_entry|as_crispy_field  }}
 
                 <label for="datetimepicker_filterevent_fromevent" class="requiredField">
@@ -118,7 +118,7 @@
         </li>
 
         {% empty %}
-            <p>No hay Eventos para mostrar.</p>
+            <p class="text-center"><b>No hay Eventos para mostrar.</b></p>
 
         {% endfor %}
     </ul>
@@ -133,8 +133,6 @@
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a {% if paginate_by == 2 %} selected {% endif %}   class="dropdown-item" href="?{% param_replace paginate_by=2 %}">2</a>
-                    <a {% if paginate_by == 3 %} selected {% endif %}   class="dropdown-item" href="?{% param_replace paginate_by=3 %}">3</a>
-                    <a {% if paginate_by == 4 %} selected {% endif %}   class="dropdown-item" href="?{% param_replace paginate_by=4 %}">4</a>
                     <a {% if paginate_by == 5 %} selected {% endif %}   class="dropdown-item" href="?{% param_replace paginate_by=5 %}">5</a>
                     <a {% if paginate_by == 10 %} selected {% endif %}  class="dropdown-item" href="?{% param_replace paginate_by=10 %}">10</a>
                     <a {% if paginate_by == 25 %} selected {% endif %}  class="dropdown-item" href="?{% param_replace paginate_by=25 %}">25</a>

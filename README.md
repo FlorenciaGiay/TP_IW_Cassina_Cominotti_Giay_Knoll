@@ -95,7 +95,16 @@ Password (again): ucse$admin$2022
 Superuser created successfully.
 ```
 
-5. Final checks
+5. Restart your Search Backend
+- For develop we use ```Haystack + Whoosh```
+- For production we use ```Haystack + Elasticsearch```
+
+So delete all indexes and update them using:
+```console 
+$ python manage.py rebuild_index
+```
+
+6. Final checks
 ```console 
 $ python manage.py runserver
 ```

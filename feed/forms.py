@@ -3,7 +3,7 @@ from .models import Event, Comment
 
 
 class EventFilterForm(forms.ModelForm):
-    title = forms.CharField(required=False)
+    text_search = forms.CharField(required=False, label="Búsqueda por texto")
     cost_of_entry = forms.IntegerField(required=False)
     datetime_from_event = forms.DateTimeField(
         label="Fecha desde",
@@ -31,7 +31,7 @@ class EventFilterForm(forms.ModelForm):
     class Meta:
         model = Event
         fields = [
-            "title",
+            "text_search",
             "cost_of_entry",
             "datetime_from_event",
             "datetime_to_event",

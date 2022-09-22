@@ -17,6 +17,7 @@ from django.db.models import Q
 from django.conf import settings
 from django.utils.timezone import make_aware
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from haystack.query import SearchQuerySet
 
 
 def home(request):
@@ -53,12 +54,12 @@ class EventListView(ListView):
         filter_form = self.form_class(request.GET)
 
         # Get the parameters from the body of the request
-        title = request.GET.get("title")
+        text_search = request.GET.get("text_search")
         cost_of_entry = request.GET.get("cost_of_entry")
         datetime_from_event = request.GET.get("datetime_from_event")
         datetime_to_event = request.GET.get("datetime_to_event")
         values = {
-            "title": title,
+            "text_search": text_search,
             "cost_of_entry": cost_of_entry,
             "datetime_from_event": datetime_from_event,
             "datetime_to_event": datetime_to_event,
@@ -72,6 +73,9 @@ class EventListView(ListView):
                     continue
 
                 q = Q(**{"%s" % key: value})
+
+                if key == "text_search":
+                    continue
 
                 if key == "datetime_from_event":
                     q = Q(
@@ -89,12 +93,22 @@ class EventListView(ListView):
                     Qr = q
 
         if Qr:
-            event_list = Event.objects.filter(Qr).order_by("datetime_of_event")
+            if text_search:
+                event_list = SearchQuerySet().filter(content=text_search).filter(Qr).order_by("datetime_of_event")
+            else:
+                event_list = Event.objects.filter(Qr).order_by("datetime_of_event")
         else:
-            event_list = Event.objects.exclude(
-                datetime_of_event__lt=datetime.now()
-            ).order_by("datetime_of_event")
+            if text_search:
+                event_list = SearchQuerySet().filter(content=text_search).exclude(
+                    datetime_of_event__lt=datetime.now()
+                ).order_by("datetime_of_event")
+            else:
+                event_list = Event.objects.exclude(
+                    datetime_of_event__lt=datetime.now()
+                ).order_by("datetime_of_event")
 
+        if text_search and event_list.count() == 0:
+            event_list = []
         ########################### Pagination ###########################
         paginator = Paginator(event_list, request.GET.get("paginate_by", 3))
         page = request.GET.get("page")

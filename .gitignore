@@ -9,6 +9,7 @@ __pycache__
 db.sqlite3
 media
 .vscode
+whoosh_index
 
 # Backup files # 
 *.bak 

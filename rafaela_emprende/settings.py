@@ -43,11 +43,7 @@ AUTH_USER_MODEL = "users.User"
 # Application definition
 
 INSTALLED_APPS = [
-    "feed.apps.FeedConfig",
-    "users.apps.UsersConfig",
-    "entrepreneurs.apps.EntrepreneursConfig",
-    "crispy_forms",
-    "fontawesomefree",
+    # Django Apps
     "django_filters",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -57,7 +53,14 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.humanize",
     "django_extensions",
+    "fontawesomefree",
+    "crispy_forms",
     "storages",
+    "haystack",
+    # My Apps
+    "feed.apps.FeedConfig",
+    "users.apps.UsersConfig",
+    "entrepreneurs.apps.EntrepreneursConfig",
 ]
 
 MIDDLEWARE = [
@@ -100,7 +103,20 @@ DATABASES = {
         "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
     }
 }
-
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
+        'PATH': os.path.join(BASE_DIR,'whoosh_index'),
+    },
+}
+if os.environ.get('SEARCHBOX_URL'):
+    HAYSTACK_CONNECTIONS = {
+        'default': {
+            'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
+            'URL': os.environ.get('SEARCHBOX_URL'),
+            'INDEX_NAME': 'documents',
+        },
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
