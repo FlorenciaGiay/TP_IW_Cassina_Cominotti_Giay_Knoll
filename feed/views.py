@@ -18,6 +18,7 @@ from django.conf import settings
 from django.utils.timezone import make_aware
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
+
 def home(request):
     return render(request, "feed/home.html")
 
@@ -41,6 +42,7 @@ def petitions(request):
 #     model = Event
 #     filterset_class = EventFilter
 
+
 class EventListView(ListView):
     paginate_by = 2
     template_name = "feed/event_home.html"
@@ -59,37 +61,43 @@ class EventListView(ListView):
             "title": title,
             "cost_of_entry": cost_of_entry,
             "datetime_from_event": datetime_from_event,
-            "datetime_to_event": datetime_to_event
+            "datetime_to_event": datetime_to_event,
         }
 
         # Create the query to make to the database
         Qr = None
         if len(values) != 0:
             for key, value in values.items():
-                if value == '' or value is None:
+                if value == "" or value is None:
                     continue
 
-                q = Q(**{"%s" % key: value })
+                q = Q(**{"%s" % key: value})
 
                 if key == "datetime_from_event":
-                    q = Q(datetime_of_event__gt=datetime.strptime(value, "%d/%m/%Y %H:%M"))
+                    q = Q(
+                        datetime_of_event__gt=datetime.strptime(value, "%d/%m/%Y %H:%M")
+                    )
 
                 if key == "datetime_to_event":
-                    q = Q(datetime_of_event__lt=datetime.strptime(value, "%d/%m/%Y %H:%M"))
+                    q = Q(
+                        datetime_of_event__lt=datetime.strptime(value, "%d/%m/%Y %H:%M")
+                    )
 
                 if Qr:
-                    Qr = Qr & q # or | for filtering
+                    Qr = Qr & q  # or | for filtering
                 else:
                     Qr = q
 
         if Qr:
             event_list = Event.objects.filter(Qr).order_by("datetime_of_event")
         else:
-            event_list = Event.objects.exclude(datetime_of_event__lt=datetime.now()).order_by("datetime_of_event")
+            event_list = Event.objects.exclude(
+                datetime_of_event__lt=datetime.now()
+            ).order_by("datetime_of_event")
 
         ########################### Pagination ###########################
-        paginator = Paginator(event_list, request.GET.get('paginate_by', 3))
-        page = request.GET.get('page')
+        paginator = Paginator(event_list, request.GET.get("paginate_by", 3))
+        page = request.GET.get("page")
 
         try:
             paginated = paginator.page(page)
@@ -101,7 +109,18 @@ class EventListView(ListView):
 
         settings.TIME_ZONE
         datetime_now = make_aware(datetime.now())
-        return render(request, self.template_name, {'page_obj':paginated, 'paginate_by': request.GET.get('paginate_by', 3), 'filter_form': filter_form, "event_list": paginated.object_list, "datetime_now": datetime_now})
+        return render(
+            request,
+            self.template_name,
+            {
+                "page_obj": paginated,
+                "paginate_by": request.GET.get("paginate_by", 3),
+                "filter_form": filter_form,
+                "event_list": paginated.object_list,
+                "datetime_now": datetime_now,
+            },
+        )
+
 
 class EventDisplay(DetailView):
     model = Event

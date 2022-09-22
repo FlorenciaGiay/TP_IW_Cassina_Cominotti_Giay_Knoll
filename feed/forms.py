@@ -14,7 +14,7 @@ class EventFilterForm(forms.ModelForm):
                 "data-target": "#datetimepicker_filterevent_fromevent",
             }
         ),
-        required=False
+        required=False,
     )
     datetime_to_event = forms.DateTimeField(
         label="Fecha hasta",
@@ -25,7 +25,7 @@ class EventFilterForm(forms.ModelForm):
                 "data-target": "#datetimepicker_filterevent_toevent",
             }
         ),
-        required=False
+        required=False,
     )
 
     class Meta:
@@ -36,6 +36,7 @@ class EventFilterForm(forms.ModelForm):
             "datetime_from_event",
             "datetime_to_event",
         ]
+
 
 class EventAddForm(forms.ModelForm):
     datetime_of_event = forms.DateTimeField(
