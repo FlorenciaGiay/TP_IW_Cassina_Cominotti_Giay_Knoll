@@ -47,11 +47,6 @@ class EventListView(ListView):
     model = Event
     form_class = EventFilterForm
 
-    # def post(self, request, *args, **kwargs):
-    #     # self.object = self.get_object()
-    #     context = self.get_contex_data(**kwargs)
-    #     return super().post(self.request, self.template_name, context=context, *args, **kwargs)
-
     def get(self, request, *args, **kwargs):
         filter_form = self.form_class(request.GET)
 
@@ -68,14 +63,6 @@ class EventListView(ListView):
         }
 
         # Create the query to make to the database
-        query = []
-        empty_query = True
-        # if (values):
-        #     queries = [Q(**{key: value}) for key, value in values]
-
-        # Turn list of values into list of Q objects
-        # queries = [Q(key=value) for value in values]
-
         Qr = None
         if len(values) != 0:
             for key, value in values.items():
@@ -95,18 +82,10 @@ class EventListView(ListView):
                 else:
                     Qr = q
 
-        # if title:
-        #     query += title if empty_query else ("," + title)
-
-        # if datetime_from_event:
-        #     query += datetime_from_event if empty_query else ("," + datetime_from_event)
-        
         if Qr:
             event_list = Event.objects.filter(Qr).order_by("datetime_of_event")
         else:
             event_list = Event.objects.exclude(datetime_of_event__lt=datetime.now()).order_by("datetime_of_event")
-        # for event in event_list:
-        #         event["is_past_event"] = event.datetime_of_event < datetime.now()
 
         ########################### Pagination ###########################
         paginator = Paginator(event_list, request.GET.get('paginate_by', 3))
@@ -123,91 +102,6 @@ class EventListView(ListView):
         settings.TIME_ZONE
         datetime_now = make_aware(datetime.now())
         return render(request, self.template_name, {'page_obj':paginated, 'paginate_by': request.GET.get('paginate_by', 3), 'filter_form': filter_form, "event_list": paginated.object_list, "datetime_now": datetime_now})
-
-    def post(self, request, *args, **kwargs):
-        filter_form = self.form_class(request.POST)
-        # Get the parameters from the body of the request
-        title = request.POST["title"]
-        cost_of_entry = request.POST["cost_of_entry"]
-        datetime_from_event = request.POST["datetime_from_event"]
-        datetime_to_event = request.POST["datetime_to_event"]
-        values = {
-            "title": title,
-            "cost_of_entry": cost_of_entry,
-            "datetime_from_event": datetime_from_event,
-            "datetime_to_event": datetime_to_event
-        }
-
-        # Create the query to make to the database
-        query = []
-        empty_query = True
-        # if (values):
-        #     queries = [Q(**{key: value}) for key, value in values]
-
-        # Turn list of values into list of Q objects
-        # queries = [Q(key=value) for value in values]
-
-        Qr = None
-        if len(values) != 0:
-            for key, value in values.items():
-                if value == '' or value is None:
-                    continue
-
-                q = Q("%s=%s" % (key, value))
-
-                if key == "datetime_from_event":
-                    q = Q(datetime_of_event__gt=datetime.strptime(value, "%d/%m/%Y %H:%M"))
-
-                if key == "datetime_to_event":
-                    q = Q(datetime_of_event__lt=datetime.strptime(value, "%d/%m/%Y %H:%M"))
-
-                if Qr:
-                    Qr = Qr & q # or | for filtering
-                else:
-                    Qr = q
-
-        # if title:
-        #     query += title if empty_query else ("," + title)
-
-        # if datetime_from_event:
-        #     query += datetime_from_event if empty_query else ("," + datetime_from_event)
-        
-        if Qr:
-            event_list = Event.objects.filter(Qr).order_by("datetime_of_event")
-        else:
-            event_list = Event.objects.exclude(datetime_of_event__lt=datetime.now()).order_by("datetime_of_event")
-        # for event in event_list:
-        #         event["is_past_event"] = event.datetime_of_event < datetime.now()
-
-        ########################### Pagination ###########################
-        paginator = Paginator(event_list, self.paginate_by)
-        page = request.GET.get('page')
-
-        try:
-            paginated = paginator.page(page)
-        except PageNotAnInteger:
-            paginated = paginator.page(1)
-        except EmptyPage:
-            paginated = paginator.page(paginator.num_pages)
-        ########################### Pagination ###########################
-
-        settings.TIME_ZONE
-        datetime_now = make_aware(datetime.now())
-        return render(request, self.template_name, {'page_obj':paginated, 'paginate_by':self.paginate_by, 'filter_form': filter_form, "event_list": paginated.object_list, "datetime_now": datetime_now})
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        # context["filter_form"] = self.form_class()
-        # context["event_list"] = EventFilterForm()
-        return context
-
-    def form_valid(self, form):
-        comment = form.save(commit=False)
-        return super().form_valid(form)
-
-    # def get_success_url(self):
-    #     post = self.get_object()
-    #     return reverse("event-detail", kwargs={"pk": post.pk}) + "#comments"
 
 class EventDisplay(DetailView):
     model = Event

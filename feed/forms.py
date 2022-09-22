@@ -1,8 +1,5 @@
 from django import forms
 from .models import Event, Comment
-from django.forms import ModelForm
-from django.core.exceptions import ValidationError
-from django.forms import DateTimeInput
 
 
 class EventFilterForm(forms.ModelForm):
