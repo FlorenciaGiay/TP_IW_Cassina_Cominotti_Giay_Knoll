@@ -2,14 +2,73 @@
 {% block content %}
 {% load crispy_forms_tags %}
 {% load humanize %}
+{% load param_replace %}
+
 <article class="content-section">
     <h3>Eventos</h3>
-    <form action="" method="get">
+    <form action="" method="GET">
         {% csrf_token %}
         <fieldset class="form-group">
-            {{ filter.form|crispy  }}
+            <legend class="border-bottom mb-4">Informacion del Evento</legend>
+                {{ filter_form.title|as_crispy_field  }}
+                {{ filter_form.cost_of_entry|as_crispy_field  }}
 
-            <button type="submit" class="btn btn-primary mt-3">Buscar</button>
+                <label for="datetimepicker_filterevent_fromevent" class="requiredField">
+                    Desde
+                </label>
+                <div class="input-group date" id="datetimepicker_filterevent_fromevent" data-target-input="nearest">
+                    {{ filter_form.datetime_from_event }}
+                    <div class="input-group-append" data-target="#datetimepicker_filterevent_fromevent" data-toggle="datetimepicker">
+                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                    </div>
+                </div>
+
+                <label for="datetimepicker_filterevent_toevent" class="requiredField">
+                    Hasta
+                </label>
+                <div class="input-group date" id="datetimepicker_filterevent_toevent" data-target-input="nearest">
+                    {{ filter_form.datetime_to_event }}
+                    <div class="input-group-append" data-target="#datetimepicker_filterevent_toevent" data-toggle="datetimepicker">
+                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                    </div>
+                </div>
+
+                <script>
+                    $(function () {
+                        $("#datetimepicker_filterevent_fromevent").datetimepicker({
+                            format: 'DD/MM/YYYY HH:mm',
+                            icons: {
+                                time: 'fa fa-clock',
+                                date: 'fa fa-calendar',
+                                up: 'fa fa-angle-up',
+                                down: 'fa fa-angle-down',
+                                previous: 'fa fa-angle-left',
+                                next: 'fa fa-angle-right',
+                                today: 'fa fa-calendar-check-o',
+                                clear: 'fa fa-trash',
+                                close: 'fa fa-times'
+                            },
+                        });
+                        $("#datetimepicker_filterevent_toevent").datetimepicker({
+                            format: 'DD/MM/YYYY HH:mm',
+                            icons: {
+                                time: 'fa fa-clock',
+                                date: 'fa fa-calendar',
+                                up: 'fa fa-angle-up',
+                                down: 'fa fa-angle-down',
+                                previous: 'fa fa-angle-left',
+                                next: 'fa fa-angle-right',
+                                today: 'fa fa-calendar-check-o',
+                                clear: 'fa fa-trash',
+                                close: 'fa fa-times'
+                            },
+                        });
+                    });
+                </script>
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">Buscar</button>
+            </div>
         </fieldset>
     </form>
     <div class="col-12 d-flex align-items-center justify-content-end">
@@ -40,7 +99,14 @@
                 </div>
                 <div class="col-12 col-md-8 justify-content-center mt-3">
                     <div class="d-flex flex-column text-center">
-                        <h5 class="article-title">{{ event.title }} • <small class="text-muted">{{ event.created_at | timesince }}</small>
+                        <h5 class="article-title">{{ event.title }} 
+                            • <small class="text-muted">
+                                {% if event.datetime_of_event < datetime_now %}
+                                    hace {{ event.datetime_of_event | timesince }} 
+                                {% else %}
+                                    en {{ event.datetime_of_event | timeuntil }} 
+                                {% endif %}
+                            </small>
                             <small>
                                 <span class="badge" style="color:white; background-color: {{ event.category.color }}">{{ event.category.description }}</span>
                             </small>
@@ -57,51 +123,76 @@
         {% endfor %}
     </ul>
 
+
     <!--Pagination-->
-    <nav aria-label="Page navigation example">
-        <ul class="pagination justify-content-center">
-        {% if page_obj.has_previous %}
-            <li class="page-item">
-            <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
-        </li>
-        {% else %}
-            <li class="page-item disabled">
-            <a class="page-link" href="#" tabindex="-1" aria-disabled="True">Previous</a>
-        </li>
-        {% endif %}
+    <div class="row mb-5">
+        <div class="col-12 col-md-4">
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Número de resultados: {{ paginate_by }}
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a {% if paginate_by == 2 %} selected {% endif %}   class="dropdown-item" href="?{% param_replace paginate_by=2 %}">2</a>
+                    <a {% if paginate_by == 3 %} selected {% endif %}   class="dropdown-item" href="?{% param_replace paginate_by=3 %}">3</a>
+                    <a {% if paginate_by == 4 %} selected {% endif %}   class="dropdown-item" href="?{% param_replace paginate_by=4 %}">4</a>
+                    <a {% if paginate_by == 5 %} selected {% endif %}   class="dropdown-item" href="?{% param_replace paginate_by=5 %}">5</a>
+                    <a {% if paginate_by == 10 %} selected {% endif %}  class="dropdown-item" href="?{% param_replace paginate_by=10 %}">10</a>
+                    <a {% if paginate_by == 25 %} selected {% endif %}  class="dropdown-item" href="?{% param_replace paginate_by=25 %}">25</a>
+                    <a {% if paginate_by == 50 %} selected {% endif %}  class="dropdown-item" href="?{% param_replace paginate_by=50 %}">50</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-8"></div>
+    </div>
 
-        {% if page_obj.number|add:'-4' > 1 %}
-            <li class="page-item"><a class="page-link" href="?page={{ page_obj.number|add:'-5' }}">&hellip;</a></li>
-        {% endif %}
+    <div class="row">
+        <div class="col-12">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                    <a class="page-link" href="?{% param_replace page=page_obj.previous_page_number %}">Previous</a>
+                </li>
+                {% else %}
+                    <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1" aria-disabled="True">Previous</a>
+                </li>
+                {% endif %}
 
-        {% for i in page_obj.paginator.page_range %}
-            {% if page_obj.number == i %}
-                <li class="page-item active" aria-current="page">
-            <span class="page-link">
-                {{ i }}
-                <span class="sr-only">(current)</span>
-            </span>
-            </li>
-            {% elif i > page_obj.number|add:'-5' and i < page_obj.number|add:'5' %}
-                <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
-            {% endif %}
-        {% endfor %}
+                {% if page_obj.number|add:'-4' > 1 %}
+                    <li class="page-item"><a class="page-link" href="?{% param_replace page=page_obj.number|add:'-5' %}">&hellip;</a></li>
+                {% endif %}
 
-        {% if page_obj.paginator.num_pages > page_obj.number|add:'4' %}
-        <li class="page-item"><a class="page-link" href="?page={{ page_obj.number|add:'5' }}">&hellip;</a></li>
-        {% endif %}
+                {% for i in page_obj.paginator.page_range %}
+                    {% if page_obj.number == i %}
+                        <li class="page-item active" aria-current="page">
+                    <span class="page-link">
+                        {{ i }}
+                        <span class="sr-only">(current)</span>
+                    </span>
+                    </li>
+                    {% elif i > page_obj.number|add:'-5' and i < page_obj.number|add:'5' %}
+                        <li class="page-item"><a class="page-link" href="?{% param_replace page=i %}">{{ i }}</a></li>
+                    {% endif %}
+                {% endfor %}
 
-        {% if page_obj.has_next %}
-            <li class="page-item">
-            <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
-        </li>
-        {% else %}
-            <li class="page-item disabled">
-            <a class="page-link" href="#" tabindex="-1" aria-disabled="True">Next</a>
-        </li>
-        {% endif %}
-    </ul>
-    </nav>
+                {% if page_obj.paginator.num_pages > page_obj.number|add:'4' %}
+                <li class="page-item"><a class="page-link" href="?{% param_replace page=page_obj.number|add:'5' %}">&hellip;</a></li>
+                {% endif %}
+
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                    <a class="page-link" href="?{% param_replace page=page_obj.next_page_number %}">Next</a>
+                </li>
+                {% else %}
+                    <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1" aria-disabled="True">Next</a>
+                </li>
+                {% endif %}
+            </ul>
+            </nav>
+        </div>
+    </div>
     <!--end of Pagination-->
 </article>
 {% endblock content %}
