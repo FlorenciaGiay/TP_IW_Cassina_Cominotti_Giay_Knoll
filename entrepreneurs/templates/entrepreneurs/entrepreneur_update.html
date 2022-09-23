@@ -30,7 +30,7 @@
                     {% for photo in entrepreneur.photos.all %}
                             <div class="col-12 col-md-3 text-center" id="column_entrepreneur_photo_{{photo.pk}}">
                                 <img id="entrepreneur_photo_{{photo.pk}}" class="rounded w-100" src="{{photo.image.url}}" alt="Foto del emprendedor">
-                                <a name="link_remove_photo" href="">Eliminar <i class="fa fa-close"></i></a>
+                                <a id="{{photo.pk}}" name="link_remove_photo" href="">Eliminar <i class="fa fa-close"></i></a>
                             </div>    
                     {%endfor%}
                 </div>
@@ -53,50 +53,131 @@
 
 
     <script>
-        document.getElementById("baseInputFile").addEventListener("change", function(event){
-            const fileName = event.target.files[0].name;
+        const GET_URL = window.location;
+        const BASE_URL = GET_URL.protocol + "//" + GET_URL.host + "/" + GET_URL.pathname.split('/')[1];
 
-            // TODO: Make request and save file in DB
-            var randLetter = String.fromCharCode(65 + Math.floor(Math.random() * 26));
-            var uniqid = randLetter + Date.now();
+        const ENTREPRENEUR_PHOTO_DELETE_URL = `${BASE_URL}/photo/delete`
+        const ENTREPRENEUR_PHOTO_ADD_URL = `${BASE_URL}/photo/add`
 
-            // add to entrepreneurUploadedPhotos the new photo returned
+        var photoGallery = document.getElementById("entrepreneurUploadedPhotos")
+
+        async function addEntrepreneurPhoto(url, data) {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: data
+            });
+            return response.json();
+        }
+
+        async function deleteEntrepreneurPhoto(url, data) {
+            const response = await fetch(url, {
+                method: 'DELETE',
+                headers: {
+                    'Content-type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                }
+            });
+            return response.json();
+        }
+        
+        document.getElementById("baseInputFile").addEventListener("change", async function(event){
+            let file = event.target.files[0];
+            // No file size means no file.
+            if (file.size === 0) return; // Do nothing.
+            
+            let formData = new FormData();           
+            formData.append("file", file);
+
+            // Make request and save file in DB
+            let response = await addEntrepreneurPhoto(`${ENTREPRENEUR_PHOTO_ADD_URL}/`, formData)
+            newEntrepreneurPhoto = JSON.parse(response.entrepreneurPhoto)[0]
+            console.log(response)
+            console.log(newEntrepreneurPhoto)
+
+            // Add the new photo returned to entrepreneurUploadedPhotos
             var newColumn = document.createElement('div');
             newColumn.setAttribute('class','col-12 col-md-3 text-center');
-            newColumn.setAttribute('id', `column_entrepreneur_photo_${uniqid}`);
+            newColumn.setAttribute('id', `column_entrepreneur_photo_${newEntrepreneurPhoto.pk}`);
 
             var newPhoto = document.createElement('img');
             newPhoto.setAttribute('class','rounded w-100');
-            var url = URL.createObjectURL(event.target.files[0])
-            newPhoto.setAttribute('src', url);
+            //var url = URL.createObjectURL(event.target.files[0])
+            //var url = URL.createObjectURL(newEntrepreneurPhoto.fields.image)
+            newPhoto.setAttribute('src', response.entrepreneurPhotoUrl);
             newPhoto.setAttribute('alt','Foto del emprendedor');
-            newPhoto.setAttribute('id', `entrepreneur_photo_${uniqid}`);
+            newPhoto.setAttribute('id', `entrepreneur_photo_${newEntrepreneurPhoto.pk}`);
 
             var newAnchor = document.createElement('a');
             newAnchor.setAttribute('href','');
+            newAnchor.setAttribute('id', newEntrepreneurPhoto.pk);
             newAnchor.innerHTML = "Eliminar <i class='fa fa-close'></i>";
-            newAnchor.addEventListener("click", function(e){
+            newAnchor.addEventListener("click", async function(e){
                 e.preventDefault();
-                // TODO: Make request and delete file in DB
-                this.parentElement.remove()
+                try {
+                    // Make request and delete file in DB
+                    let response = await deleteEntrepreneurPhoto(`${ENTREPRENEUR_PHOTO_DELETE_URL}/${e.target.id}/`)
+
+                    // Add an alert message for the user
+                    newAlertDiv = document.createElement('div');
+                    newAlertDiv.setAttribute('class','alert alert-primary alert-dismissable fade show w-100');
+                    newAlertDiv.setAttribute('role','alert');
+                    newAlertDiv.innerHTML = `<a href='#'' class='close' data-dismiss='alert' aria-label='close'>&times;</a> ${response.message}`;
+
+                    photoGallery.appendChild(newAlertDiv);
+
+                    // Remove photo from the gallery
+                    this.parentElement.remove()
+                }
+                catch (e) {
+                    newAlertDiv = document.createElement('div');
+                    newAlertDiv.setAttribute('class','alert alert-danger alert-dismissable fade show w-100');
+                    newAlertDiv.setAttribute('role','alert');
+                    newAlertDiv.innerHTML = `<a href='#'' class='close' data-dismiss='alert' aria-label='close'>&times;</a> Hubo un problema al eliminar la foto`;
+
+                    photoGallery.appendChild(newAlertDiv);
+                }
             });
 
             newColumn.appendChild(newPhoto)
             newColumn.appendChild(newAnchor)
 
-            var photoGallery = document.getElementById("entrepreneurUploadedPhotos")
             photoGallery.appendChild(newColumn);
 
             // Then clear the input for upload a new photo
         });
 
+        // Initialize delete button in current displayed photos 
         anchor_tags = document.getElementsByName("link_remove_photo")
         if(anchor_tags.length > 0) {
             anchor_tags.forEach(anchor_tag => {
-                anchor_tag.addEventListener("click", function(e) {
+                anchor_tag.addEventListener("click", async function(e) {
                     e.preventDefault();
-                    // TODO: Make request and delete file in DB
-                    this.parentElement.remove()
+                    try {
+                        // Make request and delete file in DB
+                        let response = await deleteEntrepreneurPhoto(`${ENTREPRENEUR_PHOTO_DELETE_URL}/${e.target.id}/`)
+
+                        // Add an alert message for the user
+                        newAlertDiv = document.createElement('div');
+                        newAlertDiv.setAttribute('class','alert alert-primary alert-dismissable fade show w-100');
+                        newAlertDiv.setAttribute('role','alert');
+                        newAlertDiv.innerHTML = `<a href='#'' class='close' data-dismiss='alert' aria-label='close'>&times;</a> ${response.message}`;
+
+                        photoGallery.appendChild(newAlertDiv);
+
+                        // Remove photo from the gallery
+                        this.parentElement.remove()
+                    }
+                    catch (e) {
+                        newAlertDiv = document.createElement('div');
+                        newAlertDiv.setAttribute('class','alert alert-danger alert-dismissable fade show w-100');
+                        newAlertDiv.setAttribute('role','alert');
+                        newAlertDiv.innerHTML = `<a href='#'' class='close' data-dismiss='alert' aria-label='close'>&times;</a> Hubo un problema al eliminar la foto`;
+
+                        photoGallery.appendChild(newAlertDiv);
+                    }
                 });
             })
         }

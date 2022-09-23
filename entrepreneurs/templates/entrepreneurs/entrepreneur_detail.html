@@ -23,28 +23,37 @@
                 <p><b>Descripción:</b> {{ entrepreneur.description }}</p>
             </p>
         </div>
-        <div class="col-12 px-5">
-            <div id="entrepreneurPhotosCarousel" class="carousel slide" data-interval="5000" data-touch="true" data-ride="carousel">
-                <ol class="carousel-indicators">
-                {% for photo in entrepreneur.photos.all %}
-                    <li data-target="#entrepreneurPhotosCarousel" data-slide-to="{{forloop.counter0 }}" class="{% if forloop.first%}active{%endif%}"></li>
-                {%endfor%}
-                </ol>
-                <div class="carousel-inner">
-                {% for photo in entrepreneur.photos.all %}        
-                    <div class="carousel-item{% if forloop.first %} active{% endif %}" style="height: 50vh;">                    
-                    <img class="d-block w-100 rounded" src="{{photo.image.url}}" alt="Foto del emprendedor">
-                    </div>
-                {%endfor%}
+
+        <div class="col-12">
+            <div class="row">
+                <div class="col-12 col-md-2">
                 </div>
-                <a class="carousel-control-prev" href="#entrepreneurPhotosCarousel" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Anterior</span>
-                </a>
-                <a class="carousel-control-next" href="#entrepreneurPhotosCarousel" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Siguiente</span>
-                </a>
+                <div class="col-12 col-md-8">
+                    <div id="entrepreneurPhotosCarousel" class="carousel slide" data-interval="5000" data-touch="true" data-ride="carousel">
+                        <ol class="carousel-indicators">
+                        {% for photo in entrepreneur.photos.all %}
+                            <li data-target="#entrepreneurPhotosCarousel" data-slide-to="{{forloop.counter0 }}" class="{% if forloop.first%}active{%endif%}"></li>
+                        {%endfor%}
+                        </ol>
+                        <div class="carousel-inner">
+                        {% for photo in entrepreneur.photos.all %}        
+                            <div class="carousel-item{% if forloop.first %} active{% endif %}">                    
+                            <img class="d-block w-100 rounded" src="{{photo.image.url}}" alt="Foto del emprendedor">
+                            </div>
+                        {%endfor%}
+                        </div>
+                        <a class="carousel-control-prev" href="#entrepreneurPhotosCarousel" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Anterior</span>
+                        </a>
+                        <a class="carousel-control-next" href="#entrepreneurPhotosCarousel" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Siguiente</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-12 col-md-2">
+                </div>
             </div>
         </div>
     </article>

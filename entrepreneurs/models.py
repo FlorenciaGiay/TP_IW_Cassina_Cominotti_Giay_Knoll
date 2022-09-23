@@ -55,3 +55,13 @@ class EntrepreneurPhoto(models.Model):
     image = models.ImageField(
         default="images/default.jpg", upload_to="images/entrepreneur_photos"
     )
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+        img = Image.open(self.image.path)
+
+        output_size = (300, 300)
+        img.thumbnail(output_size, Image.ANTIALIAS)
+        # img = img.resize(output_size, Image.ANTIALIAS)
+        img.save(self.image.path, quality=100, optimize=True)
