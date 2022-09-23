@@ -5,8 +5,16 @@ from . import views as entrepreneur_views
 urlpatterns = [
     path("entrepreneurs/", EntrepreneurListView.as_view(), name="entrepreneurs"),
     path("entrepreneur/add/", EntrepreneurAddView.as_view(), name="entrepreneur-add"),
-    path("entrepreneur/photo/add/", entrepreneur_views.entrepreneur_add_photos, name="entrepreneur-photos-add"),
-    path("entrepreneur/photo/delete/<int:pk>/", entrepreneur_views.entrepreneur_delete_photos, name="entrepreneur-photos-delete"),
+    path(
+        "entrepreneur/photo/add/",
+        entrepreneur_views.entrepreneur_add_photos,
+        name="entrepreneur-photos-add",
+    ),
+    path(
+        "entrepreneur/photo/delete/<int:pk>/",
+        entrepreneur_views.entrepreneur_delete_photos,
+        name="entrepreneur-photos-delete",
+    ),
     path(
         "entrepreneur/delete/<int:pk>",
         entrepreneur_views.entrepreneur_delete_view,

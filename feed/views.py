@@ -94,14 +94,22 @@ class EventListView(ListView):
 
         if Qr:
             if text_search:
-                event_list = SearchQuerySet().filter(content=text_search).filter(Qr).order_by("datetime_of_event")
+                event_list = (
+                    SearchQuerySet()
+                    .filter(content=text_search)
+                    .filter(Qr)
+                    .order_by("datetime_of_event")
+                )
             else:
                 event_list = Event.objects.filter(Qr).order_by("datetime_of_event")
         else:
             if text_search:
-                event_list = SearchQuerySet().filter(content=text_search).exclude(
-                    datetime_of_event__lt=datetime.now()
-                ).order_by("datetime_of_event")
+                event_list = (
+                    SearchQuerySet()
+                    .filter(content=text_search)
+                    .exclude(datetime_of_event__lt=datetime.now())
+                    .order_by("datetime_of_event")
+                )
             else:
                 event_list = Event.objects.exclude(
                     datetime_of_event__lt=datetime.now()

@@ -385,17 +385,34 @@ def entrepreneur_add_photos(request, pk=None):
                     user=request.user
                 )
             except Entrepreneur.DoesNotExist:
-                return JsonResponse(status=404, data={"message":"Hubo un problema al cargar la Foto"})
+                return JsonResponse(
+                    status=404, data={"message": "Hubo un problema al cargar la Foto"}
+                )
 
             file = request.FILES.getlist("file")
             entrepreneur_photo_to_add = EntrepreneurPhoto.objects.create(
-                    entrepreneur=entrepreneur_selected, image=file[0]
-                )
+                entrepreneur=entrepreneur_selected, image=file[0]
+            )
             image_url = request.build_absolute_uri(entrepreneur_photo_to_add.image.url)
-            serialized_entrepreneur_photo = serializers.serialize('json', [entrepreneur_photo_to_add, ])
-            return JsonResponse(status=200, data={"message":"La foto del emprendedor fue cargada exitosamente", "entrepreneurPhoto": serialized_entrepreneur_photo,  "entrepreneurPhotoUrl": image_url})
+            serialized_entrepreneur_photo = serializers.serialize(
+                "json",
+                [
+                    entrepreneur_photo_to_add,
+                ],
+            )
+            return JsonResponse(
+                status=200,
+                data={
+                    "message": "La foto del emprendedor fue cargada exitosamente",
+                    "entrepreneurPhoto": serialized_entrepreneur_photo,
+                    "entrepreneurPhotoUrl": image_url,
+                },
+            )
         except EntrepreneurPhoto.DoesNotExist:
-            return JsonResponse(status=404, data={"message":"Hubo un problema al cargar la Foto"})
+            return JsonResponse(
+                status=404, data={"message": "Hubo un problema al cargar la Foto"}
+            )
+
 
 @login_required
 def entrepreneur_delete_photos(request, pk=None):
@@ -403,6 +420,11 @@ def entrepreneur_delete_photos(request, pk=None):
         try:
             entrepreneur_photo_to_delete = EntrepreneurPhoto.objects.get(id=pk)
             entrepreneur_photo_to_delete.delete()
-            return JsonResponse(status=200, data={"message":"La foto del emprendedor fue borrada exitosamente"})
+            return JsonResponse(
+                status=200,
+                data={"message": "La foto del emprendedor fue borrada exitosamente"},
+            )
         except EntrepreneurPhoto.DoesNotExist:
-            return JsonResponse(status=404, data={"message":"Hubo un problema al eliminar la Foto"})
+            return JsonResponse(
+                status=404, data={"message": "Hubo un problema al eliminar la Foto"}
+            )
