@@ -393,7 +393,11 @@ def entrepreneur_add_photos(request, pk=None):
             entrepreneur_photo_to_add = EntrepreneurPhoto.objects.create(
                 entrepreneur=entrepreneur_selected, image=file[0]
             )
-            image_url = request.build_absolute_uri(entrepreneur_photo_to_add.image.url)
+            image_url = (
+                request.build_absolute_uri(entrepreneur_photo_to_add.image.url)
+                if settings.DEBUG_VALUE
+                else entrepreneur_photo_to_add.image.url
+            )
             serialized_entrepreneur_photo = serializers.serialize(
                 "json",
                 [
