@@ -395,7 +395,7 @@ def entrepreneur_add_photos(request, pk=None):
             )
             image_url = (
                 request.build_absolute_uri(entrepreneur_photo_to_add.image.url)
-                if settings.DEBUG_VALUE
+                if settings.DEBUG
                 else entrepreneur_photo_to_add.image.url
             )
             serialized_entrepreneur_photo = serializers.serialize(
