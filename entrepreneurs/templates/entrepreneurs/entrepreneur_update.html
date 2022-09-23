@@ -17,11 +17,109 @@
             <legend class="border-bottom mb-4">Información del Perfil</legend>
             {{ u_form|crispy }}
             {{ e_form|crispy }}
-            {{ i_form|crispy }}
+            {% comment %} {{ i_form|crispy }} {% endcomment %}
         </fieldset>
+
+        <form>
+            <fieldset class="form-group">
+
+                <legend class="border-bottom mb-4">Fotos del emprendimiento</legend>
+                {% for photo in entrepreneur.photos.all %}
+                    <div class="d-flex justify-content-center my-3">
+                        <img class="rounded" width="10%" heigth="10%" src="{{photo.image.url}}" alt="Foto del emprendedor">
+                    </div>
+                        <div class="input-group mb-3" name="survey_item">
+                        <div class="custom-file">
+                            <input disabled="true" type="file" class="custom-file-input" id="baseInputFile" name="survey_option">
+                            <label class="custom-file-label" for="baseInputFile">{{photo.image.url}} <i class='fa fa-check'></i></label>
+                        </div>
+                    </div>
+                {%endfor%}
+
+                <div id="survey_options">
+                    <div class="input-group mb-3" name="survey_item">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="baseInputFile" name="survey_option">
+                            <label class="custom-file-label" for="baseInputFile">Elegir archivo</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-around">
+                    <a class="mx-auto" href="" id="add_more_fields"><i class="fa fa-plus"></i> Agregar campo</a>
+                    <a class="mx-auto" href="" id="remove_fields"><i class="fa fa-minus"></i> Eliminar</a>
+                </div>
+            </fieldset>
+        </form>
+
         <div class="form-group">
             <button class="btn btn-outline-info" type="submit">Actualizar</button>
         </div>
     </form>
+
+
+    <script>
+        document.getElementById("baseInputFile").addEventListener("change", function(e){
+            const fileName = e.target.files[0].name;
+            e.target.setAttribute('disabled','true');
+            var label = document.querySelector("#baseInputFile + label")
+            label.innerHTML = fileName + " <i class='fa fa-check'></i>";
+            // TODO: Make request and save file in DB
+            // change the ID of the input and the label 
+            // for the new one returned
+        });
+
+        var survey_options = document.getElementById('survey_options');
+        var add_more_fields = document.getElementById('add_more_fields');
+        var remove_fields = document.getElementById('remove_fields');
+        
+        add_more_fields.onclick = function(event){
+            event.preventDefault();
+            // Create parent and child div
+            var parentDiv = document.createElement('div');
+            parentDiv.setAttribute('class','input-group mb-3');
+            parentDiv.setAttribute('name','survey_item');
+
+            var childDiv = document.createElement('div');
+            childDiv.setAttribute('class','custom-file');
+
+            // Create input
+            var inputField = document.createElement('input');
+            inputField.setAttribute('type','file');
+            inputField.setAttribute('class','custom-file-input');
+            inputField.setAttribute('name','survey_option');
+            var randLetter = String.fromCharCode(65 + Math.floor(Math.random() * 26));
+            var uniqid = randLetter + Date.now();
+            inputField.setAttribute('id', uniqid);
+
+            inputField.addEventListener("change", function(e){
+                const fileName = e.target.files[0].name;
+                e.target.setAttribute('disabled','true');
+                var label = document.querySelector(`#${uniqid} + label`)
+                label.innerHTML = fileName + " <i class='fa fa-check'></i>";
+                // TODO: Make request and save file in DB
+                // change the ID of the input and the label 
+                // for the new one returned
+            });
+
+            // Create label
+            var labelField = document.createElement('label');
+            labelField.setAttribute('class','custom-file-label');
+            labelField.innerHTML = "Elegir archivo"
+
+            childDiv.appendChild(inputField);
+            childDiv.appendChild(labelField);
+            parentDiv.appendChild(childDiv);
+            survey_options.appendChild(parentDiv);
+        }
+        
+        remove_fields.onclick = function(event){
+            event.preventDefault();
+            var input_tags = document.getElementsByName('survey_item');
+            if(input_tags.length > 0) {
+                // TODO: Make request and delete file in DB
+                survey_options.removeChild(input_tags[(input_tags.length) - 1]);
+            }
+        }
+    </script>
 </div>
 {% endblock content %}

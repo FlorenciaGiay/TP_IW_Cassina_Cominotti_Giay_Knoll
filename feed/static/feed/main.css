@@ -4,6 +4,14 @@ body {
   margin-top: 5rem;
 }
 
+.input-group > .custom-file input {
+  cursor: pointer
+}
+
+.input-group > .custom-file input:disabled {
+  cursor: not-allowed
+}
+
 #intro-example {
   position: relative;
   background: url('https://bootstrapmade.com/demo/templates/BizLand/assets/img/hero-bg.jpg') no-repeat;
@@ -21,7 +29,8 @@ body {
 }
 
 .fa-angle-down,
-.fa-angle-up {
+.fa-angle-up,
+.fa-check {
   color: #56cc9d;
 }
 /* width */
