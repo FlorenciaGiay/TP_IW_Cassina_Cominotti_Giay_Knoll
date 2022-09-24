@@ -104,7 +104,7 @@
                                 {% if event.datetime_of_event < datetime_now %}
                                     hace {{ event.datetime_of_event | timesince }} 
                                 {% else %}
-                                    en {{ event.datetime_of_event | timeuntil }} 
+                                    falta {{ event.datetime_of_event | timeuntil }} 
                                 {% endif %}
                             </small>
                             <small>

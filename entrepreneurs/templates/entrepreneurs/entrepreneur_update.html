@@ -19,7 +19,6 @@
             <legend class="border-bottom mb-4">Información del Perfil</legend>
             {{ u_form|crispy }}
             {{ e_form|crispy }}
-            {% comment %} {{ i_form|crispy }} {% endcomment %}
         </fieldset>
 
         <form>
@@ -82,7 +81,7 @@
             });
             return response.json();
         }
-        
+
         document.getElementById("baseInputFile").addEventListener("change", async function(event){
             let file = event.target.files[0];
             // No file size means no file.
@@ -94,8 +93,6 @@
             // Make request and save file in DB
             let response = await addEntrepreneurPhoto(`${ENTREPRENEUR_PHOTO_ADD_URL}/`, formData)
             newEntrepreneurPhoto = JSON.parse(response.entrepreneurPhoto)[0]
-            console.log(response)
-            console.log(newEntrepreneurPhoto)
 
             // Add the new photo returned to entrepreneurUploadedPhotos
             var newColumn = document.createElement('div');
@@ -104,8 +101,6 @@
 
             var newPhoto = document.createElement('img');
             newPhoto.setAttribute('class','rounded w-100');
-            //var url = URL.createObjectURL(event.target.files[0])
-            //var url = URL.createObjectURL(newEntrepreneurPhoto.fields.image)
             newPhoto.setAttribute('src', response.entrepreneurPhotoUrl);
             newPhoto.setAttribute('alt','Foto del emprendedor');
             newPhoto.setAttribute('id', `entrepreneur_photo_${newEntrepreneurPhoto.pk}`);
@@ -114,37 +109,61 @@
             newAnchor.setAttribute('href','');
             newAnchor.setAttribute('id', newEntrepreneurPhoto.pk);
             newAnchor.innerHTML = "Eliminar <i class='fa fa-close'></i>";
+            // Event for deleting a photo
             newAnchor.addEventListener("click", async function(e){
                 e.preventDefault();
                 try {
                     // Make request and delete file in DB
-                    let response = await deleteEntrepreneurPhoto(`${ENTREPRENEUR_PHOTO_DELETE_URL}/${e.target.id}/`)
+                    let response = await deleteEntrepreneurPhoto(`${ENTREPRENEUR_PHOTO_DELETE_URL}/${e.target.id}/`);
 
                     // Add an alert message for the user
+                    var randLetter = String.fromCharCode(65 + Math.floor(Math.random() * 26));
+                    var uniqid = randLetter + Date.now();
                     newAlertDiv = document.createElement('div');
+                    newAlertDiv.setAttribute('id', uniqid)
                     newAlertDiv.setAttribute('class','alert alert-primary alert-dismissable fade show w-100');
                     newAlertDiv.setAttribute('role','alert');
-                    newAlertDiv.innerHTML = `<a href='#'' class='close' data-dismiss='alert' aria-label='close'>&times;</a> ${response.message}`;
+                    stringForAlert = `<a href='#'' class='close' data-dismiss='alert' aria-label='close'>&times;</a> ${response.message}`;
+                    newAlertDiv.innerHTML = stringForAlert;
 
                     photoGallery.appendChild(newAlertDiv);
+                    $(`#${uniqid}`).delay(2000).fadeOut();
 
                     // Remove photo from the gallery
                     this.parentElement.remove()
                 }
                 catch (e) {
+                    console.error("Error: ", e)
+
+                    // Add an alert message for the user
+                    var randLetter = String.fromCharCode(65 + Math.floor(Math.random() * 26));
+                    var uniqid = randLetter + Date.now();
                     newAlertDiv = document.createElement('div');
+                    newAlertDiv.setAttribute('id', uniqid)
                     newAlertDiv.setAttribute('class','alert alert-danger alert-dismissable fade show w-100');
                     newAlertDiv.setAttribute('role','alert');
                     newAlertDiv.innerHTML = `<a href='#'' class='close' data-dismiss='alert' aria-label='close'>&times;</a> Hubo un problema al eliminar la foto`;
 
                     photoGallery.appendChild(newAlertDiv);
+                    $(`#${uniqid}`).delay(2000).fadeOut();
                 }
             });
 
             newColumn.appendChild(newPhoto)
             newColumn.appendChild(newAnchor)
 
+            // Add an alert message for the user
+            var randLetter = String.fromCharCode(65 + Math.floor(Math.random() * 26));
+            var uniqid = randLetter + Date.now();
+            newAlertDiv = document.createElement('div');
+            newAlertDiv.setAttribute('id', uniqid)
+            newAlertDiv.setAttribute('class','alert alert-primary alert-dismissable fade show w-100');
+            newAlertDiv.setAttribute('role','alert');
+            newAlertDiv.innerHTML = `<a href='#'' class='close' data-dismiss='alert' aria-label='close'>&times;</a> ${response.message}`;
+
             photoGallery.appendChild(newColumn);
+            photoGallery.appendChild(newAlertDiv);
+            $(`#${uniqid}`).delay(2000).fadeOut();
 
             // Then clear the input for upload a new photo
         });
@@ -160,23 +179,34 @@
                         let response = await deleteEntrepreneurPhoto(`${ENTREPRENEUR_PHOTO_DELETE_URL}/${e.target.id}/`)
 
                         // Add an alert message for the user
+                        var randLetter = String.fromCharCode(65 + Math.floor(Math.random() * 26));
+                        var uniqid = randLetter + Date.now();
                         newAlertDiv = document.createElement('div');
+                        newAlertDiv.setAttribute('id', uniqid)
                         newAlertDiv.setAttribute('class','alert alert-primary alert-dismissable fade show w-100');
                         newAlertDiv.setAttribute('role','alert');
                         newAlertDiv.innerHTML = `<a href='#'' class='close' data-dismiss='alert' aria-label='close'>&times;</a> ${response.message}`;
 
                         photoGallery.appendChild(newAlertDiv);
+                        $(`#${uniqid}`).delay(2000).fadeOut();
 
                         // Remove photo from the gallery
                         this.parentElement.remove()
                     }
                     catch (e) {
+                        console.error("Error: ", e)
+
+                        // Add an alert message for the user
+                        var randLetter = String.fromCharCode(65 + Math.floor(Math.random() * 26));
+                        var uniqid = randLetter + Date.now();
                         newAlertDiv = document.createElement('div');
+                        newAlertDiv.setAttribute('id', uniqid)
                         newAlertDiv.setAttribute('class','alert alert-danger alert-dismissable fade show w-100');
                         newAlertDiv.setAttribute('role','alert');
                         newAlertDiv.innerHTML = `<a href='#'' class='close' data-dismiss='alert' aria-label='close'>&times;</a> Hubo un problema al eliminar la foto`;
 
                         photoGallery.appendChild(newAlertDiv);
+                        $(`#${uniqid}`).delay(2000).fadeOut();
                     }
                 });
             })

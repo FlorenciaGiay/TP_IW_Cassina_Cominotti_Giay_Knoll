@@ -1,6 +1,6 @@
 from django import forms
 from users.models import User
-from .models import Entrepreneur, EntrepreneurPhoto
+from .models import Entrepreneur
 
 
 class UserUpdateForm(forms.ModelForm):
@@ -23,13 +23,3 @@ class EntrepreneurUpdateForm(forms.ModelForm):
             "image_profile",
         ]
 
-
-class EntrepreneurImageForm(forms.ModelForm):
-    image = forms.ImageField(
-        label="Fotos del Emprendimiento",
-        widget=forms.ClearableFileInput(attrs={"multiple": True}),
-    )
-
-    class Meta:
-        model = EntrepreneurPhoto
-        fields = ("image",)

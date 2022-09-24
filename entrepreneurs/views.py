@@ -6,7 +6,6 @@ from entrepreneurs.filter import EntrepreneurFilter
 from entrepreneurs.forms import (
     EntrepreneurUpdateForm,
     UserUpdateForm,
-    EntrepreneurImageForm,
 )
 from feed.models import Event, EventEntrepreneur, EventPetitionStatus
 from .models import Entrepreneur, EntrepreneurStatus, EntrepreneurPhoto
@@ -344,16 +343,10 @@ def entrepreneur_update_view(request, pk):
         photos_selected = EntrepreneurPhoto.objects.filter(
             entrepreneur=entrepreneur_selected
         ).first()
-        i_form = (
-            EntrepreneurImageForm(instance=photos_selected)
-            if photos_selected
-            else EntrepreneurImageForm()
-        )
 
     context = {
         "u_form": u_form,
         "e_form": e_form,
-        "i_form": i_form,
         "entrepreneur": entrepreneur_selected,
     }
 
