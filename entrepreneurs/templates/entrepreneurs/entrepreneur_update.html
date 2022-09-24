@@ -21,33 +21,33 @@
             {{ e_form|crispy }}
         </fieldset>
 
-        <form>
-            <fieldset class="form-group">
-
-                <legend class="border-bottom mb-4">Fotos del emprendimiento</legend>
-                <div class="row my-3" id="entrepreneurUploadedPhotos">
-                    {% for photo in entrepreneur.photos.all %}
-                            <div class="col-12 col-md-3 text-center" id="column_entrepreneur_photo_{{photo.pk}}">
-                                <img id="entrepreneur_photo_{{photo.pk}}" class="rounded w-100" src="{{photo.image.url}}" alt="Foto del emprendedor">
-                                <a id="{{photo.pk}}" name="link_remove_photo" href="">Eliminar <i class="fa fa-close"></i></a>
-                            </div>    
-                    {%endfor%}
-                </div>
-
-                <div id="survey_options">
-                    <div class="input-group mb-3" name="survey_item">
-                        <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="baseInputFile" name="survey_option">
-                            <label class="custom-file-label" for="baseInputFile">Elegir archivo</label>
-                        </div>
-                    </div>
-                </div>
-            </fieldset>
-        </form>
-
         <div class="form-group">
             <button class="btn btn-outline-info" type="submit">Actualizar</button>
         </div>
+    </form>
+
+    <form>
+        <fieldset class="form-group">
+
+            <legend class="border-bottom mb-4">Fotos del emprendimiento</legend>
+            <div class="row my-3" id="entrepreneurUploadedPhotos">
+                {% for photo in entrepreneur.photos.all %}
+                        <div class="col-12 col-md-3 text-center" id="column_entrepreneur_photo_{{photo.pk}}">
+                            <img id="entrepreneur_photo_{{photo.pk}}" class="rounded w-100" src="{{photo.image.url}}" alt="Foto del emprendedor">
+                            <a id="{{photo.pk}}" name="link_remove_photo" href="">Eliminar <i class="fa fa-close"></i></a>
+                        </div>    
+                {%endfor%}
+            </div>
+
+            <div id="survey_options">
+                <div class="input-group mb-3" name="survey_item">
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="baseInputFile" name="survey_option">
+                        <label class="custom-file-label" for="baseInputFile">Elegir archivo</label>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
     </form>
 
 
