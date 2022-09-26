@@ -107,8 +107,8 @@
                                     falta {{ event.datetime_of_event | timeuntil }} 
                                 {% endif %}
                             </small>
-                            <small>
-                                <span class="badge" style="color:white; background-color: {{ event.category.color }}">{{ event.category.description }}</span>
+                            <small class="d-block text-muted" style="font-size: .9rem">
+                                <span>({{ event.datetime_of_event }})</span>
                             </small>
                         </h5>
                         <a class="btn btn-dark mt-4 nav-item nav-link align-md-self-start" href="{% url 'event-detail' event.pk %}" role="button">Ver Evento</a>

@@ -21,7 +21,17 @@ from haystack.query import SearchQuerySet
 
 
 def home(request):
-    return render(request, "feed/home.html")
+    try:
+        last_events = Event.objects.exclude(
+            datetime_of_event__lt=datetime.now()
+        ).order_by("datetime_of_event")[:4][::-1]
+    except Event.DoesNotExist:
+        last_events = None
+
+    context = {
+        "last_events": last_events,
+    }
+    return render(request, "feed/home.html", context)
 
 
 def petitions(request):
@@ -33,15 +43,6 @@ def petitions(request):
     }
 
     return render(request, "feed/petitions.html", context)
-
-
-# class EventListView(FilterView):
-#     queryset = Event.objects.exclude(datetime_of_event__lt=datetime.now())
-#     paginate_by = 5
-#     ordering = ["-datetime_of_event"]
-#     template_name = "feed/event_home.html"
-#     model = Event
-#     filterset_class = EventFilter
 
 
 class EventListView(ListView):

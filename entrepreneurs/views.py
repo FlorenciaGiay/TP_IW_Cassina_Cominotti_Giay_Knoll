@@ -415,7 +415,9 @@ def entrepreneur_add_photos(request, pk=None):
 def entrepreneur_delete_photos(request, pk=None):
     if request.method == "DELETE":
         try:
-            entrepreneur_photo_to_delete = EntrepreneurPhoto.objects.get(id=pk, entrepreneur__user=request.user)
+            entrepreneur_photo_to_delete = EntrepreneurPhoto.objects.get(
+                id=pk, entrepreneur__user=request.user
+            )
             entrepreneur_photo_to_delete.delete()
             return JsonResponse(
                 status=200,

@@ -62,6 +62,11 @@ urlpatterns = [
         ),
         name="password_reset_complete",
     ),
+    path(
+        "user/delete/<int:pk>",
+        user_views.user_delete_view,
+        name="user-delete",
+    ),
     path("", include("entrepreneurs.urls")),
     path("", include("feed.urls")),
 ]

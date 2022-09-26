@@ -93,8 +93,8 @@
     <main role="main" 
         class="{% if request.resolver_match.url_name == 'feed-home' %} container-fluid {% else %} container {% endif %}" 
         style="min-height:90vh; {% if request.resolver_match.url_name != 'feed-home' %} margin-top:15vh; {% endif %}">
-      <div class="row" style="{% if request.resolver_match.url_name == 'feed-home' %} height:100vh; {% endif %}">
-        <div class="{% if request.resolver_match.url_name == 'feed-home' %} col-12 m-0 p-0 {% else %} col-md-8 mx-auto mb-5 {% endif %}">
+      <div class="row">
+        <div class="{% if request.resolver_match.url_name == 'feed-home' %} col-12 {% else %} col-md-8 mx-auto mb-5 {% endif %}">
           {% if messages %}
             {% for message in messages %}
               <div class="alert alert-{{ message.tags }} alert-dismissable fade show">

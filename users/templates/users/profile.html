@@ -6,6 +6,7 @@
         <div class="media-body">
           <h2 class="account-heading">{{ user.username }}</h2>
           <p class="text-primary">{{ user.email }}</p>
+          <a class="btn btn-outline-danger mt-4 nav-item nav-link d-inline" href="{% url 'user-delete' user.pk %}" role="button">Eliminar Cuenta</a>
         </div>
       </div>
       <div>
@@ -61,7 +62,7 @@
 
             <div class="d-flex justify-content-around">
               <a class="btn btn-outline-info mt-4 nav-item nav-link" href="{% url 'entrepreneur-update' entrepreneur.pk %}" role="button">Actualizar perfil</a>
-              <a class="btn btn-outline-danger mt-4 nav-item nav-link" href="{% url 'entrepreneur-delete' entrepreneur.pk %}" role="button">Eliminar</a>
+              <a class="btn btn-outline-danger mt-4 nav-item nav-link" href="{% url 'entrepreneur-delete' entrepreneur.pk %}" role="button">Eliminar perfil</a>
             </div>
           </div>
           

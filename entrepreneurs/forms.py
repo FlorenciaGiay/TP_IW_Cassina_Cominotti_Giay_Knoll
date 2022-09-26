@@ -22,4 +22,3 @@ class EntrepreneurUpdateForm(forms.ModelForm):
             "category",
             "image_profile",
         ]
-

@@ -98,3 +98,31 @@ def profile(request):
         "users/profile.html",
         {"entrepreneur": entrepreneur_selected},
     )
+
+
+@login_required
+def user_delete_view(request):
+    user_to_delete = request.user
+
+    try:
+        entrepreneur_selected = Entrepreneur.objects.select_related().get(
+            user=user_to_delete
+        )
+    except Entrepreneur.DoesNotExist:
+        pass
+
+    try:
+        user_to_delete = User.objects.select_related().get(pk=user_to_delete.pk)
+        user_to_delete.delete()
+        messages.success(request, f"Su cuenta ha sido eliminada")
+        return redirect("login")
+    except Entrepreneur.DoesNotExist:
+        messages.error(
+            request,
+            f"Hubo un error al eliminar su cuenta. Por favor intentelo de nuevo más tarde",
+        )
+        return render(
+            request,
+            "users/profile.html",
+            {"entrepreneur": entrepreneur_selected},
+        )
