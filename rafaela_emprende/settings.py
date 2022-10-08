@@ -52,6 +52,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.humanize",
+    "django.contrib.sites",
+    "django.contrib.sitemaps",
     "django_extensions",
     "fontawesomefree",
     "crispy_forms",
@@ -62,6 +64,8 @@ INSTALLED_APPS = [
     "users.apps.UsersConfig",
     "entrepreneurs.apps.EntrepreneursConfig",
 ]
+
+SITE_ID = 1  # Define the site id for django.contrib.sites
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",

@@ -19,7 +19,15 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from users import views as user_views
-from entrepreneurs import views as entrepreneur_views
+from django.contrib.sitemaps.views import sitemap
+from feed.sitemaps import StaticFeedSitemap, EventSitemap
+from entrepreneurs.sitemaps import EntrepreneurSitemap
+
+sitemaps = {
+    "static": StaticFeedSitemap,
+    "event": EventSitemap,
+    "entrepreneur": EntrepreneurSitemap,
+}
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -69,6 +77,14 @@ urlpatterns = [
     ),
     path("", include("entrepreneurs.urls")),
     path("", include("feed.urls")),
+    # SEO
+    path("robots.txt", user_views.robots_txt),
+    path(
+        "sitemap.xml",
+        sitemap,
+        {"sitemaps": sitemaps},
+        name="django.contrib.sitemaps.views.sitemap",
+    ),
 ]
 
 if settings.DEBUG:

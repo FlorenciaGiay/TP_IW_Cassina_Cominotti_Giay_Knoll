@@ -13,9 +13,22 @@ from django.template.loader import render_to_string
 from django.core.mail import send_mail
 from django.conf import settings
 from users.models import User
-
+from django.http import HttpResponse
+from django.views.decorators.http import require_GET
 
 UserModel = get_user_model()
+
+
+@require_GET
+def robots_txt(request):
+    lines = [
+        "User-Agent: *",
+        "Disallow: /admin/",
+        "Sitemap: http://127.0.0.1:8000/sitemap.xml"
+        if settings.DEBUG
+        else "Sitemap: https://rafaela-emprende.herokuapp.com/sitemap.xml",
+    ]
+    return HttpResponse("\n".join(lines), content_type="text/plain")
 
 
 def register(request):
