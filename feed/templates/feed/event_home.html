@@ -10,7 +10,7 @@
         {% csrf_token %}
         <fieldset class="form-group">
             <legend class="border-bottom mb-4">Informacion del Evento</legend>
-                {% comment %} {{ filter_form.text_search|as_crispy_field  }} {% endcomment %}
+                {{ filter_form.text_search|as_crispy_field  }}
                 {{ filter_form.cost_of_entry|as_crispy_field  }}
 
                 <label for="datetimepicker_filterevent_fromevent" class="requiredField">
