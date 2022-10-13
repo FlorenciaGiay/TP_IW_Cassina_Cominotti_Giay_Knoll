@@ -37,7 +37,8 @@
     <div id="intro-example-after">
     </div>
   </div>
-  <div class="row justify-content-center my-5">
+
+  {% comment %} <div class="row justify-content-center my-5">
     <div class="col-12 col-md-8">
       <div class="row">
             <div class="col-12 col-lg-4 mt-4">
@@ -87,7 +88,8 @@
 
       </div>
     </div>
-  </div>
+  </div> {% endcomment %}
+
   <div class="row justify-content-center my-5">
     <div class="col-10">
       <h1 class="text-center mt-5">Últimos Eventos</h1>
@@ -114,14 +116,14 @@
                     <div class="d-flex flex-column text-center">
                         <h5 class="article-title">{{ event.title }} <br>
                             • <br>
-                            <small class="text-muted">
+                            <small class="text-dark">
                                 {% if event.datetime_of_event < datetime_now %}
                                     hace {{ event.datetime_of_event | timesince }} 
                                 {% else %}
                                     falta {{ event.datetime_of_event | timeuntil }} 
                                 {% endif %}
                             </small>
-                            <small class="d-block text-muted" style="font-size: .9rem">
+                            <small class="d-block text-dark" style="font-size: .9rem">
                                 <span>({{ event.datetime_of_event }})</span>
                             </small>
                         </h5>

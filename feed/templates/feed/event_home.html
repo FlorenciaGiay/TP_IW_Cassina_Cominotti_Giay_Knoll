@@ -11,7 +11,8 @@
         <fieldset class="form-group">
             <legend class="border-bottom mb-4">Informacion del Evento</legend>
                 {{ filter_form.text_search|as_crispy_field  }}
-                {{ filter_form.cost_of_entry|as_crispy_field  }}
+                {{ filter_form.cost_of_entry_min|as_crispy_field  }}
+                {{ filter_form.cost_of_entry_max|as_crispy_field  }}
 
                 <label for="datetimepicker_filterevent_fromevent" class="requiredField">
                     Desde
@@ -100,14 +101,14 @@
                 <div class="col-12 col-md-8 justify-content-center mt-3">
                     <div class="d-flex flex-column text-center">
                         <h5 class="article-title">{{ event.title }} 
-                            • <small class="text-muted">
+                            • <small class="text-dark">
                                 {% if event.datetime_of_event < datetime_now %}
                                     hace {{ event.datetime_of_event | timesince }} 
                                 {% else %}
                                     falta {{ event.datetime_of_event | timeuntil }} 
                                 {% endif %}
                             </small>
-                            <small class="d-block text-muted" style="font-size: .9rem">
+                            <small class="d-block text-dark" style="font-size: .9rem">
                                 <span>({{ event.datetime_of_event }})</span>
                             </small>
                         </h5>

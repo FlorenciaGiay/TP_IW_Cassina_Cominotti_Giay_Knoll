@@ -56,12 +56,14 @@ class EventListView(ListView):
 
         # Get the parameters from the body of the request
         text_search = request.GET.get("text_search")
-        cost_of_entry = request.GET.get("cost_of_entry")
+        cost_of_entry_min = request.GET.get("cost_of_entry_min")
+        cost_of_entry_max = request.GET.get("cost_of_entry_max")
         datetime_from_event = request.GET.get("datetime_from_event")
         datetime_to_event = request.GET.get("datetime_to_event")
         values = {
             "text_search": text_search,
-            "cost_of_entry": cost_of_entry,
+            "cost_of_entry_min": cost_of_entry_min,
+            "cost_of_entry_max": cost_of_entry_max,
             "datetime_from_event": datetime_from_event,
             "datetime_to_event": datetime_to_event,
         }
@@ -87,6 +89,12 @@ class EventListView(ListView):
                     q = Q(
                         datetime_of_event__lt=datetime.strptime(value, "%d/%m/%Y %H:%M")
                     )
+
+                if key == "cost_of_entry_min":
+                    q = Q(cost_of_entry__gt=value)
+
+                if key == "cost_of_entry_max":
+                    q = Q(cost_of_entry__lt=value)
 
                 if Qr:
                     Qr = Qr & q  # or | for filtering

@@ -4,7 +4,8 @@ from .models import Event, Comment
 
 class EventFilterForm(forms.ModelForm):
     text_search = forms.CharField(required=False, label="Búsqueda por texto")
-    cost_of_entry = forms.IntegerField(required=False, label="Costo de entrada")
+    cost_of_entry_min = forms.IntegerField(required=False, label="Costo de Minimo")
+    cost_of_entry_max = forms.IntegerField(required=False, label="Costo de Máximo")
     datetime_from_event = forms.DateTimeField(
         label="Fecha desde",
         input_formats=["%d/%m/%Y %H:%M"],
@@ -32,7 +33,8 @@ class EventFilterForm(forms.ModelForm):
         model = Event
         fields = [
             "text_search",
-            "cost_of_entry",
+            "cost_of_entry_min",
+            "cost_of_entry_max",
             "datetime_from_event",
             "datetime_to_event",
         ]
