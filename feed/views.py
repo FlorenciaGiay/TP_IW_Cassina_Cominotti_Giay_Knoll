@@ -31,10 +31,7 @@ def home(request):
     settings.TIME_ZONE
     datetime_now = make_aware(datetime.now())
 
-    context = {
-        "last_events": last_events,
-        "datetime_now": datetime_now
-    }
+    context = {"last_events": last_events, "datetime_now": datetime_now}
     return render(request, "feed/home.html", context)
 
 
@@ -232,8 +229,12 @@ class EventAddView(CreateView):
         content = request.POST.get("content")
         direction = request.POST.get("direction")
         cost_of_entry = request.POST.get("cost_of_entry")
-        datetime_of_event = datetime.strptime(request.POST.get("datetime_of_event"), "%d/%m/%Y %H:%M")
-        datetime_of_event_formatted = datetime.strptime(str(datetime_of_event), "%Y-%m-%d %H:%M:%S")
+        datetime_of_event = datetime.strptime(
+            request.POST.get("datetime_of_event"), "%d/%m/%Y %H:%M"
+        )
+        datetime_of_event_formatted = datetime.strptime(
+            str(datetime_of_event), "%Y-%m-%d %H:%M:%S"
+        )
 
         Event.objects.create(
             title=title,

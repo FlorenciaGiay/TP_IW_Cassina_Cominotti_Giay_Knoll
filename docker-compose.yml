@@ -1,15 +1,15 @@
 version: "3.9"
 
 services:
-  db:
-    image: postgres
+  db_grupo1:
+    image: postgres:14-alpine
     volumes:
       - ./data/db:/var/lib/postgresql/data
     environment:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-  web:
+  app_grupo1:
     build: .
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
@@ -21,4 +21,4 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     depends_on:
-      - db
+      - db_grupo1
