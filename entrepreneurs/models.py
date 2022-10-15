@@ -37,10 +37,10 @@ class Entrepreneur(models.Model):
         verbose_name="Foto de perfil del emprendimiento",
     )
     status = models.ForeignKey(
-        "EntrepreneurStatus", null=False, blank=False, on_delete=models.PROTECT
+        "EntrepreneurStatus", null=False, blank=False, on_delete=models.PROTECT, verbose_name="Estado del Emprendimiento"
     )
     category = models.ForeignKey(
-        "EntrepreneurCategory", null=False, blank=False, on_delete=models.PROTECT
+        "EntrepreneurCategory", null=False, blank=False, on_delete=models.PROTECT, verbose_name="Categoría del Emprendimiento"
     )
     number_of_attempts = models.IntegerField(null=False, default=0)
 
