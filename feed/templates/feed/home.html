@@ -120,7 +120,7 @@
                                 {% if event.datetime_of_event < datetime_now %}
                                     hace {{ event.datetime_of_event | timesince }} 
                                 {% else %}
-                                    falta {{ event.datetime_of_event | timeuntil }} 
+                                    falta {{ event.datetime_of_event | timeuntil:datetime_now }} 
                                 {% endif %}
                             </small>
                             <small class="d-block text-dark" style="font-size: .9rem">

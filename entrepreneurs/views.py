@@ -291,6 +291,7 @@ class EntrepreneurAddView(CreateView):
         "phone_number",
         "description",
         "category",
+        "image_profile"
     ]
 
     def form_valid(self, form):
@@ -298,6 +299,10 @@ class EntrepreneurAddView(CreateView):
         status = EntrepreneurStatus.objects.get(description="Pendiente")
         self.object.status = status
         self.object.user = self.request.user
+
+        # Get the image from the body of the request
+        self.object.image_profile=self.request.FILES.get("image_profile")
+
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 

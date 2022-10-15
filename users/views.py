@@ -114,7 +114,7 @@ def profile(request):
 
 
 @login_required
-def user_delete_view(request):
+def user_delete_view(request, pk):
     user_to_delete = request.user
 
     try:

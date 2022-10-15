@@ -28,8 +28,12 @@ def home(request):
     except Event.DoesNotExist:
         last_events = None
 
+    settings.TIME_ZONE
+    datetime_now = make_aware(datetime.now())
+
     context = {
         "last_events": last_events,
+        "datetime_now": datetime_now
     }
     return render(request, "feed/home.html", context)
 
@@ -221,8 +225,24 @@ class EventAddView(CreateView):
     template_name = "feed/event_add.html"
     form_class = EventAddForm
 
-    def form_valid(self, form):
-        self.object = form.save()
+    def post(self, request, *args, **kwargs):
+        # Get the parameters from the body of the request
+        image_profile_file = request.FILES.get("image_profile")
+        title = request.POST.get("title")
+        content = request.POST.get("content")
+        direction = request.POST.get("direction")
+        cost_of_entry = request.POST.get("cost_of_entry")
+        datetime_of_event = datetime.strptime(request.POST.get("datetime_of_event"), "%d/%m/%Y %H:%M")
+        datetime_of_event_formatted = datetime.strptime(str(datetime_of_event), "%Y-%m-%d %H:%M:%S")
+
+        Event.objects.create(
+            title=title,
+            content=content,
+            direction=direction,
+            cost_of_entry=cost_of_entry,
+            datetime_of_event=datetime_of_event_formatted,
+            image_profile=image_profile_file,
+        )
         return HttpResponseRedirect(self.get_success_url())
 
     def get_success_url(self):
@@ -257,14 +277,7 @@ def event_update_view(request, pk):
 
 @login_required
 def event_delete_view(request, pk=None):
-    if request.method == "POST":
+    if request.method == "GET":
         event_to_delete = Event.objects.get(id=pk)
         event_to_delete.delete()
-        return redirect("profile")
-
-    if request.method == "GET":
-        return render(
-            request,
-            "feed/event_confirm_delete.html",
-            {"event_pk": pk},
-        )
+        return redirect("events")

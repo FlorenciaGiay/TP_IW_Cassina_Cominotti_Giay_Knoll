@@ -67,10 +67,15 @@
             <button class="btn btn-outline-info" type="submit">Enviar</button>
         </form>
     </div>
-    <a class="btn btn-info mt-2 nav-item nav-link d-inline-block" href="{% url 'events' %}" role="button">Volver</a>
-    {% if user.is_superuser %}
-        <a class="btn btn-dark mt-2 nav-item nav-link d-inline-block" href="{% url 'event-update' event.pk %}" role="button">
-            Actualizar Evento
-        </a>
-    {% endif %}
+    <div class="mt-5">
+        <a class="btn btn-info mt-2 nav-item nav-link d-inline-block" href="{% url 'events' %}" role="button">Volver</a>
+        {% if user.is_superuser %}
+            <a class="btn btn-dark mt-2 nav-item nav-link d-inline-block" href="{% url 'event-update' event.pk %}" role="button">
+                Actualizar Evento
+            </a>
+            <a class="btn btn-outline-danger mt-2 nav-item nav-link d-inline-block" href="{% url 'event-delete' event.pk %}" role="button">
+                Eliminar Evento
+            </a>
+        {% endif %}
+    </div>
 {% endblock content %}

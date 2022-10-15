@@ -60,6 +60,7 @@ class EventAddForm(forms.ModelForm):
             "direction",
             "cost_of_entry",
             "datetime_of_event",
+            "image_profile"
         ]
 
 

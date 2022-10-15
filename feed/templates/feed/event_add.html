@@ -2,7 +2,7 @@
 {% load crispy_forms_tags %}
 {% block content %}
     <div class="content-section">
-        <form method="POST">
+        <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <fieldset class="form-group">
                 <legend class="border-bottom mb-4">Informacion del Evento</legend>
@@ -39,8 +39,11 @@
                     });
                 </script>
             </fieldset>
+
+            {{ form.image_profile|as_crispy_field  }}
+
             <div class="form-group">
-                <button class="btn btn-outline-info" type="submit">Guardar</button>
+                <button class="btn btn-outline-success" type="submit">Guardar</button>
             </div>
         </form>
         <a class="btn btn-info mt-2 nav-item nav-link d-inline-block" href="{% url 'events' %}" role="button">Volver</a>
