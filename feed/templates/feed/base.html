@@ -5,6 +5,12 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Rafaela Emprende: Conocé eventos y emprendedores de Rafaela y ciudades aledañas!">
+    {% if title %}
+      <title>Rafaela Emprende - {{ title }}</title>
+    {% else %}
+      <title>Rafaela Emprende</title>
+    {% endif %}
 
     <link rel="icon" type="image/gif" href="https://rafaela-emprende-logos-prod.s3.amazonaws.com/Rafaela_Emprende_Logo_Small_Slow.gif">
 
@@ -29,12 +35,6 @@
 
     <!-- Bootstrap CSS Theme -->
     <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" >
-
-    {% if title %}
-        <title>Rafaela Emprende - {{ title }}</title>
-    {% else %}
-        <title>Rafaela Emprende</title>
-    {% endif %}
 </head>
 <body>
     <header class="site-header">
