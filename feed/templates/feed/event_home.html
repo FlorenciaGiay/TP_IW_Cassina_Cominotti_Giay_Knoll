@@ -9,7 +9,7 @@
     <form action="" method="GET">
         {% csrf_token %}
         <fieldset class="form-group">
-            <legend class="border-bottom mb-4">Informacion del Evento</legend>
+            <legend class="border-bottom mb-4">Información del Evento</legend>
                 {{ filter_form.text_search|as_crispy_field  }}
                 {{ filter_form.cost_of_entry_min|as_crispy_field  }}
                 {{ filter_form.cost_of_entry_max|as_crispy_field  }}
