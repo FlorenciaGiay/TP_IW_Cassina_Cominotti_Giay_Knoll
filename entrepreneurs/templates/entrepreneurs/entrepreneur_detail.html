@@ -14,7 +14,7 @@
             </div>
             <div class="d-flex justify-content-center align-items-center flex-column">
                 <h2 class="article-title mt-4">{{ object.entrepreneurship_name }}</h2>
-                <a class="mr-2 mb-2" href="{% url 'entrepreneur-detail' entrepreneur.id %}">@{{ entrepreneur.entrepreneurship_name }}</a>
+                <a class="ms-2 mb-2" href="{% url 'entrepreneur-detail' entrepreneur.id %}">@{{ entrepreneur.entrepreneurship_name }}</a>
                 <span class="badge" style="color:white; background-color: {{ entrepreneur.category.color }}">{{ entrepreneur.category.description }}</span>
             </div>
             <p class="mt-5">
@@ -58,12 +58,12 @@
         </div>
     </article>
     <div class="d-flex justify-content-between">
-        <a class="btn btn-info mt-2 nav-item nav-link d-inline-block" href="{% url 'entrepreneurs' %}" role="button">Volver</a>
+        <a class="btn btn-info mt-2 d-inline-block" href="{% url 'entrepreneurs' %}" role="button">Volver</a>
 
         {% if entrepreneur.status.description == "Pendiente" and user.is_superuser %}
             <div>
-                <a class="btn btn-success mt-2 nav-item nav-link d-inline-block" href="{% url 'accept-entrepreneur-petition' entrepreneur.pk %}" role="button">Aceptar Solicitud</a>
-                <a class="btn btn-danger mt-2 nav-item nav-link d-inline-block" href="{% url 'reject-entrepreneur-petition' entrepreneur.pk %}" role="button">Rechazar Solicitud</a>
+                <a class="btn btn-success mt-2 d-inline-block" href="{% url 'accept-entrepreneur-petition' entrepreneur.pk %}" role="button">Aceptar Solicitud</a>
+                <a class="btn btn-danger mt-2 d-inline-block" href="{% url 'reject-entrepreneur-petition' entrepreneur.pk %}" role="button">Rechazar Solicitud</a>
             </div>
         {% endif %}
     </div>

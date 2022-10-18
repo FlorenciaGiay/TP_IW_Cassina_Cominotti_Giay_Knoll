@@ -6,7 +6,7 @@
         <div class="media-body">
           <h2 class="account-heading">{{ user.username }}</h2>
           <p class="text-primary">{{ user.email }}</p>
-          <a class="btn btn-outline-danger mt-4 nav-item nav-link d-inline" href="{% url 'user-delete' user.pk %}" role="button">Eliminar Cuenta</a>
+          <a class="btn btn-outline-danger mt-4" href="{% url 'user-delete' user.pk %}" role="button">Eliminar Cuenta</a>
         </div>
       </div>
       <div>
@@ -21,7 +21,7 @@
             <div class="media-body">
               <h2>Perfil Emprendedor</h2>
               <p>
-                <a class="mr-2" href="{% url 'entrepreneur-detail' entrepreneur.id %}">@{{ entrepreneur.entrepreneurship_name }}</a> 
+                <a class="ms-2" href="{% url 'entrepreneur-detail' entrepreneur.id %}">@{{ entrepreneur.entrepreneurship_name }}</a> 
                 • 
                 <span class="badge" style="color:white; background-color: {{ entrepreneur.category.color }}">{{ entrepreneur.category.description }}</span>
                 <span class="badge" style="color:white; background-color: {{ entrepreneur.status.color }}">Estado: {{ entrepreneur.status.description }}</span>
@@ -61,14 +61,14 @@
             </div>
 
             <div class="d-lg-flex justify-content-around">
-              <a class="btn btn-outline-info mt-4 nav-item nav-link" href="{% url 'entrepreneur-update' entrepreneur.pk %}" role="button">Actualizar Perfil Emprendedor</a>
-              <a class="btn btn-outline-danger mt-4 nav-item nav-link" href="{% url 'entrepreneur-delete' entrepreneur.pk %}" role="button">Eliminar Perfil Emprendedor</a>
+              <a class="btn btn-outline-info mt-4" href="{% url 'entrepreneur-update' entrepreneur.pk %}" role="button">Actualizar Perfil Emprendedor</a>
+              <a class="btn btn-outline-danger mt-4" href="{% url 'entrepreneur-delete' entrepreneur.pk %}" role="button">Eliminar Perfil Emprendedor</a>
             </div>
           </div>
           
         {% else %}
           <div class="d-flex align-items-start">
-            <a class="btn btn-outline-info mt-4 nav-item nav-link" href="{% url 'entrepreneur-add' %}" role="button">Quiero ser Emprendedor!</a>
+            <a class="btn btn-outline-info mt-4" href="{% url 'entrepreneur-add' %}" role="button">Quiero ser Emprendedor!</a>
           </div>
         {% endif %}
       </div>

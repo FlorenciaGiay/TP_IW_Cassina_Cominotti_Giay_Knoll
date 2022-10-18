@@ -1,7 +1,10 @@
 body {
   background: #fafafa;
   color: #333333;
-  margin-top: 5rem;
+}
+
+.navbar-dark .navbar-nav .nav-link.active, .navbar-dark .navbar-nav .show>.nav-link {
+  color: #fff;
 }
 
 .navbar-brand {
@@ -79,6 +82,17 @@ option {
 
 textarea {
   width: 100%;
+  padding: 10px 20px;
+  border: 1px solid #dddddd;
+  border-radius: 3px;
+}
+
+textarea:focus {
+  color: #888;
+  background-color: #fff;
+  border-color: #bce1d6;
+  outline: 0;
+  box-shadow: 0 0 0 0.25rem rgb(120 194 173 / 25%);
 }
 
 .bg-steel {

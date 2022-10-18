@@ -14,23 +14,26 @@
                 {{ filter_form.cost_of_entry_min|as_crispy_field  }}
                 {{ filter_form.cost_of_entry_max|as_crispy_field  }}
 
-                <label for="datetimepicker_filterevent_fromevent" class="requiredField">
-                    Desde
-                </label>
-                <div class="input-group date" id="datetimepicker_filterevent_fromevent" data-target-input="nearest">
-                    {{ filter_form.datetime_from_event }}
-                    <div class="input-group-append" data-target="#datetimepicker_filterevent_fromevent" data-toggle="datetimepicker">
-                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                <div class="mb-3">
+                    <label for="datetimepicker_filterevent_fromevent" class="requiredField">
+                        Desde
+                    </label>
+                    <div class="input-group date" id="datetimepicker_filterevent_fromevent" data-target-input="nearest">
+                        {{ filter_form.datetime_from_event }}
+                        <div class="input-group-text" data-target="#datetimepicker_filterevent_fromevent" data-toggle="datetimepicker">
+                            <i class="fa fa-calendar"></i>
+                        </div>
                     </div>
                 </div>
-
-                <label for="datetimepicker_filterevent_toevent" class="requiredField">
-                    Hasta
-                </label>
-                <div class="input-group date" id="datetimepicker_filterevent_toevent" data-target-input="nearest">
-                    {{ filter_form.datetime_to_event }}
-                    <div class="input-group-append" data-target="#datetimepicker_filterevent_toevent" data-toggle="datetimepicker">
-                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                <div class="mb-3">
+                    <label for="datetimepicker_filterevent_toevent" class="requiredField">
+                        Hasta
+                    </label>
+                    <div class="input-group date" id="datetimepicker_filterevent_toevent" data-target-input="nearest">
+                        {{ filter_form.datetime_to_event }}
+                        <div class="input-group-text" data-target="#datetimepicker_filterevent_toevent" data-toggle="datetimepicker">
+                            <i class="fa fa-calendar"></i>
+                        </div>
                     </div>
                 </div>
 
@@ -68,13 +71,13 @@
                 </script>
             </fieldset>
             <div class="form-group">
-                <button class="btn btn-outline-info" type="submit">Buscar</button>
+                <button class="btn btn-outline-info mt-3" type="submit">Buscar</button>
             </div>
         </fieldset>
     </form>
     <div class="col-12 d-flex align-items-center justify-content-end">
         {% if user.is_superuser %}
-            <a class="btn btn-dark mx-2 nav-item nav-link" href="{% url 'event-add' %}" role="button">
+            <a class="btn btn-dark mx-2" href="{% url 'event-add' %}" role="button">
                 Crear Evento
             </a>
         {% endif %}
@@ -100,8 +103,11 @@
                 </div>
                 <div class="col-12 col-md-8 justify-content-center mt-3">
                     <div class="d-flex flex-column text-center">
-                        <h5 class="article-title">{{ event.title }} 
-                            • <small class="text-dark">
+                        <h5 class="article-title">{{ event.title }}
+                            </br>
+                            • 
+                            </br>
+                            <small class="text-dark">
                                 {% if event.datetime_of_event < datetime_now %}
                                     hace {{ event.datetime_of_event | timesince }} 
                                 {% else %}
@@ -112,7 +118,7 @@
                                 <span>({{ event.datetime_of_event }})</span>
                             </small>
                         </h5>
-                        <a class="btn btn-dark mt-4 nav-item nav-link align-md-self-start" href="{% url 'event-detail' event.pk %}" role="button">Ver Evento</a>
+                        <a class="btn btn-dark mt-4 align-md-self-start" href="{% url 'event-detail' event.pk %}" role="button">Ver Evento</a>
                     </div>
                 </div>
             </div>
@@ -129,15 +135,15 @@
     <div class="row mb-5">
         <div class="col-12 col-md-4">
             <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                     Número de resultados: {{ paginate_by }}
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a {% if paginate_by == 2 %} selected {% endif %}   class="dropdown-item" href="?{% param_replace paginate_by=2 %}">2</a>
-                    <a {% if paginate_by == 5 %} selected {% endif %}   class="dropdown-item" href="?{% param_replace paginate_by=5 %}">5</a>
-                    <a {% if paginate_by == 10 %} selected {% endif %}  class="dropdown-item" href="?{% param_replace paginate_by=10 %}">10</a>
-                    <a {% if paginate_by == 25 %} selected {% endif %}  class="dropdown-item" href="?{% param_replace paginate_by=25 %}">25</a>
-                    <a {% if paginate_by == 50 %} selected {% endif %}  class="dropdown-item" href="?{% param_replace paginate_by=50 %}">50</a>
+                    <li><a {% if paginate_by == 2 %} selected {% endif %}   class="dropdown-item" href="?{% param_replace paginate_by=2 %}">2</a></li>
+                    <li><a {% if paginate_by == 5 %} selected {% endif %}   class="dropdown-item" href="?{% param_replace paginate_by=5 %}">5</a></li>
+                    <li><a {% if paginate_by == 10 %} selected {% endif %}  class="dropdown-item" href="?{% param_replace paginate_by=10 %}">10</a></li>
+                    <li><a {% if paginate_by == 25 %} selected {% endif %}  class="dropdown-item" href="?{% param_replace paginate_by=25 %}">25</a></li>
+                    <li><a {% if paginate_by == 50 %} selected {% endif %}  class="dropdown-item" href="?{% param_replace paginate_by=50 %}">50</a></li>
                 </div>
             </div>
         </div>
@@ -150,12 +156,12 @@
                 <ul class="pagination justify-content-center">
                 {% if page_obj.has_previous %}
                     <li class="page-item">
-                    <a class="page-link" href="?{% param_replace page=page_obj.previous_page_number %}">Previous</a>
-                </li>
+                        <a class="page-link" href="?{% param_replace page=page_obj.previous_page_number %}">Previous</a>
+                    </li>
                 {% else %}
                     <li class="page-item disabled">
-                    <a class="page-link" href="#" tabindex="-1" aria-disabled="True">Previous</a>
-                </li>
+                        <a class="page-link" href="#" tabindex="-1" aria-disabled="True">Previous</a>
+                    </li>
                 {% endif %}
 
                 {% if page_obj.number|add:'-4' > 1 %}
@@ -176,17 +182,17 @@
                 {% endfor %}
 
                 {% if page_obj.paginator.num_pages > page_obj.number|add:'4' %}
-                <li class="page-item"><a class="page-link" href="?{% param_replace page=page_obj.number|add:'5' %}">&hellip;</a></li>
+                    <li class="page-item"><a class="page-link" href="?{% param_replace page=page_obj.number|add:'5' %}">&hellip;</a></li>
                 {% endif %}
 
                 {% if page_obj.has_next %}
                     <li class="page-item">
-                    <a class="page-link" href="?{% param_replace page=page_obj.next_page_number %}">Next</a>
-                </li>
+                        <a class="page-link" href="?{% param_replace page=page_obj.next_page_number %}">Next</a>
+                    </li>
                 {% else %}
                     <li class="page-item disabled">
-                    <a class="page-link" href="#" tabindex="-1" aria-disabled="True">Next</a>
-                </li>
+                        <a class="page-link" href="#" tabindex="-1" aria-disabled="True">Next</a>
+                    </li>
                 {% endif %}
             </ul>
             </nav>

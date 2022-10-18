@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     "django_extensions",
     "fontawesomefree",
     "crispy_forms",
+    "crispy_bootstrap5",
     "storages",
     "haystack",
     # My Apps
@@ -188,7 +189,8 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-CRISPY_TEMPLATE_PACK = "bootstrap4"
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"
 MESSAGE_TAGS = {
     bootstrapMessages.ERROR: "danger",
 }

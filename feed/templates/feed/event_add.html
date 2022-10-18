@@ -11,13 +11,15 @@
                 {{ form.direction|as_crispy_field  }}
                 {{ form.cost_of_entry|as_crispy_field  }}
 
-                <label for="datetimepicker_addevent" class="requiredField">
-                    Fecha de Realización<span class="asteriskField">*</span>
-                </label>
-                <div class="input-group date" id="datetimepicker_addevent" data-target-input="nearest">
-                    {{ form.datetime_of_event }}
-                    <div class="input-group-append" data-target="#datetimepicker_addevent" data-toggle="datetimepicker">
-                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                <div class="mb-3">
+                    <label for="datetimepicker_addevent" class="requiredField">
+                        Fecha de Realización<span class="asteriskField">*</span>
+                    </label>
+                    <div class="input-group date" id="datetimepicker_addevent" data-target-input="nearest">
+                        {{ form.datetime_of_event }}
+                        <div class="input-group-text" data-target="#datetimepicker_addevent" data-toggle="datetimepicker">
+                            <i class="fa fa-calendar"></i>
+                        </div>
                     </div>
                 </div>
                 <script>
@@ -46,6 +48,6 @@
                 <button class="btn btn-outline-success" type="submit">Guardar</button>
             </div>
         </form>
-        <a class="btn btn-info mt-2 nav-item nav-link d-inline-block" href="{% url 'events' %}" role="button">Volver</a>
+        <a class="btn btn-info mt-2 d-inline-block" href="{% url 'events' %}" role="button">Volver</a>
     </div>
 {% endblock content %}
