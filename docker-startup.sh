@@ -1,18 +1,18 @@
 #!/bin/bash
 
 # Collect static files
-echo ""
-echo "##########################################################################"
-echo "########################## Collect static files ##########################"
-echo "##########################################################################"
-python manage.py collectstatic --noinput
+# echo ""
+# echo "##########################################################################"
+# echo "########################## Collect static files ##########################"
+# echo "##########################################################################"
+# python manage.py collectstatic --noinput
 
-# Apply database migrations
-echo ""
-echo "##########################################################################"
-echo "####################### Apply database migrations ########################"
-echo "##########################################################################"
-python manage.py migrate
+# # Apply database migrations
+# echo ""
+# echo "##########################################################################"
+# echo "####################### Apply database migrations ########################"
+# echo "##########################################################################"
+# python manage.py migrate
 
 # Uncomment this lines if you want to create a superuser automatically
 # Create superuser
@@ -29,12 +29,12 @@ python manage.py migrate
 # echo "DJANGO_SUPERUSER_EMAIL: " $DJANGO_SUPERUSER_EMAIL
 # python manage.py createsuperuser --username $DJANGO_SUPERUSER_USERNAME --email $DJANGO_SUPERUSER_EMAIL --noinput
 
-# Delete all indexes and update them
-echo ""
-echo "##########################################################################"
-echo "################### Delete all indexes and update them ###################"
-echo "##########################################################################"
-python manage.py update_index --remove
+# # Delete all indexes and update them
+# echo ""
+# echo "##########################################################################"
+# echo "################### Delete all indexes and update them ###################"
+# echo "##########################################################################"
+# python manage.py update_index --remove
 
 # Start server
 echo ""
