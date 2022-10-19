@@ -11,12 +11,12 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 import os
+from pathlib import Path
 from django.contrib.messages import constants as bootstrapMessages
 import django_heroku
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -105,21 +105,21 @@ if os.environ.get("RUNNING_IN_DOCKER") == "TRUE":
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.sqlite3",
-            "NAME": os.path.join(BASE_DIR, "..", "..", "data", "db.sqlite3"),
+            "NAME": BASE_DIR / ".." / ".." / "data" / "db.sqlite3",
         }
     }
 else:
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.sqlite3",
-            "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
+            "NAME": BASE_DIR / "db.sqlite3",
         }
     }
 
 HAYSTACK_CONNECTIONS = {
     "default": {
         "ENGINE": "haystack.backends.whoosh_backend.WhooshEngine",
-        "PATH": os.path.join(BASE_DIR, "whoosh_index"),
+        "PATH": BASE_DIR / "whoosh_index",
     },
 }
 if os.environ.get("SEARCHBOX_URL"):
@@ -175,13 +175,21 @@ if USE_S3:
     AWS_S3_DEFAULT_OVERWRITE = False
     AWS_DEFAULT_ACL = None
     DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+    STATICFILES_DIRS = (BASE_DIR / "static", )
 else:
-    STATIC_URL = "/staticfiles/"
-    STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-    MEDIA_URL = "/media/"
-    MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+    if os.environ.get("RUNNING_IN_DOCKER") == "TRUE":
+        STATIC_URL = "/staticfiles/"
+        STATIC_ROOT = BASE_DIR / ".." / ".." / "staticfiles"
+        MEDIA_URL = "/media/"
+        MEDIA_ROOT = BASE_DIR / ".." / ".." / "media"
+        STATICFILES_DIRS = (BASE_DIR / ".." / ".." / "static", )
+    else:
+        STATIC_URL = "/staticfiles/"
+        STATIC_ROOT = BASE_DIR / "staticfiles"
+        MEDIA_URL = "/media/"
+        MEDIA_ROOT = BASE_DIR / "media"
+        STATICFILES_DIRS = (BASE_DIR / "static", )
 
-STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
 
 
 # Default primary key field type
