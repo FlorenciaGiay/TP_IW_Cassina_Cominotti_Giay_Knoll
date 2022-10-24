@@ -165,3 +165,17 @@ a.article-title:hover {
 .account-heading {
   font-size: 2.5rem;
 }
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  .nav-link {
+    font-size: .85rem;
+  }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  .nav-link {
+    font-size: inherit;
+  }
+}
