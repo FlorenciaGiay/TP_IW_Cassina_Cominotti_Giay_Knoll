@@ -28,4 +28,6 @@ ENV RUNNING_IN_DOCKER = True
 RUN mkdir -p /app_grupo1/data
 RUN mkdir -p /app_grupo1/media
 
-CMD ["/bin/bash","-c","./docker-startup.sh"]
+# If you want to execute a bash to run multiple things
+# CMD ["/bin/bash","-c","./docker-startup.sh"]
+CMD [ "python", "manage.py", "runserver", "0.0.0.0:8000"]

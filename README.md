@@ -28,6 +28,29 @@ El modelo de datos de ésta App es el siguiente:
 <br />
 <br />
 
+## Steps to run the App with Docker
+1. Go to the root directory of this repository
+```console
+$ cd ../ ... /TP_IW_Cassina_Cominotti_Giay_Knoll
+```
+
+2. Build a Docker Image called "app_grupo1"
+```console
+$ docker build --no-cache -t app_grupo1 .
+```
+
+3. Create a container called "web_grupo1" with the previous image "app_grupo1" 
+and then mount 1 volume for the DB, and then another for the media if you have 
+some local images
+```console
+$ docker create --name web_grupo1 -p 8000:8000 -v /data/:/data -v /media/:/media app_grupo1
+```
+
+4. That's it! Now just run the container!!
+```console
+$ docker start web_grupo1
+```
+
 ## Steps to clone this repository with Conda
 1. Clone this Django application with the optional step of creating a virtual environment.
 ```console

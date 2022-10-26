@@ -175,21 +175,24 @@ if USE_S3:
     AWS_S3_DEFAULT_OVERWRITE = False
     AWS_DEFAULT_ACL = None
     DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
-    STATICFILES_DIRS = (BASE_DIR / "static", )
+    STATICFILES_DIRS = (BASE_DIR / "static",)
 else:
-    if os.environ.get("RUNNING_IN_DOCKER") == "TRUE":
-        STATIC_URL = "/staticfiles/"
-        STATIC_ROOT = BASE_DIR / ".." / ".." / "staticfiles"
-        MEDIA_URL = "/media/"
-        MEDIA_ROOT = BASE_DIR / ".." / ".." / "media"
-        STATICFILES_DIRS = (BASE_DIR / ".." / ".." / "static", )
-    else:
-        STATIC_URL = "/staticfiles/"
-        STATIC_ROOT = BASE_DIR / "staticfiles"
-        MEDIA_URL = "/media/"
-        MEDIA_ROOT = BASE_DIR / "media"
-        STATICFILES_DIRS = (BASE_DIR / "static", )
-
+    # if os.environ.get("RUNNING_IN_DOCKER") == "TRUE":
+    #     STATIC_URL = "/staticfiles/"
+    #     STATIC_ROOT = BASE_DIR / ".." / ".." / "staticfiles"
+    #     MEDIA_URL = "/media/"
+    #     MEDIA_ROOT = BASE_DIR / ".." / ".." / "media"
+    #     STATICFILES_DIRS = (BASE_DIR / ".." / ".." / "static",)
+    #     print('STATIC_ROOT' + STATIC_ROOT)
+    #     print('MEDIA_ROOT' + MEDIA_ROOT)
+    #     print('STATICFILES_DIRS' + STATICFILES_DIRS)
+    # else:
+    # TODO: Check if it has to go up 2 directories
+    STATIC_URL = "/staticfiles/"
+    STATIC_ROOT = BASE_DIR / "staticfiles"
+    MEDIA_URL = "/media/"
+    MEDIA_ROOT = BASE_DIR / "media"
+    STATICFILES_DIRS = (BASE_DIR / "static",)
 
 
 # Default primary key field type
