@@ -101,20 +101,12 @@ WSGI_APPLICATION = "rafaela_emprende.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-if os.environ.get("RUNNING_IN_DOCKER") == "TRUE":
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": BASE_DIR / ".." / ".." / "data" / "db.sqlite3",
-        }
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
     }
-else:
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": BASE_DIR / "db.sqlite3",
-        }
-    }
+}
 
 HAYSTACK_CONNECTIONS = {
     "default": {
@@ -177,17 +169,6 @@ if USE_S3:
     DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
     STATICFILES_DIRS = (BASE_DIR / "static",)
 else:
-    # if os.environ.get("RUNNING_IN_DOCKER") == "TRUE":
-    #     STATIC_URL = "/staticfiles/"
-    #     STATIC_ROOT = BASE_DIR / ".." / ".." / "staticfiles"
-    #     MEDIA_URL = "/media/"
-    #     MEDIA_ROOT = BASE_DIR / ".." / ".." / "media"
-    #     STATICFILES_DIRS = (BASE_DIR / ".." / ".." / "static",)
-    #     print('STATIC_ROOT' + STATIC_ROOT)
-    #     print('MEDIA_ROOT' + MEDIA_ROOT)
-    #     print('STATICFILES_DIRS' + STATICFILES_DIRS)
-    # else:
-    # TODO: Check if it has to go up 2 directories
     STATIC_URL = "/staticfiles/"
     STATIC_ROOT = BASE_DIR / "staticfiles"
     MEDIA_URL = "/media/"

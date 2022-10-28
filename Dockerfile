@@ -23,7 +23,15 @@ RUN pip install -r requirements.txt
 # Copy the current directory contents into the container at /rafaelaemprende_service
 COPY . /app_grupo1/
 
-ENV RUNNING_IN_DOCKER = True
+ENV SECRET_KEY="my_secret_key"
+ENV DEBUG_VALUE=True
+ENV EMAIL_HOST="smtp.gmail.com"
+ENV EMAIL_HOST_USER="your.email@gmail.com"
+ENV EMAIL_HOST_PASSWORD="your_password"
+ENV EMAIL_PORT=587
+ENV EMAIL_USE_TLS=True
+ENV NUMBER_OF_ATTEMPTS_TO_CREATE_ENTREPRENEUR_PROFILE=3
+ENV USE_S3="FALSE"
 
 RUN mkdir -p /app_grupo1/data
 RUN mkdir -p /app_grupo1/media
