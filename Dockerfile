@@ -32,9 +32,10 @@ ENV EMAIL_PORT=587
 ENV EMAIL_USE_TLS=True
 ENV NUMBER_OF_ATTEMPTS_TO_CREATE_ENTREPRENEUR_PROFILE=3
 ENV USE_S3="FALSE"
+ENV RUNNING_IN_DOCKER=True
 
-RUN mkdir -p /app_grupo1/data
-RUN mkdir -p /app_grupo1/media
+RUN mkdir -p /data
+RUN mkdir -p /media
 
 # If you want to execute a bash to run multiple things
 # CMD ["/bin/bash","-c","./docker-startup.sh"]

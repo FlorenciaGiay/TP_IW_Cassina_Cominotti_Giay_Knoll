@@ -101,12 +101,21 @@ WSGI_APPLICATION = "rafaela_emprende.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+RUNNING_IN_DOCKER = os.environ.get("RUNNING_IN_DOCKER") == "True"
+if RUNNING_IN_DOCKER:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / '..' / 'data' / 'db.sqlite3',
+        }
     }
-}
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
 
 HAYSTACK_CONNECTIONS = {
     "default": {
@@ -172,8 +181,11 @@ else:
     STATIC_URL = "/staticfiles/"
     STATIC_ROOT = BASE_DIR / "staticfiles"
     MEDIA_URL = "/media/"
-    MEDIA_ROOT = BASE_DIR / "media"
     STATICFILES_DIRS = (BASE_DIR / "static",)
+    if RUNNING_IN_DOCKER:
+        MEDIA_ROOT = BASE_DIR / '..' / "media"
+    else:
+        MEDIA_ROOT = BASE_DIR / "media"
 
 
 # Default primary key field type
