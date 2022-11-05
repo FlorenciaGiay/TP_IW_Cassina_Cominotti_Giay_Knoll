@@ -4,35 +4,39 @@
     <div style="{% if entrepreneurs %} height: 70vh; max-height: 70vh; overflow-y: scroll;{% endif %}">
         {% for entrepreneur in entrepreneurs %}
             <li class="media my-4 d-flex flex-column border p-4 rounded">
-                <div class="row w-100">
-                    <div class="col-2 d-flex flex-row">
+                <div class="row">
+                    <div class="col-12 col-md-2 d-flex flex-row justify-content-center">
                         {% if entrepreneur.image_profile %}
-                            <img class="ms-3 rounded-circle"
+                            <img class="rounded-circle"
                                 width="70px"
                                 height="70px" 
                                 src="{{ entrepreneur.image_profile.url }}" 
                                 alt="Event profile image">
                         {% else %}
-                            <img class="ms-3 rounded-circle"
+                            <img class="rounded-circle"
                                 width="70px"
                                 height="70px" 
                                 src="https://pro2-bar-s3-cdn-cf.myportfolio.com/8ee9e0df6a57e6cb08ce8298364354c5/b4dd1698f1d995ddf6dc1caf45e69d0b5550752716af226bf5b6e140d0a48ae6175a3d2b28d2d24e_car_1x1.jpg?h=2f9a2d1908efc225350ee82423d2d7b5&url=aHR0cHM6Ly9taXItczMtY2RuLWNmLmJlaGFuY2UubmV0L3Byb2plY3RzL29yaWdpbmFsLzE5Yjg3YTI5Mjc0MzkzLjU1ZWFkMmU3MWFhNDMuanBn" 
                                 alt="Event profile image">
                         {% endif %}
                     </div>
-                    <div class="col-10">
-                        <h5 class="article-title">
-                            <a href="{% url 'entrepreneur-detail' entrepreneur.pk %}">
-                                {{ entrepreneur.entrepreneurship_name }}
-                            </a>
-                            • 
-                            <small>
-                                <span class="badge" style="color:white; background-color: {{ entrepreneur.category.color }}">{{ entrepreneur.category.description }}</span>
-                            </small>
-                        </h5>
-                        <div class="d-flex mt-2">
-                            <a class="btn btn-success" href="{% url 'accept-entrepreneur-petition' entrepreneur.pk %}" role="button">Aceptar</a>
-                            <a class="btn btn-danger ms-3" href="{% url 'reject-entrepreneur-petition' entrepreneur.pk %}" role="button">Rechazar</a>
+                    <div class="col-12 col-md-10 justify-content-center">
+                        <div class="d-flex flex-column text-center text-md-start">
+                            <h5 class="article-title">
+                                <a href="{% url 'entrepreneur-detail' entrepreneur.pk %}">
+                                    {{ entrepreneur.entrepreneurship_name }}
+                                </a>
+                                <span class="d-block d-md-inline">
+                                • 
+                                </span>
+                                <small>
+                                    <span class="badge" style="color:white; background-color: {{ entrepreneur.category.color }}">{{ entrepreneur.category.description }}</span>
+                                </small>
+                            </h5>
+                            <div class="d-flex justify-content-center justify-content-md-start mt-2">
+                                <a class="btn btn-success" href="{% url 'accept-entrepreneur-petition' entrepreneur.pk %}" role="button">Aceptar</a>
+                                <a class="btn btn-danger ms-3" href="{% url 'reject-entrepreneur-petition' entrepreneur.pk %}" role="button">Rechazar</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -51,36 +55,42 @@
                 <div class="row w-100">
                     <div class="col-2 d-flex flex-row">
                         {% if event_petition.entrepreneur.image_profile %}
-                            <img class="ms-3 rounded-circle"
+                            <img class="rounded-circle"
                                 width="70px"
                                 height="70px" 
                                 src="{{ event_petition.entrepreneur.image_profile.url }}" 
                                 alt="Event profile image">
                         {% else %}
-                            <img class="ms-3 rounded-circle"
+                            <img class="rounded-circle"
                                 width="70px"
                                 height="70px" 
                                 src="https://pro2-bar-s3-cdn-cf.myportfolio.com/8ee9e0df6a57e6cb08ce8298364354c5/b4dd1698f1d995ddf6dc1caf45e69d0b5550752716af226bf5b6e140d0a48ae6175a3d2b28d2d24e_car_1x1.jpg?h=2f9a2d1908efc225350ee82423d2d7b5&url=aHR0cHM6Ly9taXItczMtY2RuLWNmLmJlaGFuY2UubmV0L3Byb2plY3RzL29yaWdpbmFsLzE5Yjg3YTI5Mjc0MzkzLjU1ZWFkMmU3MWFhNDMuanBn" 
                                 alt="Event profile image">
                         {% endif %}
                     </div>
-                    <div class="col-10">
-                        <h5 class="article-title">
-                            <a href="{% url 'event-detail' event_petition.event.pk %}">
-                                {{ event_petition.event.title }}
-                            </a>
-                            • 
-                            <a href="{% url 'entrepreneur-detail' event_petition.entrepreneur.pk %}">
-                                {{ event_petition.entrepreneur.entrepreneurship_name }}
-                            </a>
-                            • 
-                            <small>
-                                <span class="badge" style="color:white; background-color: {{ event_petition.entrepreneur.category.color }}">{{ event_petition.entrepreneur.category.description }}</span>
-                            </small>
-                        </h5>
-                        <div class="d-flex mt-2">
-                            <a class="btn btn-success" href="{% url 'accept-entrepreneurship-event-petition' event_petition.pk %}" role="button">Aceptar</a>
-                            <a class="btn btn-danger ms-3" href="{% url 'reject-entrepreneurship-event-petition' event_petition.pk %}" role="button">Rechazar</a>
+                    <div class="col-12 col-md-10 justify-content-center">
+                        <div class="d-flex flex-column text-center text-md-start">
+                            <h5 class="article-title">
+                                <a href="{% url 'event-detail' event_petition.event.pk %}">
+                                    {{ event_petition.event.title }}
+                                </a>
+                                <span class="d-block d-md-inline">
+                                    • 
+                                </span>
+                                <a href="{% url 'entrepreneur-detail' event_petition.entrepreneur.pk %}">
+                                    {{ event_petition.entrepreneur.entrepreneurship_name }}
+                                </a>
+                                <span class="d-block d-md-inline">
+                                    • 
+                                </span>
+                                <small>
+                                    <span class="badge" style="color:white; background-color: {{ event_petition.entrepreneur.category.color }}">{{ event_petition.entrepreneur.category.description }}</span>
+                                </small>
+                            </h5>
+                            <div class="d-flex justify-content-center justify-content-md-start mt-2">
+                                <a class="btn btn-success" href="{% url 'accept-entrepreneurship-event-petition' event_petition.pk %}" role="button">Aceptar</a>
+                                <a class="btn btn-danger ms-3" href="{% url 'reject-entrepreneurship-event-petition' event_petition.pk %}" role="button">Rechazar</a>
+                            </div>
                         </div>
                     </div>
                 </div>
