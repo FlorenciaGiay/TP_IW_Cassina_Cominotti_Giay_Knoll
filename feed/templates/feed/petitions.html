@@ -1,7 +1,7 @@
 {% extends "feed/base.html" %}
 {% block content %}
     <h5>Solicitudes de Perfiles de Emprendedor</h5>
-    <div style="{% if entrepreneurs %} max-height: 70vh; overflow-y: scroll;{% endif %}">
+    <div style="{% if entrepreneurs %} max-height: 70vh; overflow-y: auto;{% endif %}">
         {% for entrepreneur in entrepreneurs %}
             <li class="media my-4 d-flex flex-column border p-4 rounded">
                 <div class="row">
@@ -49,7 +49,7 @@
     <hr>
 
     <h5>Solicitudes de Asistencia a Evento</h5>
-    <div style="{% if event_petitions %} max-height: 70vh; overflow-y: scroll;{% endif %}">
+    <div style="{% if event_petitions %} max-height: 70vh; overflow-y: auto;{% endif %}">
         {% for event_petition in event_petitions %}
             <li class="media my-4 d-flex flex-column border p-4 rounded">
                 <div class="row">
