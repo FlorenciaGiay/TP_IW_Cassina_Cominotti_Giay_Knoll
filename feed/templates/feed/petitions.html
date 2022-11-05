@@ -52,8 +52,8 @@
     <div style="{% if event_petitions %} max-height: 70vh; overflow-y: scroll;{% endif %}">
         {% for event_petition in event_petitions %}
             <li class="media my-4 d-flex flex-column border p-4 rounded">
-                <div class="row w-100">
-                    <div class="col-2 d-flex flex-row">
+                <div class="row">
+                    <div class="col-12 col-md-2 d-flex flex-row justify-content-center">
                         {% if event_petition.entrepreneur.image_profile %}
                             <img class="rounded-circle"
                                 width="70px"
